@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">ShirTory — Your Style, Your Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface2: #242424;
+      --ink: #f0ece4;
+      --muted: #888;
+      --accent: #e63946;
+      --accent2: #f4a261;
+      --border: #2a2a2a;
+      --radius: 10px;
+      --nav-h: 68px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    button{cursor:pointer;border:none;font:inherit}
+    img{display:block;max-width:100%;border-radius:var(--radius)}
+
+    /* ===== NAVBAR ===== */
+    .navbar{
+      position:fixed;top:0;left:0;right:0;height:var(--nav-h);
+      background:rgba(15,15,15,0.95);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;padding:0 32px;gap:32px;z-index:100;
+    }
+    .nav-logo{
+      font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;
+      color:var(--ink);flex:1;letter-spacing:0.02em;
+    }
+    .nav-logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:28px}
+    .nav-links a{font-size:0.82rem;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+    .nav-links a:hover{color:var(--ink)}
+    .nav-actions{display:flex;align-items:center;gap:12px}
+    .btn-nav{background:var(--accent);color:#fff;padding:9px 20px;border-radius:6px;font-size:0.82rem;font-weight:600;letter-spacing:0.04em;transition:opacity .2s}
+    .btn-nav:hover{opacity:.85}
+    .nav-toggle{display:none;font-size:1.5rem;color:var(--ink);background:none}
+
+    /* Mobile nav */
+    .mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);flex-direction:column;padding:20px 32px 28px;gap:18px;z-index:99}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{font-size:1rem;font-weight:500;color:var(--muted)}
+
+    /* ===== HERO ===== */
+    .hero{
+      min-height:100vh;display:flex;align-items:center;
+      padding:calc(var(--nav-h) + 40px) 32px 60px;
+      max-width:1200px;margin:0 auto;gap:60px;
+    }
+    .hero-content{flex:1;max-width:600px}
+    .hero-eyebrow{font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;font-weight:600}
+    .hero-headline{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(3rem,7vw,6rem);font-weight:700;line-height:1.05;
+      margin-bottom:22px;
+    }
+    .hero-headline .hl{color:var(--accent)}
+    .hero-sub{color:var(--muted);font-size:1.05rem;max-width:420px;margin-bottom:36px;font-weight:300}
+    .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+    .btn-primary{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--accent);color:#fff;
+      padding:14px 30px;border-radius:var(--radius);
+      font-size:0.88rem;font-weight:600;letter-spacing:0.05em;
+      transition:transform .2s,opacity .2s;
+    }
+    .btn-primary:hover{transform:translateY(-2px);opacity:.9}
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:8px;
+      background:transparent;color:var(--ink);
+      border:1px solid var(--border);
+      padding:14px 30px;border-radius:var(--radius);
+      font-size:0.88rem;font-weight:500;
+      transition:border-color .2s,background .2s;
+    }
+    .btn-outline:hover{border-color:var(--ink);background:var(--surface)}
+    .hero-visual{flex:1;display:flex;justify-content:flex-end}
+    .hero-block{
+      width:380px;max-width:100%;height:500px;
+      background:linear-gradient(145deg,var(--accent) 0%,#c1121f 50%,#6d0c14 100%);
+      border-radius:80px 12px 80px 12px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:8rem;position:relative;overflow:hidden;
+    }
+    .hero-block::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.4) 100%);
+    }
+    .hero-badge{
+      position:absolute;bottom:28px;left:28px;z-index:2;
+      background:rgba(255,255,255,.1);backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:8px;padding:12px 16px;
+      color:#fff;font-size:.78rem;font-weight:500;
+    }
+
+    /* ===== MARQUEE ===== */
+    .marquee-wrap{overflow:hidden;background:var(--accent);padding:12px 0;margin-top:-1px}
+    .marquee-track{display:flex;gap:0;white-space:nowrap;animation:marquee 18s linear infinite}
+    .marquee-item{padding:0 32px;font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#fff;opacity:.9}
+    .marquee-item span{color:rgba(255,255,255,.5);margin:0 16px}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ===== COLLECTIONS ===== */
+    .section{padding:80px 32px;max-width:1200px;margin:0 auto}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:700;margin-bottom:8px}
+    .section-sub{color:var(--muted);font-size:.9rem;margin-bottom:40px}
+    .collection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .collection-card{
+      background:var(--bg-card,var(--surface));border-radius:16px;
+      aspect-ratio:2/3;display:flex;align-items:flex-end;padding:24px;
+      cursor:pointer;transition:transform .3s;overflow:hidden;position:relative;
+    }
+    .collection-card:hover{transform:translateY(-6px)}
+    .collection-card::before{content:attr(data-emoji);position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:5rem;opacity:.5}
+    .collection-label{position:relative;z-index:1;width:100%}
+    .collection-label strong{display:block;font-size:1.1rem;font-weight:600;margin-bottom:4px}
+    .collection-label a{font-size:.8rem;color:var(--accent);font-weight:500}
+
+    /* ===== PRODUCTS ===== */
+    .products-section{padding:60px 32px 80px;max-width:1200px;margin:0 auto}
+    .products-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:32px}
+    .filter-bar{display:flex;gap:8px;flex-wrap:wrap}
+    .filter-btn{
+      padding:8px 18px;border:1px solid var(--border);border-radius:999px;
+      font-size:.78rem;font-weight:500;color:var(--muted);background:var(--surface);
+      transition:all .2s;
+    }
+    .filter-btn.active,.filter-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+    .product-card{
+      background:var(--surface);border-radius:14px;overflow:hidden;
+      border:1px solid var(--border);transition:transform .3s,box-shadow .3s;
+    }
+    .product-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+    .product-img{
+      aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;
+      font-size:4rem;position:relative;overflow:hidden;
+    }
+    .product-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+    .product-badge{
+      position:absolute;top:12px;left:12px;
+      background:var(--accent);color:#fff;font-size:.68rem;font-weight:700;
+      padding:4px 10px;border-radius:999px;letter-spacing:.05em;text-transform:uppercase;
+    }
+    .product-info{padding:16px}
+    .product-name{font-weight:600;font-size:.95rem;margin-bottom:4px}
+    .product-cat{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+    .product-footer{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .product-price{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--accent2)}
+    .wa-btn{
+      background:#25D366;color:#fff;padding:9px 14px;border-radius:8px;
+      font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:6px;
+      transition:opacity .2s,transform .2s;white-space:nowrap;
+    }
+    .wa-btn:hover{opacity:.9;transform:scale(1.03)}
+    .wa-icon{width:16px;height:16px}
+    .no-products{text-align:center;color:var(--muted);padding:60px 20px;font-size:1rem}
+
+    /* ===== ABOUT ===== */
+    .about{background:var(--surface);padding:80px 32px}
+    .about-inner{max-width:1200px;margin:0 auto;display:flex;gap:64px;align-items:center;flex-wrap:wrap}
+    .about-text{flex:1;min-width:280px}
+    .about-text .section-title{color:var(--ink)}
+    .about-text p{color:var(--muted);margin-bottom:16px;font-size:.97rem}
+    .stats-row{display:flex;gap:40px;flex-wrap:wrap;margin-top:12px}
+    .stat{border-left:2px solid var(--accent);padding-left:16px}
+    .stat-num{display:block;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--ink)}
+    .stat-label{font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+    .about-img{flex:1;min-width:260px;max-width:420px}
+    .about-img-placeholder{
+      width:100%;aspect-ratio:4/5;background:linear-gradient(145deg,var(--surface2),var(--border));
+      border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:6rem;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-section{padding:80px 32px;max-width:1200px;margin:0 auto}
+    .contact-inner{display:flex;gap:60px;flex-wrap:wrap;align-items:flex-start}
+    .contact-info{flex:1;min-width:240px}
+    .contact-info p{margin-bottom:14px;color:var(--muted);font-size:.92rem}
+    .contact-info strong{color:var(--ink)}
+    .socials{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+    .social-btn{
+      padding:9px 18px;border:1px solid var(--border);border-radius:8px;
+      font-size:.8rem;font-weight:500;color:var(--muted);background:var(--surface);
+      transition:all .2s;
+    }
+    .social-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .contact-form{flex:2;min-width:280px;display:flex;flex-direction:column;gap:14px}
+    .contact-form input,.contact-form textarea{
+      padding:13px 16px;border:1px solid var(--border);border-radius:var(--radius);
+      background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;
+      transition:border-color .2s;
+    }
+    .contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--accent)}
+    .contact-form textarea{resize:vertical;min-height:110px}
+    .form-success{display:none;color:#25D366;font-size:.88rem;padding:10px 0}
+
+    /* ===== FOOTER ===== */
+    .footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px}
+    .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;flex:1}
+    .footer-logo span{color:var(--accent)}
+    .footer-copy{font-size:.78rem;color:var(--muted)}
+    .footer-links{display:flex;gap:16px}
+    .footer-links a{font-size:.78rem;color:var(--muted);transition:color .2s}
+    .footer-links a:hover{color:var(--ink)}
+
+    /* ===== FLOATING WA ===== */
+    .float-wa{
+      position:fixed;bottom:28px;right:28px;
+      background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+      box-shadow:0 4px 20px rgba(37,211,102,.4);z-index:150;
+      transition:transform .2s;
+    }
+    .float-wa:hover{transform:scale(1.1)}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .nav-toggle{display:block}
+      .hero{flex-direction:column;gap:36px;padding-top:calc(var(--nav-h)+28px);min-height:auto}
+      .hero-block{width:100%;height:240px;border-radius:20px}
+      .hero-block::after{display:none}
+      .collection-grid{grid-template-columns:1fr 1fr}
+      .about-inner{flex-direction:column;gap:36px}
+      .contact-inner{flex-direction:column}
+      .footer-inner{flex-direction:column;align-items:flex-start;gap:12px}
+      .stats-row{gap:24px}
+    }
+    @media(max-width:480px){
+      .collection-grid{grid-template-columns:1fr}
+      .product-grid{grid-template-columns:1fr 1fr}
+      .hero-cta{flex-direction:column}
+      .btn-primary,.btn-outline{width:100%;justify-content:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-logo" id="navLogo">Shir<span>Tory</span></div>
+  <nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#collections">Collections</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="nav-actions">
+    <a href="admin.html" class="btn-nav">Admin</a>
+    <button class="nav-toggle" onclick="toggleMobile()">☰</button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#collections" onclick="closeMobile()">Collections</a>
+  <a href="#shop" onclick="closeMobile()">Shop</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <p class="hero-eyebrow" id="heroEyebrow">New Collection — 2026</p>
+    <h1 class="hero-headline" id="heroHeadline">Your<br/><span class="hl">Style,</span><br/>Your Story.</h1>
+    <p class="hero-sub" id="heroSub">Premium quality tees & clothing — made for those who wear their personality.</p>
+    <div class="hero-cta">
+      <a href="#shop" class="btn-primary">🛍️ Shop Now</a>
+      <a href="#about" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-block">
+      👕
+      <div class="hero-badge">✦ Deshi Pride Collection</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item">ShirTory <span>✦</span> Premium Tees <span>✦</span> Deshi Pride <span>✦</span> Made in Bangladesh <span>✦</span> Express Yourself <span>✦</span> Graphic Tees <span>✦</span></div>
+    <div class="marquee-item">ShirTory <span>✦</span> Premium Tees <span>✦</span> Deshi Pride <span>✦</span> Made in Bangladesh <span>✦</span> Express Yourself <span>✦</span> Graphic Tees <span>✦</span></div>
+  </div>
+</div>
+
+<!-- COLLECTIONS -->
+<div class="section" id="collections">
+  <h2 class="section-title">Collections</h2>
+  <p class="section-sub">Browse by category</p>
+  <div class="collection-grid" id="collectionGrid">
+    <div class="collection-card" data-emoji="👕" style="background:linear-gradient(135deg,#1a1a2e,#16213e)" onclick="filterProducts('tops')">
+      <div class="collection-label">
+        <strong>Tops & Tees</strong>
+        <a>Browse →</a>
+      </div>
+    </div>
+    <div class="collection-card" data-emoji="👖" style="background:linear-gradient(135deg,#2d1b69,#11998e)" onclick="filterProducts('bottoms')">
+      <div class="collection-label">
+        <strong>Bottoms</strong>
+        <a>Browse →</a>
+      </div>
+    </div>
+    <div class="collection-card" data-emoji="🧥" style="background:linear-gradient(135deg,#3d0000,#870000)" onclick="filterProducts('outerwear')">
+      <div class="collection-label">
+        <strong>Outerwear</strong>
+        <a>Browse →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="shop">
+  <div class="products-header">
+    <div>
+      <h2 class="section-title">Shop All</h2>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all" onclick="filterProducts('all',this)">All</button>
+      <button class="filter-btn" data-filter="tops" onclick="filterProducts('tops',this)">Tops</button>
+      <button class="filter-btn" data-filter="bottoms" onclick="filterProducts('bottoms',this)">Bottoms</button>
+      <button class="filter-btn" data-filter="outerwear" onclick="filterProducts('outerwear',this)">Outerwear</button>
+      <button class="filter-btn" data-filter="accessories" onclick="filterProducts('accessories',this)">Accessories</button>
+    </div>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <h2 class="section-title" id="aboutTitle">About ShirTory</h2>
+      <p id="aboutP1">We started ShirTory because we believe your clothing should say something. Every tee we make carries a story — crafted with quality, priced honestly, and designed to be worn with pride.</p>
+      <p id="aboutP2">Based in Mirpur, Dhaka. Delivering across Bangladesh & worldwide.</p>
+      <div class="stats-row">
+        <div class="stat"><span class="stat-num" id="stat1">100+</span><span class="stat-label">Products Sold</span></div>
+        <div class="stat"><span class="stat-num" id="stat2">500+</span><span class="stat-label">Happy Customers</span></div>
+        <div class="stat"><span class="stat-num" id="stat3">100%</span><span class="stat-label">Deshi Made</span></div>
+      </div>
+    </div>
+    <div class="about-img">
+      <div class="about-img-placeholder">🫡</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <h2 class="section-title">Get in Touch</h2>
+  <p class="section-sub">We'd love to hear from you</p>
+  <div class="contact-inner">
+    <div class="contact-info">
+      <p><strong>WhatsApp:</strong> <span id="contactWA">+880 1700 000000</span></p>
+      <p><strong>Email:</strong> <span id="contactEmail">hello@shirtory.com</span></p>
+      <p><strong>Address:</strong> <span id="contactAddr">Mirpur, Dhaka, Bangladesh</span></p>
+      <div class="socials">
+        <a class="social-btn" id="fbLink" href="#" target="_blank">📘 Facebook</a>
+        <a class="social-btn" id="igLink" href="#" target="_blank">📸 Instagram</a>
+        <a class="social-btn" id="waLink" href="#" target="_blank">💬 WhatsApp</a>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleContact(event)">
+      <input type="text" placeholder="Your name" required/>
+      <input type="email" placeholder="Your email" required/>
+      <textarea placeholder="Your message" rows="4" required></textarea>
+      <button type="submit" class="btn-primary">Send Message</button>
+      <p class="form-success" id="formSuccess">✓ Message sent! We'll reply soon.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Shir<span>Tory</span></div>
+    <p class="footer-copy">© 2026 ShirTory. All rights reserved.</p>
+    <nav class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Shipping</a>
+      <a href="#">Returns</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a class="float-wa" id="floatWA" href="#" target="_blank" title="Order on WhatsApp">💬</a>
+
+<script>
+// ============================================================
+// DATA & DEFAULTS
+// ============================================================
+const DEFAULT_PRODUCTS = [
+  {id:1,name:"Classic Logo Tee",price:550,category:"tops",emoji:"👕",color:"#e63946",badge:"Bestseller",image:""},
+  {id:2,name:"Deshi Pride Graphic Tee",price:650,category:"tops",emoji:"🎨",color:"#457b9d",badge:"New",image:""},
+  {id:3,name:"Oversized Drop Tee",price:700,category:"tops",emoji:"👕",color:"#2d6a4f",badge:"",image:""},
+  {id:4,name:"Cargo Pants",price:1200,category:"bottoms",emoji:"👖",color:"#6b4226",badge:"",image:""},
+  {id:5,name:"Jogger Set",price:950,category:"bottoms",emoji:"🩳",color:"#3d405b",badge:"",image:""},
+  {id:6,name:"Denim Jacket",price:2200,category:"outerwear",emoji:"🧥",color:"#264653",badge:"Limited",image:""},
+  {id:7,name:"Canvas Tote Bag",price:400,category:"accessories",emoji:"👜",color:"#a8795d",badge:"",image:""},
+  {id:8,name:"Embroidered Cap",price:500,category:"accessories",emoji:"🧢",color:"#333",badge:"New",image:""},
+];
+
+const DEFAULT_SETTINGS = {
+  storeName:"ShirTory",
+  heroEyebrow:"New Collection — 2026",
+  heroHeadline:"Your Style, Your Story.",
+  heroSub:"Premium quality tees & clothing — made for those who wear their personality.",
+  aboutTitle:"About ShirTory",
+  aboutP1:"We started ShirTory because we believe your clothing should say something. Every tee we make carries a story — crafted with quality, priced honestly, and designed to be worn with pride.",
+  aboutP2:"Based in Mirpur, Dhaka. Delivering across Bangladesh & worldwide.",
+  waNumber:"8801700000000",
+  contactEmail:"hello@shirtory.com",
+  contactAddr:"Mirpur, Dhaka, Bangladesh",
+  fbURL:"#",
+  igURL:"#",
+  currency:"৳",
+  stat1:"100+",stat2:"500+",stat3:"100%",
+};
+
+function getProducts(){ return JSON.parse(localStorage.getItem('shirtory_products')||JSON.stringify(DEFAULT_PRODUCTS)); }
+function getSettings(){ return Object.assign({},DEFAULT_SETTINGS,JSON.parse(localStorage.getItem('shirtory_settings')||'{}')); }
+
+// ============================================================
+// APPLY SETTINGS
+// ============================================================
+function applySettings(){
+  const s = getSettings();
+  document.title = s.storeName + " — Your Style, Your Story";
+  document.getElementById('navLogo').innerHTML = s.storeName.slice(0,-4)+'<span>'+s.storeName.slice(-4)+'</span>';
+  document.getElementById('heroEyebrow').textContent = s.heroEyebrow;
+  const hl = s.heroHeadline.split(' ');
+  document.getElementById('heroHeadline').innerHTML = hl.slice(0,1).join(' ')+'<br/><span class="hl">'+hl.slice(1,2).join(' ')+'</span><br/>'+hl.slice(2).join(' ');
+  document.getElementById('heroSub').textContent = s.heroSub;
+  document.getElementById('aboutTitle').textContent = s.aboutTitle;
+  document.getElementById('aboutP1').textContent = s.aboutP1;
+  document.getElementById('aboutP2').textContent = s.aboutP2;
+  document.getElementById('contactWA').textContent = '+'+s.waNumber;
+  document.getElementById('contactEmail').textContent = s.contactEmail;
+  document.getElementById('contactAddr').textContent = s.contactAddr;
+  document.getElementById('fbLink').href = s.fbURL||'#';
+  document.getElementById('igLink').href = s.igURL||'#';
+  const waURL = 'https://wa.me/'+s.waNumber+'?text='+encodeURIComponent('Hi! I\'m interested in ordering from '+s.storeName);
+  document.getElementById('waLink').href = waURL;
+  document.getElementById('floatWA').href = waURL;
+  if(s.stat1) document.getElementById('stat1').textContent=s.stat1;
+  if(s.stat2) document.getElementById('stat2').textContent=s.stat2;
+  if(s.stat3) document.getElementById('stat3').textContent=s.stat3;
+}
+
+// ============================================================
+// RENDER PRODUCTS
+// ============================================================
+function renderProducts(filter='all'){
+  const products = getProducts();
+  const s = getSettings();
+  const grid = document.getElementById('productGrid');
+  const filtered = filter==='all' ? products : products.filter(p=>p.category===filter);
+  if(!filtered.length){
+    grid.innerHTML='<div class="no-products">No products in this category yet.</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(p=>{
+    const waMsg = encodeURIComponent('Hi! I want to order: *'+p.name+'* ('+s.currency+p.price+')\nPlease confirm availability & delivery details.');
+    const waHref = 'https://wa.me/'+s.waNumber+'?text='+waMsg;
+    const imgHTML = p.image
+      ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">`
+      : p.emoji;
+    const badgeHTML = p.badge ? `<div class="product-badge">${p.badge}</div>` : '';
+    return `
+      <div class="product-card">
+        <div class="product-img" style="background:${p.color}22">
+          ${badgeHTML}
+          ${imgHTML}
+        </div>
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-cat">${p.category}</div>
+          <div class="product-footer">
+            <span class="product-price">${s.currency}${p.price}</span>
+            <a class="wa-btn" href="${waHref}" target="_blank">
+              <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Order
+            </a>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function filterProducts(filter, btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else {
+    const match = document.querySelector(`.filter-btn[data-filter="${filter}"]`);
+    if(match) match.classList.add('active');
+  }
+  renderProducts(filter);
+  document.getElementById('shop').scrollIntoView({behavior:'smooth'});
+}
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+function toggleMobile(){ document.getElementById('mobileMenu').classList.toggle('open') }
+function closeMobile(){ document.getElementById('mobileMenu').classList.remove('open') }
+function handleContact(e){
+  e.preventDefault();
+  const el = document.getElementById('formSuccess');
+  el.style.display='block';
+  e.target.reset();
+  setTimeout(()=>el.style.display='none',5000);
+}
+
+window.addEventListener('scroll',()=>{
+  const nav = document.querySelector('.navbar');
+  nav.style.boxShadow = window.scrollY>8 ? '0 4px 20px rgba(0,0,0,.5)' : 'none';
+});
+
+// ============================================================
+// INIT
+// ============================================================
+applySettings();
+renderProducts();
+</script>
+</body>
+</html>
