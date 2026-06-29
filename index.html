@@ -5,26 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ShirTory — Your Style, Your Story</title>
   <link rel="icon" type="image/png" href="images/logo.png"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --crimson: #7B1A1A;
-      --crimson-light: #9B2525;
-      --crimson-dark: #5a1212;
-      --cream: #F2EDE4;
-      --cream-dark: #E8E0D4;
-      --gold: #C9A84C;
-      --ink: #1a0a0a;
-      --muted: #7a6a6a;
-      --white: #ffffff;
-      --border: #e0d5cc;
-      --surface: #faf7f3;
-      --radius: 12px;
-      --nav-h: 72px;
+    :root{
+      --primary:#7B1A1A;
+      --primary-dark:#5a1212;
+      --primary-light:#f9f0f0;
+      --gold:#C9A84C;
+      --bg:#f8f8f8;
+      --white:#ffffff;
+      --ink:#1a1a1a;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --surface:#ffffff;
+      --radius:8px;
+      --nav-h:64px;
+      --shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md:0 4px 16px rgba(0,0,0,0.1);
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6}
+    body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}
     a{color:inherit;text-decoration:none}
     button{cursor:pointer;border:none;font:inherit}
     img{display:block;max-width:100%}
@@ -32,227 +33,298 @@
     /* NAVBAR */
     .navbar{
       position:fixed;top:0;left:0;right:0;height:var(--nav-h);
-      background:rgba(242,237,228,0.97);backdrop-filter:blur(12px);
-      border-bottom:1px solid var(--border);
-      display:flex;align-items:center;padding:0 40px;gap:32px;z-index:100;
+      background:var(--white);border-bottom:1px solid var(--border);
+      display:flex;align-items:center;padding:0 24px;gap:16px;z-index:100;
+      box-shadow:var(--shadow);
     }
-    .nav-logo{flex:1;display:flex;align-items:center;gap:12px}
-    .nav-logo img{width:42px;height:42px;object-fit:contain}
-    .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--crimson);letter-spacing:0.05em}
-    .nav-links{display:flex;gap:32px}
-    .nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);transition:color .2s}
-    .nav-links a:hover{color:var(--crimson)}
-    .nav-actions{display:flex;align-items:center;gap:10px}
-    .nav-wa-btn{
-      background:var(--crimson);color:var(--cream);
-      padding:9px 20px;border-radius:6px;
-      font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
-      display:flex;align-items:center;gap:7px;transition:background .2s;
+    .nav-logo{display:flex;align-items:center;gap:10px;margin-right:16px}
+    .nav-logo img{width:36px;height:36px;object-fit:contain}
+    .nav-logo-text{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--primary)}
+    .nav-search{
+      flex:1;max-width:460px;
+      display:flex;align-items:center;
+      background:var(--bg);border:1.5px solid var(--border);border-radius:6px;
+      padding:0 14px;gap:8px;height:40px;
     }
-    .nav-wa-btn:hover{background:var(--crimson-dark)}
-    .nav-toggle{display:none;font-size:1.4rem;color:var(--crimson);background:none;padding:4px}
-    .mobile-menu{
-      display:none;position:fixed;top:var(--nav-h);left:0;right:0;
-      background:var(--cream);border-bottom:1px solid var(--border);
-      flex-direction:column;padding:20px 40px 28px;gap:18px;z-index:99;
-    }
+    .nav-search input{border:none;background:none;width:100%;font:inherit;font-size:0.85rem;color:var(--ink);outline:none}
+    .nav-search svg{width:16px;height:16px;fill:var(--muted);flex-shrink:0}
+    .nav-links{display:flex;gap:4px;margin-left:8px}
+    .nav-links a{font-size:0.8rem;font-weight:500;color:var(--muted);padding:6px 12px;border-radius:6px;transition:all .2s}
+    .nav-links a:hover{background:var(--bg);color:var(--ink)}
+    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+    .nav-wa{display:flex;align-items:center;gap:6px;background:#25D366;color:#fff;padding:8px 16px;border-radius:6px;font-size:0.78rem;font-weight:600;transition:opacity .2s}
+    .nav-wa:hover{opacity:.9}
+    .nav-wa svg{width:15px;height:15px;fill:#fff}
+    .nav-toggle{display:none;font-size:1.3rem;color:var(--ink);padding:4px;background:none}
+
+    .mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);flex-direction:column;padding:16px 24px 20px;gap:4px;z-index:99}
     .mobile-menu.open{display:flex}
-    .mobile-menu a{font-size:0.95rem;font-weight:500;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase}
+    .mobile-menu a{font-size:0.9rem;font-weight:500;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--border)}
 
     /* HERO */
-    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:var(--nav-h) 0 0;overflow:hidden}
-    .hero-left{padding:80px 40px 80px 60px;display:flex;flex-direction:column;justify-content:center}
-    .hero-eyebrow{font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-    .hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
-    .hero-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,6vw,5.5rem);font-weight:700;line-height:1.05;color:var(--crimson);margin-bottom:20px}
-    .hero-sub{color:var(--muted);font-size:1rem;font-weight:300;max-width:400px;margin-bottom:40px;line-height:1.8}
-    .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--crimson);color:var(--cream);padding:14px 32px;border-radius:8px;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:background .2s,transform .2s}
-    .btn-primary:hover{background:var(--crimson-dark);transform:translateY(-2px)}
-    .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--crimson);border:1.5px solid var(--crimson);padding:14px 32px;border-radius:8px;font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all .2s}
-    .btn-outline:hover{background:var(--crimson);color:var(--cream)}
-    .hero-right{height:100vh;position:relative;overflow:hidden;background:var(--crimson-dark)}
-    .hero-cover-img{width:100%;height:100%;object-fit:cover;opacity:0.55}
-    .hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px}
-    .hero-logo-big{width:160px;height:160px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9}
-    .hero-tagline{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--cream);opacity:0.85;text-align:center}
-    .hero-badge-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    .hero-badge{background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);color:var(--cream);padding:7px 16px;border-radius:999px;font-size:0.72rem;font-weight:500;letter-spacing:0.06em}
+    .hero{
+      margin-top:var(--nav-h);
+      position:relative;height:calc(100vh - var(--nav-h));
+      min-height:500px;max-height:700px;
+      overflow:hidden;
+    }
+    .hero-img{width:100%;height:100%;object-fit:cover;object-position:center}
+    .hero-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+      display:flex;align-items:center;padding:0 80px;
+    }
+    .hero-content{max-width:520px}
+    .hero-eyebrow{
+      display:inline-block;background:var(--gold);color:#fff;
+      font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+      padding:5px 12px;border-radius:4px;margin-bottom:18px;
+    }
+    .hero-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2.4rem,5vw,4rem);font-weight:700;
+      color:#fff;line-height:1.1;margin-bottom:16px;
+    }
+    .hero-sub{color:rgba(255,255,255,0.8);font-size:0.95rem;font-weight:400;margin-bottom:32px;line-height:1.7;max-width:380px}
+    .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-hero-primary{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:13px 28px;border-radius:6px;font-size:0.82rem;font-weight:600;letter-spacing:0.04em;transition:background .2s}
+    .btn-hero-primary:hover{background:var(--primary-dark)}
+    .btn-hero-secondary{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:#fff;border:1.5px solid rgba(255,255,255,0.4);padding:13px 28px;border-radius:6px;font-size:0.82rem;font-weight:600;transition:all .2s}
+    .btn-hero-secondary:hover{background:rgba(255,255,255,0.25)}
+    .hero-stats{
+      position:absolute;bottom:28px;left:80px;right:80px;
+      display:flex;gap:0;
+      background:rgba(255,255,255,0.12);backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,0.2);border-radius:10px;
+      overflow:hidden;
+    }
+    .hero-stat{flex:1;text-align:center;padding:14px 20px;border-right:1px solid rgba(255,255,255,0.15)}
+    .hero-stat:last-child{border-right:none}
+    .hero-stat-num{display:block;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#fff}
+    .hero-stat-label{font-size:0.65rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.1em;font-weight:500}
 
-    /* MARQUEE */
-    .marquee-wrap{overflow:hidden;background:var(--crimson);padding:13px 0}
-    .marquee-track{display:flex;white-space:nowrap;animation:marquee 20s linear infinite}
-    .marquee-item{padding:0 36px;font-size:0.72rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);opacity:0.9}
-    .marquee-sep{color:var(--gold);margin:0 8px}
+    /* PROMO BAR */
+    .promo-bar{background:var(--primary);padding:10px;text-align:center;overflow:hidden}
+    .promo-track{display:flex;white-space:nowrap;animation:marquee 22s linear infinite}
+    .promo-item{padding:0 40px;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.9)}
+    .promo-sep{color:var(--gold);margin:0 10px}
     @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-    /* SECTIONS */
-    .section{padding:90px 60px;max-width:1280px;margin:0 auto}
-    .section-label{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-    .section-label::before{content:'';display:block;width:24px;height:1px;background:var(--gold)}
-    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--crimson);margin-bottom:8px;line-height:1.1}
-    .section-sub{color:var(--muted);font-size:0.9rem;margin-bottom:48px;font-weight:300}
+    /* SECTION */
+    .section{padding:56px 24px;max-width:1280px;margin:0 auto}
+    .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+    .sec-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--ink)}
+    .sec-link{font-size:0.78rem;font-weight:600;color:var(--primary);display:flex;align-items:center;gap:4px}
+    .sec-link:hover{text-decoration:underline}
+
+    /* CATEGORY PILLS */
+    .cat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
+    .cat-pill{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 20px;background:var(--white);border:1.5px solid var(--border);
+      border-radius:999px;font-size:0.78rem;font-weight:600;color:var(--muted);
+      cursor:pointer;transition:all .2s;
+    }
+    .cat-pill:hover,.cat-pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+    /* PRODUCT GRID */
+    .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .product-card{
+      background:var(--white);border-radius:var(--radius);
+      border:1px solid var(--border);overflow:hidden;
+      transition:transform .25s,box-shadow .25s;cursor:pointer;
+    }
+    .product-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+    .product-img-wrap{
+      aspect-ratio:1/1;background:var(--bg);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;
+    }
+    .product-img-wrap img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+    .product-placeholder{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      width:100%;height:100%;gap:8px;
+    }
+    .product-initial{
+      font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;
+      color:var(--primary);opacity:0.18;
+    }
+    .product-initial-name{
+      font-size:0.75rem;font-weight:600;color:var(--muted);
+      text-align:center;padding:0 12px;line-height:1.4;
+    }
+    .badge-wrap{position:absolute;top:10px;left:10px;display:flex;gap:5px;z-index:2}
+    .badge{padding:3px 9px;border-radius:4px;font-size:0.62rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase}
+    .badge-new{background:var(--primary);color:#fff}
+    .badge-hot{background:#f59e0b;color:#fff}
+    .badge-limited{background:#059669;color:#fff}
+    .badge-sale{background:#ef4444;color:#fff}
+    .badge-bestseller{background:var(--ink);color:#fff}
+    .product-body{padding:12px 14px}
+    .product-name{font-weight:600;font-size:0.88rem;color:var(--ink);margin-bottom:2px;line-height:1.3}
+    .product-cat{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px}
+    .product-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .product-price{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--primary)}
+    .wa-btn{
+      display:flex;align-items:center;gap:5px;
+      background:#25D366;color:#fff;
+      padding:7px 13px;border-radius:6px;
+      font-size:0.72rem;font-weight:600;
+      transition:opacity .2s;white-space:nowrap;
+    }
+    .wa-btn:hover{opacity:.88}
+    .wa-btn svg{width:13px;height:13px;fill:#fff}
+    .no-products{grid-column:1/-1;text-align:center;padding:48px;color:var(--muted);font-size:0.9rem}
 
     /* COLLECTIONS */
-    .collection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .collection-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;transition:transform .35s}
-    .collection-card:hover{transform:translateY(-6px)}
-    .collection-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-    .collection-card-1{background:linear-gradient(145deg,#7B1A1A,#c1433f)}
-    .collection-card-2{background:linear-gradient(145deg,#3d2314,#7a4a2a)}
-    .collection-card-3{background:linear-gradient(145deg,#1a2a3a,#2d4a6a)}
-    .collection-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
-    .collection-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:4px}
-    .collection-cta{font-size:0.75rem;color:var(--gold);font-weight:500;letter-spacing:0.08em}
+    .coll-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .coll-card{
+      position:relative;border-radius:var(--radius);overflow:hidden;
+      aspect-ratio:4/3;cursor:pointer;transition:transform .3s;
+    }
+    .coll-card:hover{transform:scale(1.02)}
+    .coll-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+    .coll-c1{background:linear-gradient(135deg,#7B1A1A 0%,#c1433f 100%)}
+    .coll-c2{background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%)}
+    .coll-c3{background:linear-gradient(135deg,#064e3b 0%,#059669 100%)}
+    .coll-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+    .coll-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:2px}
+    .coll-sub{font-size:0.72rem;color:rgba(255,255,255,0.75);font-weight:500}
 
-    /* PRODUCTS */
-    .products-wrap{padding:0 60px 90px;max-width:1280px;margin:0 auto}
-    .products-hd{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:36px}
-    .filter-bar{display:flex;gap:8px;flex-wrap:wrap}
-    .filter-btn{padding:8px 20px;border:1.5px solid var(--border);border-radius:999px;font-size:0.75rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);background:var(--surface);transition:all .2s}
-    .filter-btn.active,.filter-btn:hover{background:var(--crimson);color:var(--cream);border-color:var(--crimson)}
-    .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
-    .product-card{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:transform .3s,box-shadow .3s}
-    .product-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(123,26,26,0.12)}
-    .product-img-wrap{aspect-ratio:4/5;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .product-img-wrap img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-    .product-img-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%}
-    .p-initial{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;color:var(--crimson);opacity:0.2}
-    .p-name-placeholder{font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-weight:600;color:var(--crimson);opacity:0.4;text-align:center;padding:0 16px;margin-top:8px}
-    .product-badge-wrap{position:absolute;top:12px;left:12px;display:flex;gap:6px;z-index:2}
-    .p-badge{padding:4px 11px;border-radius:999px;font-size:0.65rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
-    .badge-new{background:var(--crimson);color:#fff}
-    .badge-hot{background:var(--gold);color:#fff}
-    .badge-limited{background:#1a2a1a;color:#7dce7d}
-    .badge-sale{background:#ff4444;color:#fff}
-    .badge-bestseller{background:var(--ink);color:var(--cream)}
-    .product-info{padding:18px 20px}
-    .product-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.3}
-    .product-cat{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:500;margin-bottom:14px}
-    .product-footer{display:flex;justify-content:space-between;align-items:center;gap:8px}
-    .product-price{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--crimson)}
-    .wa-order-btn{background:#25D366;color:#fff;padding:9px 16px;border-radius:8px;font-size:0.75rem;font-weight:600;display:flex;align-items:center;gap:6px;transition:opacity .2s,transform .2s;white-space:nowrap;text-decoration:none}
-    .wa-order-btn:hover{opacity:0.88;transform:scale(1.03)}
-    .no-products{grid-column:1/-1;text-align:center;padding:60px;color:var(--muted)}
+    /* ABOUT STRIP */
+    .about-strip{background:var(--primary);padding:56px 24px}
+    .about-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+    .about-img-col{display:flex;align-items:center;justify-content:center}
+    .about-logo-circle{width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center}
+    .about-logo-circle img{width:160px;height:160px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.85}
+    .about-text h2{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:14px}
+    .about-text p{color:rgba(255,255,255,0.7);font-size:0.88rem;margin-bottom:12px;line-height:1.8}
+    .stats-row{display:flex;gap:32px;margin-top:24px;flex-wrap:wrap}
+    .stat-box{border-left:2px solid var(--gold);padding-left:14px}
+    .stat-n{display:block;font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--gold)}
+    .stat-l{font-size:0.65rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em}
 
-    /* ABOUT */
-    .about-section{background:var(--crimson-dark);padding:90px 60px}
-    .about-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-    .about-img-side{display:flex;align-items:center;justify-content:center}
-    .about-logo-display{width:280px;height:280px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center}
-    .about-logo-display img{width:200px;height:200px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.85}
-    .about-text-side .section-label{color:var(--gold)}
-    .about-text-side .section-title{color:var(--cream)}
-    .about-text-side p{color:rgba(242,237,228,0.7);font-size:0.95rem;margin-bottom:16px;font-weight:300;line-height:1.85}
-    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
-    .stat-item{border-top:1px solid rgba(201,168,76,0.4);padding-top:16px}
-    .stat-num{display:block;font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--gold)}
-    .stat-lbl{font-size:0.68rem;color:rgba(242,237,228,0.5);text-transform:uppercase;letter-spacing:0.1em;font-weight:500}
+    /* ORDER FORM */
+    .order-section{padding:56px 24px;background:var(--white);border-top:1px solid var(--border)}
+    .order-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.6fr;gap:64px;align-items:start}
+    .order-info h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+    .order-info p{color:var(--muted);font-size:0.85rem;margin-bottom:20px;line-height:1.7}
+    .info-item{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .info-icon{width:36px;height:36px;border-radius:8px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .info-icon svg{width:16px;height:16px;fill:var(--primary)}
+    .info-label{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:2px}
+    .info-val{font-size:0.85rem;font-weight:500;color:var(--ink)}
+    .social-row{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+    .soc-btn{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:6px;border:1.5px solid var(--border);font-size:0.75rem;font-weight:600;transition:all .2s;background:var(--white)}
+    .soc-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+    .soc-btn svg{width:14px;height:14px}
+    .soc-fb{color:#1877F2}.soc-ig{color:#E4405F}.soc-wa{color:#25D366}
 
-    /* CONTACT */
-    .contact-section{padding:90px 60px;max-width:1280px;margin:0 auto}
-    .contact-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
-    .contact-info-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
-    .contact-icon{width:40px;height:40px;border-radius:10px;background:var(--crimson);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .contact-icon svg{width:18px;height:18px;fill:#fff}
-    .contact-label{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:3px}
-    .contact-value{font-size:0.9rem;font-weight:500;color:var(--ink)}
-    .social-row{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
-    .social-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:0.78rem;font-weight:600;transition:transform .2s,opacity .2s;border:1.5px solid var(--border);background:var(--white);text-decoration:none}
-    .social-btn:hover{transform:translateY(-2px);opacity:0.9}
-    .social-btn svg{width:16px;height:16px}
-    .social-fb{color:#1877F2;border-color:#1877F220}
-    .social-ig{color:#E4405F;border-color:#E4405F20}
-    .social-wa{color:#25D366;border-color:#25D36620}
-    .contact-form{display:flex;flex-direction:column;gap:14px}
+    .order-form{display:flex;flex-direction:column;gap:14px}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .form-field{display:flex;flex-direction:column;gap:6px}
-    .form-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)}
-    .form-input{padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--white);color:var(--ink);font-size:0.88rem;transition:border-color .2s;font-family:inherit}
-    .form-input:focus{outline:none;border-color:var(--crimson)}
-    textarea.form-input{resize:vertical;min-height:110px}
-    .form-success{display:none;color:#25D366;font-size:0.82rem;padding:10px 0}
+    .form-group{display:flex;flex-direction:column;gap:5px}
+    .form-group.full{grid-column:1/-1}
+    .f-label{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)}
+    .f-input{padding:10px 13px;border:1.5px solid var(--border);border-radius:6px;background:var(--white);color:var(--ink);font:inherit;font-size:0.85rem;transition:border-color .2s}
+    .f-input:focus{outline:none;border-color:var(--primary)}
+    textarea.f-input{resize:vertical;min-height:90px}
+    .btn-wa-submit{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;padding:13px;border-radius:6px;font-size:0.85rem;font-weight:600;border:none;cursor:pointer;transition:opacity .2s;width:100%}
+    .btn-wa-submit:hover{opacity:.9}
+    .btn-wa-submit svg{width:16px;height:16px;fill:#fff}
+    .form-hint{font-size:0.7rem;color:var(--muted);text-align:center}
+
+    /* TRACKING */
+    .track-section{padding:48px 24px;background:var(--bg);border-top:1px solid var(--border)}
+    .track-inner{max-width:680px;margin:0 auto;text-align:center}
+    .track-inner h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+    .track-inner p{color:var(--muted);font-size:0.85rem;margin-bottom:24px}
+    .track-row{display:flex;gap:10px;max-width:480px;margin:0 auto 20px}
+    .track-input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:6px;font:inherit;font-size:0.85rem;color:var(--ink);background:var(--white)}
+    .track-input:focus{outline:none;border-color:var(--primary)}
+    .btn-track{background:var(--primary);color:#fff;padding:10px 20px;border-radius:6px;font-size:0.82rem;font-weight:600;border:none;cursor:pointer;white-space:nowrap;transition:background .2s}
+    .btn-track:hover{background:var(--primary-dark)}
+    .track-result{display:none;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:left;margin-top:4px}
+    .track-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+    .track-field-label{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:3px}
+    .track-field-val{font-size:0.85rem;font-weight:600;color:var(--ink)}
+    .track-steps{display:flex;justify-content:space-between;margin-top:20px;position:relative}
+    .track-steps::before{content:'';position:absolute;top:14px;left:14px;right:14px;height:2px;background:var(--border);z-index:0}
+    .track-step{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+    .step-dot{width:28px;height:28px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:0.75rem;transition:background .3s}
+    .step-dot.done{background:var(--primary);color:#fff}
+    .step-lbl{font-size:0.62rem;color:var(--muted);font-weight:500;text-align:center;max-width:60px}
+    .track-not-found{display:none;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px;color:var(--muted);font-size:0.85rem}
 
     /* FOOTER */
-    .footer{background:var(--crimson-dark);padding:40px 60px}
-    .footer-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
-    .footer-logo{display:flex;align-items:center;gap:10px;flex:1}
-    .footer-logo img{width:36px;height:36px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.7}
-    .footer-logo span{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--cream);opacity:0.7}
-    .footer-copy{font-size:0.75rem;color:rgba(242,237,228,0.4)}
-    .footer-links{display:flex;gap:20px}
-    .footer-links a{font-size:0.75rem;color:rgba(242,237,228,0.4);transition:color .2s}
-    .footer-links a:hover{color:var(--cream)}
+    .footer{background:var(--ink);padding:40px 24px 28px}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;margin-bottom:32px}
+    .footer-brand img{width:40px;height:40px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.7;margin-bottom:10px}
+    .footer-brand-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px}
+    .footer-brand p{font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.7}
+    .footer-col h4{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.5);margin-bottom:14px}
+    .footer-col a{display:block;font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:8px;transition:color .2s}
+    .footer-col a:hover{color:rgba(255,255,255,0.8)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .footer-copy{font-size:0.72rem;color:rgba(255,255,255,0.3)}
+    .footer-soc{display:flex;gap:10px}
+    .footer-soc a{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;transition:background .2s}
+    .footer-soc a:hover{background:rgba(255,255,255,0.12)}
+    .footer-soc svg{width:14px;height:14px;fill:rgba(255,255,255,0.5)}
 
     /* FLOAT WA */
-    .float-wa{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);z-index:150;transition:transform .2s;text-decoration:none}
-    .float-wa:hover{transform:scale(1.1)}
-    .float-wa svg{width:28px;height:28px;fill:#fff}
-
-    /* THEME EDITOR */
-    .theme-toggle{position:fixed;bottom:28px;left:28px;background:var(--crimson);color:var(--cream);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 16px rgba(123,26,26,0.3);z-index:150;cursor:pointer;border:none}
-    .theme-panel{
-      position:fixed;bottom:88px;left:28px;
-      background:#fff;border:1px solid var(--border);border-radius:16px;
-      padding:20px;width:260px;z-index:149;
-      box-shadow:0 8px 32px rgba(0,0,0,0.12);
-      display:none;
-    }
-    .theme-panel.open{display:block}
-    .tp-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--crimson);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-    .tp-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
-    .tp-label{font-size:0.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
-    .tp-color{width:36px;height:28px;border:1px solid var(--border);border-radius:6px;cursor:pointer;padding:2px}
-    .tp-input{flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:0.8rem;color:var(--ink)}
-    .tp-input:focus{outline:none;border-color:var(--crimson)}
-    .tp-btn{width:100%;padding:10px;background:var(--crimson);color:#fff;border-radius:8px;font-size:0.78rem;font-weight:600;border:none;cursor:pointer;margin-top:4px;transition:opacity .2s}
-    .tp-btn:hover{opacity:0.85}
-    .tp-btn-reset{background:var(--surface);color:var(--muted);border:1px solid var(--border);margin-top:6px}
+    .float-wa{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.35);z-index:150;transition:transform .2s}
+    .float-wa:hover{transform:scale(1.08)}
+    .float-wa svg{width:26px;height:26px;fill:#fff}
 
     /* RESPONSIVE */
     @media(max-width:900px){
-      .navbar{padding:0 24px}
       .nav-links{display:none}
       .nav-toggle{display:block}
-      .hero{grid-template-columns:1fr;min-height:auto}
-      .hero-left{padding:60px 24px 40px}
-      .hero-right{height:300px}
-      .hero-logo-big{width:100px;height:100px}
-      .section,.products-wrap,.contact-section{padding-left:24px;padding-right:24px}
-      .about-section{padding:60px 24px}
-      .footer{padding:32px 24px}
-      .collection-grid{grid-template-columns:1fr 1fr}
-      .about-inner{grid-template-columns:1fr;gap:40px}
-      .about-img-side{display:none}
-      .contact-inner{grid-template-columns:1fr;gap:40px}
+      .nav-search{max-width:220px}
+      .hero-overlay{padding:0 32px}
+      .hero-stats{left:32px;right:32px}
+      .coll-grid{grid-template-columns:1fr 1fr}
+      .about-inner{grid-template-columns:1fr;gap:32px}
+      .about-img-col{display:none}
+      .order-inner{grid-template-columns:1fr;gap:32px}
+      .footer-top{grid-template-columns:1fr 1fr}
     }
-    @media(max-width:560px){
-      .collection-grid{grid-template-columns:1fr}
+    @media(max-width:600px){
+      .hero-overlay{padding:0 20px}
+      .hero-stats{display:none}
+      .hero-title{font-size:2rem}
+      .coll-grid{grid-template-columns:1fr}
       .product-grid{grid-template-columns:1fr 1fr}
-      .hero-cta{flex-direction:column}
       .form-row{grid-template-columns:1fr}
-      .stats-row{grid-template-columns:1fr 1fr}
+      .footer-top{grid-template-columns:1fr}
+      .track-row{flex-direction:column}
     }
   </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <header class="navbar">
   <div class="nav-logo">
-    <img src="images/logo.png" alt="ShirTory Logo"/>
+    <img src="images/logo.png" alt="ShirTory"/>
     <span class="nav-logo-text">ShirTory</span>
+  </div>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    <input type="text" placeholder="Search products…" oninput="searchProducts(this.value)"/>
   </div>
   <nav class="nav-links">
     <a href="#home">Home</a>
-    <a href="#collections">Collections</a>
     <a href="#shop">Shop</a>
     <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+    <a href="#order">Order</a>
+    <a href="#track">Track Order</a>
   </nav>
-  <div class="nav-actions">
-    <a class="nav-wa-btn" id="navWaBtn" href="https://wa.me/8801540406490?text=Hi%20ShirTory!%20I%27d%20like%20to%20place%20an%20order." target="_blank">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Order Now
+  <div class="nav-right">
+    <a class="nav-wa" href="https://wa.me/8801540406490?text=Hi%20ShirTory!" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
     </a>
     <button class="nav-toggle" onclick="document.getElementById('mobileMenu').classList.toggle('open')">☰</button>
   </div>
@@ -260,278 +332,237 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#home" onclick="this.closest('.mobile-menu').classList.remove('open')">Home</a>
-  <a href="#collections" onclick="this.closest('.mobile-menu').classList.remove('open')">Collections</a>
   <a href="#shop" onclick="this.closest('.mobile-menu').classList.remove('open')">Shop</a>
   <a href="#about" onclick="this.closest('.mobile-menu').classList.remove('open')">About</a>
-  <a href="#contact" onclick="this.closest('.mobile-menu').classList.remove('open')">Contact</a>
+  <a href="#order" onclick="this.closest('.mobile-menu').classList.remove('open')">Order</a>
+  <a href="#track" onclick="this.closest('.mobile-menu').classList.remove('open')">Track Order</a>
 </div>
 
+<!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-left">
-    <p class="hero-eyebrow">Est. 2026 — Bangladesh</p>
-    <h1 class="hero-headline" id="heroHeadline">Your Style,<br/>Your Story.</h1>
-    <p class="hero-sub" id="heroSub">Premium clothing crafted for those who wear their personality. Made in Bangladesh, worn worldwide.</p>
-    <div class="hero-cta">
-      <a href="#shop" class="btn-primary">Shop Collection</a>
-      <a href="#about" class="btn-outline">Our Story</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <img class="hero-cover-img" src="images/cover.jpg" alt="ShirTory Collection"/>
-    <div class="hero-overlay">
-      <img class="hero-logo-big" src="images/logo.png" alt="ShirTory"/>
-      <p class="hero-tagline">Your Style, Your Story</p>
-      <div class="hero-badge-row">
-        <span class="hero-badge">Premium Quality</span>
-        <span class="hero-badge">Deshi Pride</span>
-        <span class="hero-badge">Est. 2026</span>
+  <img class="hero-img" src="images/cover.jpg" alt="ShirTory Collection"/>
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <span class="hero-eyebrow">New Collection — 2026</span>
+      <h1 class="hero-title">Your Style,<br/>Your Story.</h1>
+      <p class="hero-sub">Premium clothing crafted for those who wear their personality. Made in Bangladesh, delivered nationwide.</p>
+      <div class="hero-btns">
+        <a href="#shop" class="btn-hero-primary">Shop Now</a>
+        <a href="#order" class="btn-hero-secondary">Order on WhatsApp</a>
       </div>
     </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="hero-stat-num" id="stat1">100+</span><span class="hero-stat-label">Products Sold</span></div>
+    <div class="hero-stat"><span class="hero-stat-num" id="stat2">500+</span><span class="hero-stat-label">Happy Customers</span></div>
+    <div class="hero-stat"><span class="hero-stat-num" id="stat3">100%</span><span class="hero-stat-label">Deshi Made</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">⚡</span><span class="hero-stat-label">Fast Delivery</span></div>
   </div>
 </section>
 
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span class="marquee-item">ShirTory <span class="marquee-sep">✦</span> Your Style, Your Story <span class="marquee-sep">✦</span> Premium Clothing <span class="marquee-sep">✦</span> Made in Bangladesh <span class="marquee-sep">✦</span> Deshi Pride <span class="marquee-sep">✦</span> Est. 2026 <span class="marquee-sep">✦</span></span>
-    <span class="marquee-item">ShirTory <span class="marquee-sep">✦</span> Your Style, Your Story <span class="marquee-sep">✦</span> Premium Clothing <span class="marquee-sep">✦</span> Made in Bangladesh <span class="marquee-sep">✦</span> Deshi Pride <span class="marquee-sep">✦</span> Est. 2026 <span class="marquee-sep">✦</span></span>
+<!-- PROMO -->
+<div class="promo-bar">
+  <div class="promo-track">
+    <span class="promo-item">ShirTory <span class="promo-sep">✦</span> Free Delivery on Orders Above ৳1500 <span class="promo-sep">✦</span> New Arrivals Every Week <span class="promo-sep">✦</span> WhatsApp Order Available <span class="promo-sep">✦</span> Made in Bangladesh <span class="promo-sep">✦</span></span>
+    <span class="promo-item">ShirTory <span class="promo-sep">✦</span> Free Delivery on Orders Above ৳1500 <span class="promo-sep">✦</span> New Arrivals Every Week <span class="promo-sep">✦</span> WhatsApp Order Available <span class="promo-sep">✦</span> Made in Bangladesh <span class="promo-sep">✦</span></span>
   </div>
 </div>
 
-<div class="section" id="collections">
-  <p class="section-label">Browse by Category</p>
-  <h2 class="section-title">Collections</h2>
-  <p class="section-sub">Find your vibe</p>
-  <div class="collection-grid">
-    <div class="collection-card" onclick="filterTo('tops')">
-      <div class="collection-bg collection-card-1"></div>
-      <div class="collection-overlay">
-        <div class="collection-name">Tops & Tees</div>
-        <div class="collection-cta">Browse Collection →</div>
+<!-- COLLECTIONS -->
+<div class="section">
+  <div class="sec-hd">
+    <h2 class="sec-title">Shop by Category</h2>
+    <a href="#shop" class="sec-link">View All →</a>
+  </div>
+  <div class="coll-grid">
+    <div class="coll-card" onclick="filterTo('tops')">
+      <div class="coll-bg coll-c1"></div>
+      <div class="coll-overlay">
+        <div class="coll-name">Tops & Tees</div>
+        <div class="coll-sub">Graphic tees, oversized, classic</div>
       </div>
     </div>
-    <div class="collection-card" onclick="filterTo('bottoms')">
-      <div class="collection-bg collection-card-2"></div>
-      <div class="collection-overlay">
-        <div class="collection-name">Bottoms</div>
-        <div class="collection-cta">Browse Collection →</div>
+    <div class="coll-card" onclick="filterTo('bottoms')">
+      <div class="coll-bg coll-c2"></div>
+      <div class="coll-overlay">
+        <div class="coll-name">Bottoms</div>
+        <div class="coll-sub">Pants, joggers, cargo</div>
       </div>
     </div>
-    <div class="collection-card" onclick="filterTo('accessories')">
-      <div class="collection-bg collection-card-3"></div>
-      <div class="collection-overlay">
-        <div class="collection-name">Accessories</div>
-        <div class="collection-cta">Browse Collection →</div>
+    <div class="coll-card" onclick="filterTo('accessories')">
+      <div class="coll-bg coll-c3"></div>
+      <div class="coll-overlay">
+        <div class="coll-name">Accessories</div>
+        <div class="coll-sub">Caps, bags, and more</div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="products-wrap" id="shop">
-  <div class="products-hd">
-    <div>
-      <p class="section-label">Our Products</p>
-      <h2 class="section-title">Shop All</h2>
-    </div>
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
-      <button class="filter-btn" onclick="filterProducts('tops',this)">Tops</button>
-      <button class="filter-btn" onclick="filterProducts('bottoms',this)">Bottoms</button>
-      <button class="filter-btn" onclick="filterProducts('outerwear',this)">Outerwear</button>
-      <button class="filter-btn" onclick="filterProducts('accessories',this)">Accessories</button>
-    </div>
+<!-- PRODUCTS -->
+<div class="section" id="shop" style="padding-top:0">
+  <div class="sec-hd">
+    <h2 class="sec-title">All Products</h2>
+  </div>
+  <div class="cat-row">
+    <div class="cat-pill active" onclick="filterProducts('all',this)">All</div>
+    <div class="cat-pill" onclick="filterProducts('tops',this)">Tops</div>
+    <div class="cat-pill" onclick="filterProducts('bottoms',this)">Bottoms</div>
+    <div class="cat-pill" onclick="filterProducts('outerwear',this)">Outerwear</div>
+    <div class="cat-pill" onclick="filterProducts('accessories',this)">Accessories</div>
   </div>
   <div class="product-grid" id="productGrid"></div>
 </div>
 
-<section class="about-section" id="about">
+<!-- ABOUT -->
+<section class="about-strip" id="about">
   <div class="about-inner">
-    <div class="about-img-side">
-      <div class="about-logo-display">
+    <div class="about-img-col">
+      <div class="about-logo-circle">
         <img src="images/logo.png" alt="ShirTory"/>
       </div>
     </div>
-    <div class="about-text-side">
-      <p class="section-label">Our Story</p>
-      <h2 class="section-title" id="aboutTitle">About ShirTory</h2>
-      <p id="aboutP1">We started ShirTory because we believe your clothing should say something. Every piece we make carries a story — crafted with quality, priced honestly, designed to be worn with pride.</p>
+    <div class="about-text">
+      <h2 id="aboutTitle">About ShirTory</h2>
+      <p id="aboutP1">We started ShirTory because we believe your clothing should say something. Every piece carries a story — crafted with quality, priced honestly, designed to be worn with pride.</p>
       <p id="aboutP2">Based in Mirpur, Dhaka. Delivering across Bangladesh & worldwide.</p>
       <div class="stats-row">
-        <div class="stat-item"><span class="stat-num" id="stat1">100+</span><span class="stat-lbl">Products Sold</span></div>
-        <div class="stat-item"><span class="stat-num" id="stat2">500+</span><span class="stat-lbl">Customers</span></div>
-        <div class="stat-item"><span class="stat-num" id="stat3">100%</span><span class="stat-lbl">Deshi Made</span></div>
+        <div class="stat-box"><span class="stat-n" id="hstat1">100+</span><span class="stat-l">Products Sold</span></div>
+        <div class="stat-box"><span class="stat-n" id="hstat2">500+</span><span class="stat-l">Customers</span></div>
+        <div class="stat-box"><span class="stat-n" id="hstat3">100%</span><span class="stat-l">Deshi Made</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="contact-section" id="contact">
-  <p class="section-label">Reach Us</p>
-  <h2 class="section-title">Get in Touch</h2>
-  <p class="section-sub">We'd love to hear from you</p>
-  <div class="contact-inner">
-    <div>
-      <div class="contact-info-item">
-        <div class="contact-icon">
-          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </div>
-        <div>
-          <div class="contact-label">WhatsApp</div>
-          <div class="contact-value">+880 1540-406490</div>
-        </div>
+<!-- ORDER FORM -->
+<section class="order-section" id="order">
+  <div class="order-inner">
+    <div class="order-info">
+      <h2>Place Your Order</h2>
+      <p>Fill in the form and we'll open WhatsApp with your order details ready to send!</p>
+      <div class="info-item">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+        <div><div class="info-label">WhatsApp</div><div class="info-val">+880 1540-406490</div></div>
       </div>
-      <div class="contact-info-item">
-        <div class="contact-icon">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        </div>
-        <div>
-          <div class="contact-label">Email</div>
-          <div class="contact-value">hello@shirtory.com</div>
-        </div>
+      <div class="info-item">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+        <div><div class="info-label">Email</div><div class="info-val">shirtory1215@gmail.com</div></div>
       </div>
-      <div class="contact-info-item">
-        <div class="contact-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-        </div>
-        <div>
-          <div class="contact-label">Address</div>
-          <div class="contact-value">Mirpur, Dhaka, Bangladesh</div>
-        </div>
+      <div class="info-item">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div><div class="info-label">Address</div><div class="info-val">Mirpur, Dhaka, Bangladesh</div></div>
       </div>
       <div class="social-row">
-        <a class="social-btn social-fb" href="https://www.facebook.com/profile.php?id=61588838799127" target="_blank">
+        <a class="soc-btn soc-fb" href="https://www.facebook.com/profile.php?id=61588838799127" target="_blank">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           Facebook
         </a>
-        <a class="social-btn social-ig" href="https://www.instagram.com/shirtory_clothing/" target="_blank">
+        <a class="soc-btn soc-ig" href="https://www.instagram.com/shirtory_clothing/" target="_blank">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           Instagram
         </a>
-        <a class="social-btn social-wa" href="https://wa.me/8801540406490?text=Hi%20ShirTory!" target="_blank">
+        <a class="soc-btn soc-wa" href="https://wa.me/8801540406490" target="_blank">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp
         </a>
       </div>
     </div>
-    <form class="contact-form" onsubmit="sendToWhatsApp(event)">
-      <div class="form-row">
-        <div class="form-field"><label class="form-label">Your Name *</label><input class="form-input" id="cf_name" type="text" placeholder="Shafi" required/></div>
-        <div class="form-field"><label class="form-label">Phone *</label><input class="form-input" id="cf_phone" type="tel" placeholder="+880 1XXX-XXXXXX" required/></div>
-      </div>
-      <div class="form-field"><label class="form-label">Product / Item *</label><input class="form-input" id="cf_product" type="text" placeholder="যেমন: Classic Logo Tee — Size M" required/></div>
-      <div class="form-field"><label class="form-label">Delivery Address *</label><input class="form-input" id="cf_address" type="text" placeholder="Mirpur-1, Dhaka" required/></div>
-      <div class="form-field"><label class="form-label">Extra Note (optional)</label><textarea class="form-input" id="cf_note" placeholder="কোনো বিশেষ কথা থাকলে লিখুন…" rows="3"></textarea></div>
-      <button type="submit" class="btn-primary" style="background:#25D366;justify-content:center">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp এ Order করুন
-      </button>
-      <p style="font-size:0.72rem;color:var(--muted);text-align:center">Submit করলে WhatsApp খুলবে — সেখানে Send করুন ✅</p>
-    </form>
-  </div>
-</section>
-
-<!-- ORDER TRACKING -->
-<section style="background:var(--surface);padding:70px 60px;border-top:1px solid var(--border)">
-  <div style="max-width:700px;margin:0 auto;text-align:center">
-    <p class="section-label" style="justify-content:center">Track Your Order</p>
-    <h2 class="section-title" style="text-align:center;margin-bottom:12px">অর্ডার ট্র্যাক করুন</h2>
-    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:32px">আপনার Order ID দিয়ে অর্ডারের অবস্থা জানুন</p>
-    <div style="display:flex;gap:12px;max-width:480px;margin:0 auto 24px">
-      <input class="form-input" id="trackInput" type="text" placeholder="Order ID — যেমন: SHT-2026-0001" style="flex:1"/>
-      <button class="btn-primary" onclick="trackOrder()" style="white-space:nowrap">Track →</button>
-    </div>
-    <div id="trackResult" style="display:none;background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;text-align:left">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-        <div>
-          <div style="font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Order ID</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--crimson)" id="tr_id">—</div>
+    <div>
+      <div class="order-form">
+        <div class="form-row">
+          <div class="form-group"><label class="f-label">Your Name *</label><input class="f-input" id="cf_name" placeholder="Shafi" required/></div>
+          <div class="form-group"><label class="f-label">Phone *</label><input class="f-input" id="cf_phone" placeholder="+880 1XXX-XXXXXX" required/></div>
         </div>
-        <span id="tr_badge" style="padding:6px 16px;border-radius:999px;font-size:0.75rem;font-weight:700;background:#fff3cd;color:#856404">Pending</span>
+        <div class="form-group full"><label class="f-label">Product / Item *</label><input class="f-input" id="cf_product" placeholder="যেমন: Classic Logo Tee — Size M, Color Black" required/></div>
+        <div class="form-group full"><label class="f-label">Delivery Address *</label><input class="f-input" id="cf_address" placeholder="Mirpur-1, Dhaka" required/></div>
+        <div class="form-group full"><label class="f-label">Extra Note (optional)</label><textarea class="f-input" id="cf_note" placeholder="কোনো বিশেষ কথা থাকলে লিখুন…"></textarea></div>
+        <button class="btn-wa-submit" onclick="sendToWhatsApp()">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp এ Order করুন
+        </button>
+        <p class="form-hint">Submit করলে WhatsApp খুলবে — সেখানে Send করুন ✅</p>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-        <div><div style="font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Customer</div><div style="font-weight:600;font-size:0.9rem" id="tr_name">—</div></div>
-        <div><div style="font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Product</div><div style="font-weight:600;font-size:0.9rem" id="tr_product">—</div></div>
-        <div><div style="font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Date</div><div style="font-weight:600;font-size:0.9rem" id="tr_date">—</div></div>
-        <div><div style="font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Amount</div><div style="font-weight:600;font-size:0.9rem;color:var(--crimson)" id="tr_amount">—</div></div>
-      </div>
-      <!-- Progress -->
-      <div style="margin-top:8px">
-        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-          <span style="font-size:0.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Delivery Progress</span>
-          <span style="font-size:0.7rem;color:var(--muted)" id="tr_pct">0%</span>
-        </div>
-        <div style="background:var(--cream-dark);border-radius:999px;height:6px;overflow:hidden">
-          <div id="tr_bar" style="height:100%;background:var(--crimson);border-radius:999px;transition:width .6s;width:0%"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:10px">
-          <span id="s1" style="font-size:0.65rem;color:var(--muted)">📦 Received</span>
-          <span id="s2" style="font-size:0.65rem;color:var(--muted)">✅ Confirmed</span>
-          <span id="s3" style="font-size:0.65rem;color:var(--muted)">🚚 Shipped</span>
-          <span id="s4" style="font-size:0.65rem;color:var(--muted)">🏠 Delivered</span>
-        </div>
-      </div>
-    </div>
-    <div id="trackNotFound" style="display:none;color:var(--muted);font-size:0.88rem;padding:16px;background:#fff;border:1px solid var(--border);border-radius:12px">
-      ❌ Order ID পাওয়া যায়নি। সঠিক ID দিন অথবা <a href="https://wa.me/8801540406490" target="_blank" style="color:var(--crimson);font-weight:600">WhatsApp এ জিজ্ঞেস করুন</a>।
     </div>
   </div>
 </section>
 
+<!-- TRACKING -->
+<section class="track-section" id="track">
+  <div class="track-inner">
+    <h2>Track Your Order</h2>
+    <p>আপনার Order ID দিয়ে অর্ডারের অবস্থা জানুন</p>
+    <div class="track-row">
+      <input class="track-input" id="trackInput" placeholder="Order ID — যেমন: SHT-2026-0001"/>
+      <button class="btn-track" onclick="trackOrder()">Track →</button>
+    </div>
+    <div class="track-result" id="trackResult">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div><div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">Order ID</div><div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--primary)" id="tr_id">—</div></div>
+        <span id="tr_badge" style="padding:5px 14px;border-radius:4px;font-size:0.72rem;font-weight:700">—</span>
+      </div>
+      <div class="track-grid">
+        <div><div class="track-field-label">Customer</div><div class="track-field-val" id="tr_name">—</div></div>
+        <div><div class="track-field-label">Product</div><div class="track-field-val" id="tr_product">—</div></div>
+        <div><div class="track-field-label">Date</div><div class="track-field-val" id="tr_date">—</div></div>
+        <div><div class="track-field-label">Amount</div><div class="track-field-val" id="tr_amount">—</div></div>
+      </div>
+      <div style="background:var(--border);border-radius:999px;height:5px;overflow:hidden;margin-top:16px">
+        <div id="tr_bar" style="height:100%;background:var(--primary);border-radius:999px;transition:width .6s;width:0%"></div>
+      </div>
+      <div class="track-steps" style="margin-top:12px">
+        <div class="track-step"><div class="step-dot" id="s1">📦</div><div class="step-lbl">Received</div></div>
+        <div class="track-step"><div class="step-dot" id="s2">✅</div><div class="step-lbl">Confirmed</div></div>
+        <div class="track-step"><div class="step-dot" id="s3">🚚</div><div class="step-lbl">Shipped</div></div>
+        <div class="track-step"><div class="step-dot" id="s4">🏠</div><div class="step-lbl">Delivered</div></div>
+      </div>
+    </div>
+    <div class="track-not-found" id="trackNotFound">❌ Order ID পাওয়া যায়নি। সঠিক ID দিন অথবা <a href="https://wa.me/8801540406490" target="_blank" style="color:var(--primary);font-weight:600">WhatsApp এ জিজ্ঞেস করুন →</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-logo">
-      <img src="images/logo.png" alt="ShirTory"/>
-      <span>ShirTory</span>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="ShirTory"/>
+        <div class="footer-brand-name">ShirTory</div>
+        <p>Premium clothing brand from Dhaka, Bangladesh. Your Style, Your Story.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#shop" onclick="filterProducts('tops')">Tops & Tees</a>
+        <a href="#shop" onclick="filterProducts('bottoms')">Bottoms</a>
+        <a href="#shop" onclick="filterProducts('outerwear')">Outerwear</a>
+        <a href="#shop" onclick="filterProducts('accessories')">Accessories</a>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="#order">Place Order</a>
+        <a href="#track">Track Order</a>
+        <a href="https://wa.me/8801540406490" target="_blank">WhatsApp Support</a>
+        <a href="#about">About Us</a>
+      </div>
     </div>
-    <p class="footer-copy">© 2026 ShirTory. All rights reserved.</p>
-    <nav class="footer-links">
-      <a href="#">Privacy</a>
-      <a href="#">Shipping</a>
-      <a href="#">Returns</a>
-    </nav>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 ShirTory. All rights reserved.</p>
+      <div class="footer-soc">
+        <a href="https://www.facebook.com/profile.php?id=61588838799127" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="https://www.instagram.com/shirtory_clothing/" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+        <a href="https://wa.me/8801540406490" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      </div>
+    </div>
   </div>
 </footer>
 
-<!-- Floating WhatsApp -->
-<a class="float-wa" href="https://wa.me/8801540406490?text=Hi%20ShirTory!%20I%27d%20like%20to%20place%20an%20order." target="_blank">
+<a class="float-wa" href="https://wa.me/8801540406490?text=Hi%20ShirTory!" target="_blank">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- Theme Editor -->
-<button class="theme-toggle" onclick="document.getElementById('themePanel').classList.toggle('open')" title="Customize Theme">🎨</button>
-<div class="theme-panel" id="themePanel">
-  <div class="tp-title">🎨 Theme Editor</div>
-  <div class="tp-row"><span class="tp-label">Brand Color</span><input type="color" class="tp-color" id="tp_crimson" value="#7B1A1A" oninput="liveTheme()"/></div>
-  <div class="tp-row"><span class="tp-label">Background</span><input type="color" class="tp-color" id="tp_cream" value="#F2EDE4" oninput="liveTheme()"/></div>
-  <div class="tp-row"><span class="tp-label">Gold Accent</span><input type="color" class="tp-color" id="tp_gold" value="#C9A84C" oninput="liveTheme()"/></div>
-  <div class="tp-row"><span class="tp-label">Hero Text</span><input type="text" class="tp-input" id="tp_hero" placeholder="Your Style, Your Story." oninput="liveText()"/></div>
-  <div class="tp-row"><span class="tp-label">Sub Text</span><input type="text" class="tp-input" id="tp_sub" placeholder="Premium clothing…" oninput="liveText()"/></div>
-  <div class="tp-row"><span class="tp-label">Body Font</span>
-    <select class="tp-input" id="tp_font" onchange="liveFont()" style="font-size:0.75rem">
-      <option value="'DM Sans',sans-serif">DM Sans (Default)</option>
-      <option value="'Inter',sans-serif">Inter</option>
-      <option value="'Poppins',sans-serif">Poppins</option>
-      <option value="'Raleway',sans-serif">Raleway</option>
-      <option value="'Montserrat',sans-serif">Montserrat</option>
-      <option value="'Nunito',sans-serif">Nunito</option>
-    </select>
-  </div>
-  <div class="tp-row"><span class="tp-label">Display Font</span>
-    <select class="tp-input" id="tp_dfont" onchange="liveFont()" style="font-size:0.75rem">
-      <option value="'Cormorant Garamond',serif">Cormorant (Default)</option>
-      <option value="'Playfair Display',serif">Playfair Display</option>
-      <option value="'Lora',serif">Lora</option>
-      <option value="'Merriweather',serif">Merriweather</option>
-      <option value="Georgia,serif">Georgia</option>
-    </select>
-  </div>
-  <button class="tp-btn" onclick="saveTheme()">💾 Save Theme</button>
-  <button class="tp-btn tp-btn-reset" onclick="resetTheme()">↺ Reset</button>
-</div>
-
 <script>
-const WA_NUMBER = '8801540406490';
-
-const DEFAULT_PRODUCTS = [
+const WA='8801540406490';
+const DEFAULT_PRODUCTS=[
   {id:1,name:"Classic Logo Tee",price:550,category:"tops",color:"#7B1A1A",badge:"Bestseller",image:""},
   {id:2,name:"Deshi Pride Graphic Tee",price:650,category:"tops",color:"#457b9d",badge:"New",image:""},
   {id:3,name:"Oversized Drop Tee",price:700,category:"tops",color:"#2d6a4f",badge:"",image:""},
@@ -541,178 +572,84 @@ const DEFAULT_PRODUCTS = [
   {id:7,name:"Canvas Tote Bag",price:400,category:"accessories",color:"#a8795d",badge:"",image:""},
   {id:8,name:"Embroidered Cap",price:500,category:"accessories",color:"#333",badge:"New",image:""},
 ];
+const BADGE_CLS={New:'badge-new',Hot:'badge-hot','Hot 🔥':'badge-hot',Limited:'badge-limited',Sale:'badge-sale',Bestseller:'badge-bestseller'};
+function getProducts(){return JSON.parse(localStorage.getItem('shirtory_products')||JSON.stringify(DEFAULT_PRODUCTS));}
+function getSettings(){return JSON.parse(localStorage.getItem('shirtory_settings')||'{}');}
 
-function getProducts(){ return JSON.parse(localStorage.getItem('shirtory_products')||JSON.stringify(DEFAULT_PRODUCTS)); }
-function getSettings(){ return JSON.parse(localStorage.getItem('shirtory_settings')||'{}'); }
-
-const BADGE_CLASS={New:'badge-new','Hot':'badge-hot','Hot 🔥':'badge-hot',Limited:'badge-limited',Sale:'badge-sale',Bestseller:'badge-bestseller'};
-
-function renderProducts(filter='all'){
-  const products = getProducts();
-  const s = getSettings();
-  const cur = s.currency||'৳';
-  const grid = document.getElementById('productGrid');
-  const list = filter==='all' ? products : products.filter(p=>p.category===filter);
-  if(!list.length){ grid.innerHTML='<div class="no-products">No products yet.</div>'; return; }
-  grid.innerHTML = list.map(p=>{
-    const msg = encodeURIComponent('Hi ShirTory! I want to order:\n*'+p.name+'* ('+cur+p.price+')\nPlease confirm availability & delivery details.');
-    const waHref = 'https://wa.me/'+WA_NUMBER+'?text='+msg;
-    const badgeCls = p.badge?(BADGE_CLASS[p.badge]||'badge-new'):'';
-    const badgeHTML = p.badge?'<div class="product-badge-wrap"><span class="p-badge '+badgeCls+'">'+p.badge+'</span></div>':'';
-    const imgHTML = p.image
-      ? '<img src="'+p.image+'" alt="'+p.name+'" onerror="this.style.display=\'none\'">'
-      : '<div class="product-img-placeholder"><span class="p-initial">'+p.name[0]+'</span><span class="p-name-placeholder">'+p.name+'</span></div>';
-    return '<div class="product-card"><div class="product-img-wrap" style="background:'+p.color+'18">'+badgeHTML+imgHTML+'</div><div class="product-info"><div class="product-name">'+p.name+'</div><div class="product-cat">'+p.category+'</div><div class="product-footer"><span class="product-price">'+cur+p.price+'</span><a class="wa-order-btn" href="'+waHref+'" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Order</a></div></div></div>';
+function renderProducts(filter='all',query=''){
+  const s=getSettings();const cur=s.currency||'৳';
+  const grid=document.getElementById('productGrid');
+  let list=getProducts();
+  if(filter!=='all')list=list.filter(p=>p.category===filter);
+  if(query)list=list.filter(p=>p.name.toLowerCase().includes(query.toLowerCase())||p.category.includes(query.toLowerCase()));
+  if(!list.length){grid.innerHTML='<div class="no-products">No products found.</div>';return;}
+  grid.innerHTML=list.map(p=>{
+    const msg=encodeURIComponent('Hi ShirTory! I want to order:\n*'+p.name+'* ('+cur+p.price+')\nPlease confirm availability & delivery details.');
+    const waHref='https://wa.me/'+WA+'?text='+msg;
+    const bc=p.badge?(BADGE_CLS[p.badge]||'badge-new'):'';
+    const bHTML=p.badge?'<div class="badge-wrap"><span class="badge '+bc+'">'+p.badge+'</span></div>':'';
+    const iHTML=p.image?'<img src="'+p.image+'" alt="'+p.name+'" onerror="this.style.display=\'none\'">'
+      :'<div class="product-placeholder"><span class="product-initial">'+p.name[0]+'</span><span class="product-initial-name">'+p.name+'</span></div>';
+    return '<div class="product-card"><div class="product-img-wrap" style="background:'+p.color+'12">'+bHTML+iHTML+'</div><div class="product-body"><div class="product-name">'+p.name+'</div><div class="product-cat">'+p.category+'</div><div class="product-foot"><span class="product-price">'+cur+p.price+'</span><a class="wa-btn" href="'+waHref+'" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Order</a></div></div></div>';
   }).join('');
 }
 
-function filterProducts(filter,btn){
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  renderProducts(filter);
+function filterProducts(f,el){
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
+  if(el)el.classList.add('active');
+  renderProducts(f);
 }
-
 function filterTo(cat){
   document.getElementById('shop').scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>{
-    const btn=document.querySelector('.filter-btn[onclick*="\''+cat+'\'"]');
-    filterProducts(cat,btn);
-  },400);
+  setTimeout(()=>{const el=document.querySelector('.cat-pill[onclick*="\''+cat+'\'"]');filterProducts(cat,el);},400);
 }
+function searchProducts(q){renderProducts('all',q);}
 
-function sendToWhatsApp(e){
-  e.preventDefault();
-  const name = document.getElementById('cf_name').value;
-  const phone = document.getElementById('cf_phone').value;
-  const product = document.getElementById('cf_product').value;
-  const address = document.getElementById('cf_address').value;
-  const note = document.getElementById('cf_note').value;
-  const orderId = 'SHT-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);
-  const msg = encodeURIComponent(
-    '🛍️ *নতুন অর্ডার — ShirTory*\n\n'+
-    '📋 Order ID: *'+orderId+'*\n'+
-    '👤 নাম: '+name+'\n'+
-    '📞 ফোন: '+phone+'\n'+
-    '👕 Product: '+product+'\n'+
-    '📍 Address: '+address+'\n'+
-    (note?'📝 Note: '+note+'\n':'')+
-    '\n✅ Please confirm this order!'
-  );
-  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');
+function sendToWhatsApp(){
+  const name=document.getElementById('cf_name').value.trim();
+  const phone=document.getElementById('cf_phone').value.trim();
+  const product=document.getElementById('cf_product').value.trim();
+  const address=document.getElementById('cf_address').value.trim();
+  const note=document.getElementById('cf_note').value.trim();
+  if(!name||!phone||!product||!address){alert('সব required field পূরণ করুন!');return;}
+  const orderId='SHT-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);
+  const msg=encodeURIComponent('🛍️ *নতুন অর্ডার — ShirTory*\n\n📋 Order ID: *'+orderId+'*\n👤 নাম: '+name+'\n📞 ফোন: '+phone+'\n👕 Product: '+product+'\n📍 Address: '+address+(note?'\n📝 Note: '+note:'')+'\n\n✅ Please confirm!');
+  window.open('https://wa.me/'+WA+'?text='+msg,'_blank');
 }
 
 function trackOrder(){
-  const id = document.getElementById('trackInput').value.trim().toUpperCase();
-  const orders = JSON.parse(localStorage.getItem('shirtory_orders')||'[]');
-  const found = orders.find(o=>o.id.toUpperCase()===id);
+  const id=document.getElementById('trackInput').value.trim().toUpperCase();
+  const orders=JSON.parse(localStorage.getItem('shirtory_orders')||'[]');
+  const found=orders.find(o=>o.id.toUpperCase()===id);
   document.getElementById('trackResult').style.display='none';
   document.getElementById('trackNotFound').style.display='none';
-  if(!found){ document.getElementById('trackNotFound').style.display='block'; return; }
+  if(!found){document.getElementById('trackNotFound').style.display='block';return;}
   document.getElementById('tr_id').textContent=found.id;
   document.getElementById('tr_name').textContent=found.name||'—';
   document.getElementById('tr_product').textContent=found.product||'—';
   document.getElementById('tr_date').textContent=found.date||'—';
-  document.getElementById('tr_amount').textContent=(found.amount?'৳'+found.amount:'—');
-  const statusMap={pending:{pct:15,label:'Pending',bg:'#fff3cd',col:'#856404'},confirmed:{pct:40,label:'Confirmed ✅',bg:'#d1e7dd',col:'#0a3622'},shipped:{pct:75,label:'Shipped 🚚',bg:'#cfe2ff',col:'#084298'},delivered:{pct:100,label:'Delivered 🏠',bg:'#d1e7dd',col:'#0a3622'}};
-  const st=statusMap[found.status||'pending'];
-  document.getElementById('tr_badge').textContent=st.label;
-  document.getElementById('tr_badge').style.background=st.bg;
-  document.getElementById('tr_badge').style.color=st.col;
+  document.getElementById('tr_amount').textContent=found.amount?'৳'+found.amount:'—';
+  const sm={pending:{pct:15,label:'Pending',bg:'#fff3cd',col:'#856404'},confirmed:{pct:40,label:'Confirmed ✅',bg:'#d1e7dd',col:'#0a3622'},shipped:{pct:75,label:'Shipped 🚚',bg:'#cfe2ff',col:'#084298'},delivered:{pct:100,label:'Delivered 🏠',bg:'#d1e7dd',col:'#0a3622'}};
+  const st=sm[found.status||'pending'];
+  const badge=document.getElementById('tr_badge');
+  badge.textContent=st.label;badge.style.background=st.bg;badge.style.color=st.col;
   document.getElementById('tr_bar').style.width=st.pct+'%';
-  document.getElementById('tr_pct').textContent=st.pct+'%';
-  ['s1','s2','s3','s4'].forEach((id,i)=>{
-    document.getElementById(id).style.color=st.pct>=[15,40,75,100][i]?'var(--crimson)':'var(--muted)';
-    document.getElementById(id).style.fontWeight=st.pct>=[15,40,75,100][i]?'700':'400';
+  [['s1',15],['s2',40],['s3',75],['s4',100]].forEach(([id,v])=>{
+    document.getElementById(id).classList.toggle('done',st.pct>=v);
   });
   document.getElementById('trackResult').style.display='block';
 }
 
-function handleContact(e){ e.preventDefault(); }
-
-// THEME EDITOR
-function liveFont(){
-  const f=document.getElementById('tp_font').value;
-  const df=document.getElementById('tp_dfont').value;
-  document.body.style.fontFamily=f;
-  document.querySelectorAll('.hero-headline,.section-title,.nav-logo-text,.product-name,.product-price,.hero-tagline,.footer-logo span,.about-text-side .section-title,.collection-name,.stat-num').forEach(el=>el.style.fontFamily=df);
-  // Load Google Font if needed
-  const fontName=f.replace(/'/g,'').split(',')[0];
-  const dfontName=df.replace(/'/g,'').split(',')[0];
-  [fontName,dfontName].forEach(fn=>{
-    if(!['Georgia','sans-serif','serif'].includes(fn)){
-      const id='gf-'+fn.replace(/ /g,'-');
-      if(!document.getElementById(id)){
-        const l=document.createElement('link');
-        l.id=id;l.rel='stylesheet';
-        l.href='https://fonts.googleapis.com/css2?family='+fn.replace(/ /g,'+')+'&display=swap';
-        document.head.appendChild(l);
-      }
-    }
-  });
-}
-  const r=document.documentElement.style;
-  const c=document.getElementById('tp_crimson').value;
-  const bg=document.getElementById('tp_cream').value;
-  const g=document.getElementById('tp_gold').value;
-  r.setProperty('--crimson',c);
-  r.setProperty('--crimson-light',c);
-  r.setProperty('--crimson-dark',c);
-  r.setProperty('--cream',bg);
-  r.setProperty('--gold',g);
-}
-function liveText(){
-  const h=document.getElementById('tp_hero').value;
-  const s=document.getElementById('tp_sub').value;
-  if(h) document.getElementById('heroHeadline').textContent=h;
-  if(s) document.getElementById('heroSub').textContent=s;
-}
-function saveTheme(){
+function applySettings(){
   const s=getSettings();
-  s.themeColor=document.getElementById('tp_crimson').value;
-  s.themeBg=document.getElementById('tp_cream').value;
-  s.themeGold=document.getElementById('tp_gold').value;
-  s.bodyFont=document.getElementById('tp_font').value;
-  s.displayFont=document.getElementById('tp_dfont').value;
-  const h=document.getElementById('tp_hero').value;
-  const sub=document.getElementById('tp_sub').value;
-  if(h)s.heroHeadline=h;
-  if(sub)s.heroSub=sub;
-  localStorage.setItem('shirtory_settings',JSON.stringify(s));
-  alert('✅ Theme saved!');
-}
-function resetTheme(){
-  const r=document.documentElement.style;
-  r.setProperty('--crimson','#7B1A1A');
-  r.setProperty('--crimson-light','#9B2525');
-  r.setProperty('--crimson-dark','#5a1212');
-  r.setProperty('--cream','#F2EDE4');
-  r.setProperty('--gold','#C9A84C');
-  document.getElementById('tp_crimson').value='#7B1A1A';
-  document.getElementById('tp_cream').value='#F2EDE4';
-  document.getElementById('tp_gold').value='#C9A84C';
-}
-function applyStoredTheme(){
-  const s=getSettings();
-  if(s.themeColor){document.getElementById('tp_crimson').value=s.themeColor;document.documentElement.style.setProperty('--crimson',s.themeColor);document.documentElement.style.setProperty('--crimson-light',s.themeColor);document.documentElement.style.setProperty('--crimson-dark',s.themeColor);}
-  if(s.themeBg){document.getElementById('tp_cream').value=s.themeBg;document.documentElement.style.setProperty('--cream',s.themeBg);}
-  if(s.themeGold){document.getElementById('tp_gold').value=s.themeGold;document.documentElement.style.setProperty('--gold',s.themeGold);}
-  if(s.bodyFont){document.getElementById('tp_font').value=s.bodyFont;}
-  if(s.displayFont){document.getElementById('tp_dfont').value=s.displayFont;}
-  if(s.bodyFont||s.displayFont) liveFont();
-  if(s.heroHeadline){document.getElementById('heroHeadline').textContent=s.heroHeadline;document.getElementById('tp_hero').value=s.heroHeadline;}
-  if(s.heroSub){document.getElementById('heroSub').textContent=s.heroSub;document.getElementById('tp_sub').value=s.heroSub;}
-  if(s.aboutP1) document.getElementById('aboutP1').textContent=s.aboutP1;
-  if(s.aboutP2) document.getElementById('aboutP2').textContent=s.aboutP2;
-  if(s.stat1) document.getElementById('stat1').textContent=s.stat1;
-  if(s.stat2) document.getElementById('stat2').textContent=s.stat2;
-  if(s.stat3) document.getElementById('stat3').textContent=s.stat3;
+  if(s.aboutP1)document.getElementById('aboutP1').textContent=s.aboutP1;
+  if(s.aboutP2)document.getElementById('aboutP2').textContent=s.aboutP2;
+  if(s.stat1){document.getElementById('stat1').textContent=s.stat1;document.getElementById('hstat1').textContent=s.stat1;}
+  if(s.stat2){document.getElementById('stat2').textContent=s.stat2;document.getElementById('hstat2').textContent=s.stat2;}
+  if(s.stat3){document.getElementById('stat3').textContent=s.stat3;document.getElementById('hstat3').textContent=s.stat3;}
 }
 
-window.addEventListener('scroll',()=>{
-  document.querySelector('.navbar').style.boxShadow=window.scrollY>8?'0 4px 20px rgba(123,26,26,0.08)':'none';
-});
-
-applyStoredTheme();
+applySettings();
 renderProducts();
 </script>
 </body>
