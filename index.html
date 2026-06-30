@@ -162,9 +162,32 @@
     .badge-bestseller{background:var(--ink);color:#fff}
     .product-body{padding:12px 14px}
     .product-name{font-weight:600;font-size:0.88rem;color:var(--ink);margin-bottom:2px;line-height:1.3}
+    .product-code{font-size:0.65rem;color:var(--muted);font-family:monospace;margin-bottom:3px;letter-spacing:0.02em}
     .product-cat{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px}
-    .product-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
-    .product-price{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--primary)}
+    .product-foot{display:flex;flex-direction:column;gap:10px}
+    .price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+    .product-price{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--primary)}
+    .price-old{font-size:0.78rem;color:var(--muted);text-decoration:line-through;font-weight:500}
+    .price-discount{font-size:0.65rem;font-weight:700;color:#fff;background:#ef4444;padding:2px 7px;border-radius:4px}
+    .stock-row{font-size:0.68rem;color:var(--muted);font-weight:500}
+    .stock-low{color:#ef4444;font-weight:600}
+    .size-row{display:flex;gap:5px;flex-wrap:wrap;margin:2px 0}
+    .size-chip{
+      width:26px;height:26px;border-radius:5px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.62rem;font-weight:700;
+      border:1.5px solid var(--border);color:var(--ink);
+      background:var(--white);position:relative;
+    }
+    .size-chip.unavailable{color:#d1d5db;border-color:#f0f0f0;background:#fafafa}
+    .size-chip.unavailable::after{content:'';position:absolute;width:130%;height:1.5px;background:#d1d5db;transform:rotate(-45deg)}
+    .cart-row{display:flex;gap:8px}
+    .wa-btn{flex:1;justify-content:center}
+    .badge-sale{background:#ef4444;color:#fff}
+    .badge-hot{background:#f59e0b;color:#fff}
+    .badge-soldout{background:#6b7280;color:#fff}
+    .product-card.soldout{opacity:0.65}
+    .product-card.soldout .wa-btn{background:#9ca3af;pointer-events:none}
     .wa-btn{
       display:flex;align-items:center;gap:5px;
       background:#25D366;color:#fff;
@@ -177,19 +200,18 @@
     .no-products{grid-column:1/-1;text-align:center;padding:48px;color:var(--muted);font-size:0.9rem}
 
     /* COLLECTIONS */
-    .coll-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .coll-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .coll-card{
       position:relative;border-radius:var(--radius);overflow:hidden;
-      aspect-ratio:4/3;cursor:pointer;transition:transform .3s;
+      aspect-ratio:3/4;cursor:pointer;transition:transform .3s;
     }
     .coll-card:hover{transform:scale(1.02)}
-    .coll-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-    .coll-c1{background:linear-gradient(135deg,#7B1A1A 0%,#c1433f 100%)}
-    .coll-c2{background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%)}
-    .coll-c3{background:linear-gradient(135deg,#064e3b 0%,#059669 100%)}
-    .coll-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
-    .coll-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:2px}
-    .coll-sub{font-size:0.72rem;color:rgba(255,255,255,0.75);font-weight:500}
+    .coll-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center top;transition:transform .4s}
+    .coll-card:hover .coll-bg{transform:scale(1.08)}
+    .coll-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.1) 50%,transparent 70%);display:flex;flex-direction:column;justify-content:flex-end;padding:16px}
+    .coll-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:2px}
+    .coll-sub{font-size:0.65rem;color:rgba(255,255,255,0.75);font-weight:500}
+    .coll-soon-badge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.6);color:#fff;font-size:0.6rem;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:0.05em;text-transform:uppercase;backdrop-filter:blur(4px)}
 
     /* ABOUT STRIP */
     .about-strip{background:var(--primary);padding:56px 24px}
@@ -271,6 +293,14 @@
     .footer-soc a{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;transition:background .2s}
     .footer-soc a:hover{background:rgba(255,255,255,0.12)}
     .footer-soc svg{width:14px;height:14px;fill:rgba(255,255,255,0.5)}
+
+    .soon-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;align-items:center;justify-content:center;padding:20px}
+    .soon-modal-overlay.open{display:flex}
+    .soon-modal{background:var(--white);border-radius:14px;padding:36px 28px;max-width:380px;text-align:center;box-shadow:var(--shadow-md)}
+    .soon-icon{font-size:2.5rem;margin-bottom:14px}
+    .soon-modal h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+    .soon-modal p{font-size:0.85rem;color:var(--muted);margin-bottom:22px;line-height:1.6}
+    .soon-modal .btn-hero-primary{justify-content:center;width:100%}
 
     /* FLOAT WA */
     .float-wa{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.35);z-index:150;transition:transform .2s}
@@ -375,26 +405,37 @@
     <a href="#shop" class="sec-link">View All →</a>
   </div>
   <div class="coll-grid">
-    <div class="coll-card" onclick="filterTo('tops')">
-      <div class="coll-bg coll-c1"></div>
-      <div class="coll-overlay">
-        <div class="coll-name">Tops & Tees</div>
-        <div class="coll-sub">Graphic tees, oversized, classic</div>
-      </div>
+    <div class="coll-card" onclick="filterTo('shirt')">
+      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&q=75')"></div>
+      <div class="coll-overlay"><div class="coll-name">Shirts</div><div class="coll-sub">Formal & Casual</div></div>
+    </div>
+    <div class="coll-card" onclick="filterTo('polo')">
+      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=500&q=75')"></div>
+      <div class="coll-overlay"><div class="coll-name">Polo Tee</div><div class="coll-sub">Classic Comfort</div></div>
+    </div>
+    <div class="coll-card" onclick="filterTo('tshirt')">
+      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=75')"></div>
+      <div class="coll-overlay"><div class="coll-name">Drop Shoulder Tee</div><div class="coll-sub">Solid & Graphic</div></div>
+    </div>
+    <div class="coll-card" onclick="filterTo('hoodie')">
+      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&q=75')"></div>
+      <div class="coll-overlay"><div class="coll-name">Hoodie</div><div class="coll-sub">Stay Cozy</div></div>
+    </div>
+    <div class="coll-card" onclick="filterTo('sweatshirt')">
+      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=500&q=75')"></div>
+      <div class="coll-overlay"><div class="coll-name">Sweatshirt</div><div class="coll-sub">Everyday Layer</div></div>
+    </div>
+    <div class="coll-card" onclick="filterTo('jacket')">
+      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&q=75')"></div>
+      <div class="coll-overlay"><div class="coll-name">Jacket</div><div class="coll-sub">Outerwear Edge</div></div>
     </div>
     <div class="coll-card" onclick="filterTo('bottoms')">
-      <div class="coll-bg coll-c2"></div>
-      <div class="coll-overlay">
-        <div class="coll-name">Bottoms</div>
-        <div class="coll-sub">Pants, joggers, cargo</div>
-      </div>
+      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&q=75')"></div>
+      <div class="coll-overlay"><div class="coll-name">Bottoms</div><div class="coll-sub">Pants & Joggers</div></div>
     </div>
     <div class="coll-card" onclick="filterTo('accessories')">
-      <div class="coll-bg coll-c3"></div>
-      <div class="coll-overlay">
-        <div class="coll-name">Accessories</div>
-        <div class="coll-sub">Caps, bags, and more</div>
-      </div>
+      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1521369909029-2afed882baee?w=500&q=75')"></div>
+      <div class="coll-overlay"><div class="coll-name">Accessories</div><div class="coll-sub">Caps, Bags & More</div></div>
     </div>
   </div>
 </div>
@@ -406,9 +447,13 @@
   </div>
   <div class="cat-row">
     <div class="cat-pill active" onclick="filterProducts('all',this)">All</div>
-    <div class="cat-pill" onclick="filterProducts('tops',this)">Tops</div>
+    <div class="cat-pill" onclick="filterProducts('shirt',this)">Shirts</div>
+    <div class="cat-pill" onclick="filterProducts('polo',this)">Polo</div>
+    <div class="cat-pill" onclick="filterProducts('tshirt',this)">Drop Shoulder Tee</div>
+    <div class="cat-pill" onclick="filterProducts('hoodie',this)">Hoodie</div>
+    <div class="cat-pill" onclick="filterProducts('sweatshirt',this)">Sweatshirt</div>
+    <div class="cat-pill" onclick="filterProducts('jacket',this)">Jacket</div>
     <div class="cat-pill" onclick="filterProducts('bottoms',this)">Bottoms</div>
-    <div class="cat-pill" onclick="filterProducts('outerwear',this)">Outerwear</div>
     <div class="cat-pill" onclick="filterProducts('accessories',this)">Accessories</div>
   </div>
   <div class="product-grid" id="productGrid"></div>
@@ -474,7 +519,7 @@
           <div class="form-group"><label class="f-label">Your Name *</label><input class="f-input" id="cf_name" placeholder="Shafi" required/></div>
           <div class="form-group"><label class="f-label">Phone *</label><input class="f-input" id="cf_phone" placeholder="+880 1XXX-XXXXXX" required/></div>
         </div>
-        <div class="form-group full"><label class="f-label">Product / Item *</label><input class="f-input" id="cf_product" placeholder="যেমন: Classic Logo Tee — Size M, Color Black" required/></div>
+        <div class="form-group full"><label class="f-label">Product Code / Name *</label><input class="f-input" id="cf_product" placeholder="যেমন: ST-TS-001 অথবা Classic Logo Tee — Size M" required/></div>
         <div class="form-group full"><label class="f-label">Delivery Address *</label><input class="f-input" id="cf_address" placeholder="Mirpur-1, Dhaka" required/></div>
         <div class="form-group full"><label class="f-label">Extra Note (optional)</label><textarea class="f-input" id="cf_note" placeholder="কোনো বিশেষ কথা থাকলে লিখুন…"></textarea></div>
         <button class="btn-wa-submit" onclick="sendToWhatsApp()">
@@ -522,6 +567,16 @@
 </section>
 
 <!-- FOOTER -->
+<!-- COMING SOON MODAL -->
+<div class="soon-modal-overlay" id="soonModal">
+  <div class="soon-modal">
+    <div class="soon-icon">🧵</div>
+    <h3 id="soonTitle">Coming Soon</h3>
+    <p id="soonText">We currently don't have this product yet. Please stay connected for the update!</p>
+    <button class="btn-hero-primary" onclick="closeSoonModal()" style="background:var(--primary)">Browse Other Products</button>
+  </div>
+</div>
+
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-top">
@@ -562,36 +617,100 @@
 
 <script>
 const WA='8801540406490';
+const ALL_CATEGORIES=['shirt','polo','tshirt','hoodie','sweatshirt','jacket','bottoms','accessories'];
+const CAT_LABELS={shirt:'Shirts',polo:'Polo Tee',tshirt:'Drop Shoulder Tee',hoodie:'Hoodie',sweatshirt:'Sweatshirt',jacket:'Jacket',bottoms:'Bottoms',accessories:'Accessories'};
+const ALL_SIZES=['S','M','L','XL','XXL'];
+
 const DEFAULT_PRODUCTS=[
-  {id:1,name:"Classic Logo Tee",price:550,category:"tops",color:"#7B1A1A",badge:"Bestseller",image:""},
-  {id:2,name:"Deshi Pride Graphic Tee",price:650,category:"tops",color:"#457b9d",badge:"New",image:""},
-  {id:3,name:"Oversized Drop Tee",price:700,category:"tops",color:"#2d6a4f",badge:"",image:""},
-  {id:4,name:"Cargo Pants",price:1200,category:"bottoms",color:"#6b4226",badge:"",image:""},
-  {id:5,name:"Jogger Set",price:950,category:"bottoms",color:"#3d405b",badge:"",image:""},
-  {id:6,name:"Denim Jacket",price:2200,category:"outerwear",color:"#264653",badge:"Limited",image:""},
-  {id:7,name:"Canvas Tote Bag",price:400,category:"accessories",color:"#a8795d",badge:"",image:""},
-  {id:8,name:"Embroidered Cap",price:500,category:"accessories",color:"#333",badge:"New",image:""},
+  {id:1,name:"Classic Logo Tee",code:"ST-TS-001",price:550,oldPrice:0,category:"tshirt",color:"#7B1A1A",badge:"Bestseller",image:"",stock:24,sizes:["S","M","L","XL"]},
+  {id:2,name:"Deshi Pride Graphic Tee",code:"ST-TS-002",price:650,oldPrice:800,category:"tshirt",color:"#457b9d",badge:"Sale",image:"",stock:14,sizes:["M","L","XL"]},
+  {id:3,name:"Premium Cotton Polo",code:"ST-PO-003",price:750,oldPrice:0,category:"polo",color:"#2d6a4f",badge:"Hot",image:"",stock:3,sizes:["S","M","L"]},
+  {id:4,name:"Oxford Formal Shirt",code:"ST-SH-004",price:950,oldPrice:1100,category:"shirt",color:"#1e3a5f",badge:"Sale",image:"",stock:18,sizes:["M","L","XL","XXL"]},
+  {id:5,name:"Pullover Hoodie",code:"ST-HD-005",price:1450,oldPrice:0,category:"hoodie",color:"#3d405b",badge:"New",image:"",stock:0,sizes:[]},
+  {id:6,name:"Essential Crewneck Sweatshirt",code:"ST-SW-006",price:1150,oldPrice:0,category:"sweatshirt",color:"#264653",badge:"",image:"",stock:9,sizes:["S","M","L","XL"]},
+  {id:7,name:"Denim Jacket",code:"ST-JK-007",price:2200,oldPrice:2500,category:"jacket",color:"#264653",badge:"Limited",image:"",stock:6,sizes:["M","L","XL"]},
+  {id:8,name:"Cargo Pants",code:"ST-BT-008",price:1200,oldPrice:0,category:"bottoms",color:"#6b4226",badge:"",image:"",stock:11,sizes:["S","M","L","XL"]},
+  {id:9,name:"Embroidered Cap",code:"ST-AC-009",price:500,oldPrice:0,category:"accessories",color:"#333",badge:"New",image:"",stock:30,sizes:[]},
 ];
-const BADGE_CLS={New:'badge-new',Hot:'badge-hot','Hot 🔥':'badge-hot',Limited:'badge-limited',Sale:'badge-sale',Bestseller:'badge-bestseller'};
-function getProducts(){return JSON.parse(localStorage.getItem('shirtory_products')||JSON.stringify(DEFAULT_PRODUCTS));}
+const BADGE_CLS={New:'badge-new',Hot:'badge-hot','Hot 🔥':'badge-hot',Limited:'badge-limited',Sale:'badge-sale',Bestseller:'badge-bestseller','Sold Out':'badge-soldout'};
+function getProducts(){
+  const stored=JSON.parse(localStorage.getItem('shirtory_products')||'null');
+  if(!stored) return DEFAULT_PRODUCTS;
+  // Normalize older product records that may lack new fields
+  return stored.map(p=>({
+    oldPrice:0,stock:10,sizes:["S","M","L","XL"],category:p.category||'tshirt',
+    ...p
+  }));
+}
 function getSettings(){return JSON.parse(localStorage.getItem('shirtory_settings')||'{}');}
+
+function discountPct(price,oldPrice){
+  if(!oldPrice||oldPrice<=price)return 0;
+  return Math.round((1-(price/oldPrice))*100);
+}
 
 function renderProducts(filter='all',query=''){
   const s=getSettings();const cur=s.currency||'৳';
   const grid=document.getElementById('productGrid');
   let list=getProducts();
-  if(filter!=='all')list=list.filter(p=>p.category===filter);
+
+  // If filtering by a specific category with zero products, show "coming soon"
+  if(filter!=='all'){
+    const inCat=list.filter(p=>p.category===filter);
+    if(inCat.length===0){ openSoonModal(filter); }
+    list=inCat;
+  }
   if(query)list=list.filter(p=>p.name.toLowerCase().includes(query.toLowerCase())||p.category.includes(query.toLowerCase()));
-  if(!list.length){grid.innerHTML='<div class="no-products">No products found.</div>';return;}
+
+  if(!list.length){
+    grid.innerHTML='<div class="no-products">No products found in this category yet. Please check back soon!</div>';
+    return;
+  }
+
   grid.innerHTML=list.map(p=>{
-    const msg=encodeURIComponent('Hi ShirTory! I want to order:\n*'+p.name+'* ('+cur+p.price+')\nPlease confirm availability & delivery details.');
-    const waHref='https://wa.me/'+WA+'?text='+msg;
-    const bc=p.badge?(BADGE_CLS[p.badge]||'badge-new'):'';
-    const bHTML=p.badge?'<div class="badge-wrap"><span class="badge '+bc+'">'+p.badge+'</span></div>':'';
+    const sizes=p.sizes||[];
+    const stock=typeof p.stock==='number'?p.stock:10;
+    const isSoldOut = stock<=0;
+    const disc=discountPct(p.price,p.oldPrice);
+    const badge = isSoldOut ? 'Sold Out' : p.badge;
+    const bc=badge?(BADGE_CLS[badge]||'badge-new'):'';
+    const bHTML=badge?'<div class="badge-wrap"><span class="badge '+bc+'">'+badge+'</span>'+(disc>0&&!isSoldOut?'<span class="badge badge-sale">-'+disc+'%</span>':'')+'</div>'
+      : (disc>0&&!isSoldOut?'<div class="badge-wrap"><span class="badge badge-sale">-'+disc+'%</span></div>':'');
     const iHTML=p.image?'<img src="'+p.image+'" alt="'+p.name+'" onerror="this.style.display=\'none\'">'
       :'<div class="product-placeholder"><span class="product-initial">'+p.name[0]+'</span><span class="product-initial-name">'+p.name+'</span></div>';
-    return '<div class="product-card"><div class="product-img-wrap" style="background:'+p.color+'12">'+bHTML+iHTML+'</div><div class="product-body"><div class="product-name">'+p.name+'</div><div class="product-cat">'+p.category+'</div><div class="product-foot"><span class="product-price">'+cur+p.price+'</span><a class="wa-btn" href="'+waHref+'" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Order</a></div></div></div>';
+
+    const priceHTML = '<div class="price-row"><span class="product-price">'+cur+p.price+'</span>'+
+      (p.oldPrice>p.price?'<span class="price-old">'+cur+p.oldPrice+'</span>':'')+'</div>';
+
+    const stockHTML = isSoldOut
+      ? '<div class="stock-row stock-low">Currently unavailable</div>'
+      : (stock<=5 ? '<div class="stock-row stock-low">Only '+stock+' left in stock!</div>' : '<div class="stock-row">'+stock+' in stock</div>');
+
+    const sizeHTML = sizes.length || true
+      ? '<div class="size-row">'+ALL_SIZES.map(sz=>{
+          const avail=sizes.includes(sz);
+          return '<span class="size-chip'+(avail?'':' unavailable')+'">'+sz+'</span>';
+        }).join('')+'</div>'
+      : '';
+
+    const msg=encodeURIComponent('Hi ShirTory! I want to order:\nProduct Code: *'+(p.code||('ST-'+p.id))+'*\n'+p.name+' ('+cur+p.price+')\nPlease confirm availability, size & delivery details.');
+    const waHref='https://wa.me/'+WA+'?text='+msg;
+    const waBtn = isSoldOut
+      ? '<button class="wa-btn" disabled style="background:#9ca3af;cursor:not-allowed">Sold Out</button>'
+      : '<a class="wa-btn" href="'+waHref+'" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Order Now</a>';
+
+    return '<div class="product-card'+(isSoldOut?' soldout':'')+'"><div class="product-img-wrap" style="background:'+p.color+'12">'+bHTML+iHTML+'</div><div class="product-body"><div class="product-name">'+p.name+'</div><div class="product-code">Code: '+(p.code||('ST-'+p.id))+'</div><div class="product-cat">'+(CAT_LABELS[p.category]||p.category)+'</div>'+sizeHTML+priceHTML+stockHTML+'<div class="cart-row">'+waBtn+'</div></div></div>';
   }).join('');
+}
+
+function openSoonModal(cat){
+  document.getElementById('soonTitle').textContent = (CAT_LABELS[cat]||cat) + ' — Coming Soon';
+  document.getElementById('soonText').textContent = "We currently don't have any "+(CAT_LABELS[cat]||cat).toLowerCase()+" products. Please stay connected for the update!";
+  document.getElementById('soonModal').classList.add('open');
+}
+function closeSoonModal(){
+  document.getElementById('soonModal').classList.remove('open');
+  filterProducts('all', document.querySelector('.cat-pill'));
 }
 
 function filterProducts(f,el){

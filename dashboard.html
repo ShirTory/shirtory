@@ -135,6 +135,12 @@
     .tag-tops{background:#2d6a4f30;color:#52b788;border:1px solid #2d6a4f40}
     .tag-bottoms{background:#45474b30;color:#9db2bf;border:1px solid #45474b40}
     .tag-outerwear{background:#26456330;color:#74b9ff;border:1px solid #26456340}
+    .tag-shirt{background:#1e3a5f30;color:#74b9ff;border:1px solid #1e3a5f40}
+    .tag-polo{background:#2d6a4f30;color:#52b788;border:1px solid #2d6a4f40}
+    .tag-tshirt{background:#7B1A1A30;color:#f08080;border:1px solid #7B1A1A40}
+    .tag-hoodie{background:#3d405b30;color:#a29bfe;border:1px solid #3d405b40}
+    .tag-sweatshirt{background:#26465330;color:#74b9ff;border:1px solid #26465340}
+    .tag-jacket{background:#26465330;color:#0984e3;border:1px solid #26465340}
     .tag-accessories{background:#6b422630;color:#e8a87c;border:1px solid #6b422640}
     .tag-other{background:#33333350;color:#aaa;border:1px solid #33333360}
 
@@ -302,6 +308,7 @@
               <th>Product</th>
               <th>Category</th>
               <th>Price</th>
+              <th>Stock</th>
               <th>Badge</th>
               <th>Actions</th>
             </tr>
@@ -467,17 +474,43 @@
           <input class="form-input" id="p_name" placeholder="e.g. Classic Logo Tee"/>
         </div>
         <div class="form-group">
+          <label class="form-label">Product Code *</label>
+          <input class="form-input" id="p_code" placeholder="e.g. ST-TS-001" style="text-transform:uppercase"/>
+        </div>
+        <div class="form-group">
           <label class="form-label">Price (৳) *</label>
           <input class="form-input" type="number" id="p_price" placeholder="550"/>
         </div>
         <div class="form-group">
+          <label class="form-label">Old Price (optional — for discount)</label>
+          <input class="form-input" type="number" id="p_oldprice" placeholder="leave blank if no discount"/>
+        </div>
+        <div class="form-group">
           <label class="form-label">Category *</label>
           <select class="form-input" id="p_category">
-            <option value="tops">👕 Tops</option>
-            <option value="bottoms">👖 Bottoms</option>
-            <option value="outerwear">🧥 Outerwear</option>
-            <option value="accessories">👜 Accessories</option>
+            <option value="shirt">Shirt</option>
+            <option value="polo">Polo Tee</option>
+            <option value="tshirt">Drop Shoulder / Solid Tee</option>
+            <option value="hoodie">Hoodie</option>
+            <option value="sweatshirt">Sweatshirt</option>
+            <option value="jacket">Jacket</option>
+            <option value="bottoms">Bottoms</option>
+            <option value="accessories">Accessories</option>
           </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Stock Quantity *</label>
+          <input class="form-input" type="number" id="p_stock" placeholder="e.g. 20 (0 = Sold Out)"/>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Available Sizes</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:5px;font-size:.82rem"><input type="checkbox" class="p_size" value="S"> S</label>
+            <label style="display:flex;align-items:center;gap:5px;font-size:.82rem"><input type="checkbox" class="p_size" value="M"> M</label>
+            <label style="display:flex;align-items:center;gap:5px;font-size:.82rem"><input type="checkbox" class="p_size" value="L"> L</label>
+            <label style="display:flex;align-items:center;gap:5px;font-size:.82rem"><input type="checkbox" class="p_size" value="XL"> XL</label>
+            <label style="display:flex;align-items:center;gap:5px;font-size:.82rem"><input type="checkbox" class="p_size" value="XXL"> XXL</label>
+          </div>
         </div>
         <div class="form-group">
           <label class="form-label">Emoji (placeholder icon)</label>
@@ -591,14 +624,15 @@ roleBadge.className = 'badge-role ' + (isMasterAdmin ? 'badge-master' : 'badge-m
 // DATA
 // ============================================================
 const DEFAULT_PRODUCTS = [
-  {id:1,name:"Classic Logo Tee",price:550,category:"tops",emoji:"👕",color:"#e63946",badge:"Bestseller",image:""},
-  {id:2,name:"Deshi Pride Graphic Tee",price:650,category:"tops",emoji:"🎨",color:"#457b9d",badge:"New",image:""},
-  {id:3,name:"Oversized Drop Tee",price:700,category:"tops",emoji:"👕",color:"#2d6a4f",badge:"",image:""},
-  {id:4,name:"Cargo Pants",price:1200,category:"bottoms",emoji:"👖",color:"#6b4226",badge:"",image:""},
-  {id:5,name:"Jogger Set",price:950,category:"bottoms",emoji:"🩳",color:"#3d405b",badge:"",image:""},
-  {id:6,name:"Denim Jacket",price:2200,category:"outerwear",emoji:"🧥",color:"#264653",badge:"Limited",image:""},
-  {id:7,name:"Canvas Tote Bag",price:400,category:"accessories",emoji:"👜",color:"#a8795d",badge:"",image:""},
-  {id:8,name:"Embroidered Cap",price:500,category:"accessories",emoji:"🧢",color:"#333",badge:"New",image:""},
+  {id:1,name:"Classic Logo Tee",code:"ST-TS-001",price:550,oldPrice:0,category:"tshirt",emoji:"👕",color:"#e63946",badge:"Bestseller",image:"",stock:24,sizes:["S","M","L","XL"]},
+  {id:2,name:"Deshi Pride Graphic Tee",code:"ST-TS-002",price:650,oldPrice:800,category:"tshirt",emoji:"🎨",color:"#457b9d",badge:"Sale",image:"",stock:14,sizes:["M","L","XL"]},
+  {id:3,name:"Premium Cotton Polo",code:"ST-PO-003",price:750,oldPrice:0,category:"polo",emoji:"👕",color:"#2d6a4f",badge:"Hot",image:"",stock:3,sizes:["S","M","L"]},
+  {id:4,name:"Oxford Formal Shirt",code:"ST-SH-004",price:950,oldPrice:1100,category:"shirt",emoji:"👔",color:"#1e3a5f",badge:"Sale",image:"",stock:18,sizes:["M","L","XL","XXL"]},
+  {id:5,name:"Pullover Hoodie",code:"ST-HD-005",price:1450,oldPrice:0,category:"hoodie",emoji:"🧥",color:"#3d405b",badge:"New",image:"",stock:0,sizes:[]},
+  {id:6,name:"Essential Crewneck Sweatshirt",code:"ST-SW-006",price:1150,oldPrice:0,category:"sweatshirt",emoji:"👕",color:"#264653",badge:"",image:"",stock:9,sizes:["S","M","L","XL"]},
+  {id:7,name:"Denim Jacket",code:"ST-JK-007",price:2200,oldPrice:2500,category:"jacket",emoji:"🧥",color:"#264653",badge:"Limited",image:"",stock:6,sizes:["M","L","XL"]},
+  {id:8,name:"Cargo Pants",code:"ST-BT-008",price:1200,oldPrice:0,category:"bottoms",emoji:"👖",color:"#6b4226",badge:"",image:"",stock:11,sizes:["S","M","L","XL"]},
+  {id:9,name:"Embroidered Cap",code:"ST-AC-009",price:500,oldPrice:0,category:"accessories",emoji:"🧢",color:"#333",badge:"New",image:"",stock:30,sizes:[]},
 ];
 const DEFAULT_USERS = [
   {id:1,username:'admin',password:'shirtory2026',role:'master_admin',name:'Master Admin'},
@@ -681,11 +715,15 @@ function renderProductTable(){
       <td>
         <div class="flex-gap">
           <div class="product-thumb" style="background:${p.color}25">${p.image?`<img src="${p.image}" style="width:36px;height:36px;object-fit:cover;border-radius:6px" onerror="this.style.display='none'">`:p.emoji}</div>
-          <span style="font-weight:500">${p.name}</span>
+          <div>
+            <div style="font-weight:500">${p.name}</div>
+            <div style="font-size:.68rem;color:var(--muted);font-family:monospace">${p.code||'-'}</div>
+          </div>
         </div>
       </td>
       <td><span class="tag tag-${p.category}">${p.category}</span></td>
-      <td style="font-weight:600">${s.currency}${p.price}</td>
+      <td style="font-weight:600">${s.currency}${p.price}${p.oldPrice>p.price?` <span style="color:var(--muted);text-decoration:line-through;font-weight:400;font-size:.78rem">${s.currency}${p.oldPrice}</span>`:''}</td>
+      <td style="${(p.stock||0)<=0?'color:#ff6b6b':((p.stock||0)<=5?'color:#f4a261':'')}">${(p.stock||0)<=0?'Sold Out':(p.stock||0)+' pcs'}</td>
       <td>${p.badge?`<span class="tag" style="background:#fff2;color:#fff;border:1px solid #fff3">${p.badge}</span>`:'-'}</td>
       <td>
         <div class="flex-gap">
@@ -703,20 +741,31 @@ function openProductModal(id=null){
   editingProductId = id;
   const modal = document.getElementById('productModal');
   document.getElementById('productModalTitle').textContent = id ? 'Edit Product' : 'Add Product';
+  document.querySelectorAll('.p_size').forEach(cb=>cb.checked=false);
   if(id){
     const p = getProducts().find(x=>x.id===id);
     if(!p) return;
     document.getElementById('p_name').value = p.name;
+    document.getElementById('p_code').value = p.code || autoProductCode(p.category, p.id);
     document.getElementById('p_price').value = p.price;
+    document.getElementById('p_oldprice').value = p.oldPrice||'';
     document.getElementById('p_category').value = p.category;
+    document.getElementById('p_stock').value = (typeof p.stock==='number'?p.stock:10);
     document.getElementById('p_emoji').value = p.emoji;
     document.getElementById('p_color').value = p.color;
     document.getElementById('p_badge').value = p.badge||'';
     document.getElementById('p_image').value = p.image||'';
+    (p.sizes||[]).forEach(sz=>{
+      const cb=document.querySelector('.p_size[value="'+sz+'"]');
+      if(cb)cb.checked=true;
+    });
   } else {
     document.getElementById('p_name').value='';
+    document.getElementById('p_code').value=autoProductCode('tshirt', null);
     document.getElementById('p_price').value='';
-    document.getElementById('p_category').value='tops';
+    document.getElementById('p_oldprice').value='';
+    document.getElementById('p_category').value='tshirt';
+    document.getElementById('p_stock').value='10';
     document.getElementById('p_emoji').value='👕';
     document.getElementById('p_color').value='#e63946';
     document.getElementById('p_badge').value='';
@@ -726,6 +775,19 @@ function openProductModal(id=null){
   modal.classList.add('open');
 }
 
+const CAT_PREFIX = {shirt:'SH',polo:'PO',tshirt:'TS',hoodie:'HD',sweatshirt:'SW',jacket:'JK',bottoms:'BT',accessories:'AC'};
+function autoProductCode(category, id){
+  const prefix = CAT_PREFIX[category] || 'ST';
+  const products = getProducts();
+  const num = id || (products.length ? Math.max(...products.map(p=>p.id))+1 : 1);
+  return 'ST-'+prefix+'-'+String(num).padStart(3,'0');
+}
+document.getElementById('p_category')?.addEventListener('change', ()=>{
+  if(!editingProductId){
+    document.getElementById('p_code').value = autoProductCode(document.getElementById('p_category').value, null);
+  }
+});
+
 function editProduct(id){ openProductModal(id); }
 
 function closeProductModal(){ document.getElementById('productModal').classList.remove('open'); }
@@ -733,12 +795,12 @@ function closeProductModal(){ document.getElementById('productModal').classList.
 function updatePreview(){
   const name = document.getElementById('p_name').value||'Product Name';
   const price = document.getElementById('p_price').value||'0';
-  const cat = document.getElementById('p_category').value||'tops';
+  const cat = document.getElementById('p_category').value||'tshirt';
   const emoji = document.getElementById('p_emoji').value||'👕';
   const color = document.getElementById('p_color').value||'#e63946';
   const s = getSettings();
   document.getElementById('previewName').textContent = name;
-  document.getElementById('previewPrice').textContent = s.currency+price;
+  document.getElementById('previewPrice').textContent = (s.currency||'৳')+price;
   document.getElementById('previewCat').textContent = cat;
   document.getElementById('previewImg').textContent = emoji;
   document.getElementById('previewImg').style.background = color+'33';
@@ -749,15 +811,26 @@ function updatePreview(){
 
 function saveProduct(){
   const name = document.getElementById('p_name').value.trim();
+  let code = document.getElementById('p_code').value.trim().toUpperCase();
   const price = parseFloat(document.getElementById('p_price').value);
+  const oldPrice = parseFloat(document.getElementById('p_oldprice').value)||0;
+  const stock = parseInt(document.getElementById('p_stock').value);
   if(!name){ toast('Product name required','error'); return; }
   if(!price||price<=0){ toast('Valid price required','error'); return; }
+  if(oldPrice && oldPrice<=price){ toast('Old price must be higher than current price','error'); return; }
+  const sizes = Array.from(document.querySelectorAll('.p_size:checked')).map(cb=>cb.value);
 
   const products = getProducts();
+  if(!code) code = autoProductCode(document.getElementById('p_category').value, editingProductId||(products.length?Math.max(...products.map(p=>p.id))+1:1));
+  const dupCode = products.find(p=>p.code===code && p.id!==editingProductId);
+  if(dupCode){ toast('This Product Code is already used by "'+dupCode.name+'"','error'); return; }
+
   const newProduct = {
     id: editingProductId || (products.length ? Math.max(...products.map(p=>p.id))+1 : 1),
-    name,price,
+    name,code,price,oldPrice,
     category:document.getElementById('p_category').value,
+    stock:isNaN(stock)?10:stock,
+    sizes,
     emoji:document.getElementById('p_emoji').value||'👕',
     color:document.getElementById('p_color').value,
     badge:document.getElementById('p_badge').value,
