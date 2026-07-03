@@ -69,11 +69,11 @@
     </div>
 
     <label>Username</label>
-    <input type="text" id="username" placeholder="Enter username" autocomplete="username"/>
+    <input type="text" id="loginUserField" name="shirtory_user_field" placeholder="Enter username" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
 
     <label>Password</label>
     <div class="pw-wrap">
-      <input type="password" id="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"/>
+      <input type="password" id="loginPassField" name="shirtory_pass_field" placeholder="Enter password" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter')login()"/>
       <button class="pw-toggle" onclick="togglePW()">👁</button>
     </div>
 
@@ -89,7 +89,7 @@
 let selectedRole = 'admin';
 
 const DEFAULT_USERS = [
-  {username:'admin',password:'shirtory2026',role:'master_admin',name:'Master Admin'},
+  {username:'shirtory',password:'786786',role:'master_admin',name:'Master Admin'},
   {username:'mod1',password:'mod123',role:'moderator',name:'Moderator 1'},
 ];
 
@@ -112,13 +112,13 @@ function setRole(role,btn){
 }
 
 function togglePW(){
-  const inp = document.getElementById('password');
+  const inp = document.getElementById('loginPassField');
   inp.type = inp.type==='password' ? 'text' : 'password';
 }
 
 function login(){
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value;
+  const username = document.getElementById('loginUserField').value.trim();
+  const password = document.getElementById('loginPassField').value;
   const errEl = document.getElementById('errorMsg');
   errEl.style.display='none';
 
@@ -142,7 +142,7 @@ function login(){
 }
 
 // Auto-focus
-window.onload = ()=>{ document.getElementById('username').focus(); }
+window.onload = ()=>{ document.getElementById('loginUserField').focus(); }
 </script>
 </body>
 </html>
