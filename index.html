@@ -231,19 +231,24 @@
     .wa-btn svg{width:13px;height:13px;fill:#fff}
     .no-products{grid-column:1/-1;text-align:center;padding:48px;color:var(--muted);font-size:0.9rem}
 
-    /* COLLECTIONS */
-    .coll-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-    .coll-card{
-      position:relative;border-radius:var(--radius);overflow:hidden;
-      aspect-ratio:3/4;cursor:pointer;transition:transform .3s;
+    /* CATEGORY ICONS (compact) */
+    .cat-icon-row{
+      display:flex;gap:22px;overflow-x:auto;padding:4px 2px 12px;
+      scrollbar-width:thin;
     }
-    .coll-card:hover{transform:scale(1.02)}
-    .coll-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center top;transition:transform .4s}
-    .coll-card:hover .coll-bg{transform:scale(1.08)}
-    .coll-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.1) 50%,transparent 70%);display:flex;flex-direction:column;justify-content:flex-end;padding:16px}
-    .coll-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:2px}
-    .coll-sub{font-size:0.65rem;color:rgba(255,255,255,0.75);font-weight:500}
-    .coll-soon-badge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.6);color:#fff;font-size:0.6rem;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:0.05em;text-transform:uppercase;backdrop-filter:blur(4px)}
+    .cat-icon-row::-webkit-scrollbar{height:5px}
+    .cat-icon-row::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+    .cat-icon{
+      flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:8px;
+      cursor:pointer;width:78px;
+    }
+    .cat-icon-thumb{
+      width:70px;height:70px;border-radius:50%;overflow:hidden;
+      border:2px solid var(--border);background-size:cover;background-position:center top;
+      transition:border-color .2s,transform .2s;position:relative;
+    }
+    .cat-icon:hover .cat-icon-thumb{border-color:var(--gold);transform:translateY(-3px)}
+    .cat-icon-label{font-size:0.72rem;font-weight:600;color:var(--ink);text-align:center;line-height:1.25}
 
     /* ABOUT STRIP */
     .about-strip{background:var(--primary);padding:56px 24px}
@@ -346,7 +351,6 @@
       .nav-search{max-width:220px}
       .hero-overlay{padding:0 32px}
       .hero-stats{left:32px;right:32px}
-      .coll-grid{grid-template-columns:1fr 1fr}
       .about-inner{grid-template-columns:1fr;gap:32px}
       .about-img-col{display:none}
       .order-inner{grid-template-columns:1fr;gap:32px}
@@ -356,7 +360,9 @@
       .hero-overlay{padding:0 20px}
       .hero-stats{display:none}
       .hero-title{font-size:2rem}
-      .coll-grid{grid-template-columns:1fr}
+      .cat-icon{width:66px}
+      .cat-icon-thumb{width:58px;height:58px}
+      .cat-icon-label{font-size:0.66rem}
       .product-grid{grid-template-columns:1fr 1fr}
       .form-row{grid-template-columns:1fr}
       .footer-top{grid-template-columns:1fr}
@@ -430,50 +436,49 @@
   </div>
 </div>
 
-<!-- COLLECTIONS -->
-<div class="section">
+<!-- CATEGORY ICONS (compact) -->
+<div class="section" style="padding-bottom:0">
   <div class="sec-hd">
     <h2 class="sec-title">Shop by Category</h2>
-    <a href="#shop" class="sec-link">View All →</a>
   </div>
-  <div class="coll-grid">
-    <div class="coll-card" onclick="filterTo('shirt')">
-      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&q=75')"></div>
-      <div class="coll-overlay"><div class="coll-name">Shirts</div><div class="coll-sub">Formal & Casual</div></div>
+  <div class="cat-icon-row">
+    <div class="cat-icon" onclick="filterTo('shirt')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=200&q=70')"></div>
+      <div class="cat-icon-label">Shirts</div>
     </div>
-    <div class="coll-card" onclick="filterTo('polo')">
-      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=500&q=75')"></div>
-      <div class="coll-overlay"><div class="coll-name">Polo Tee</div><div class="coll-sub">Classic Comfort</div></div>
+    <div class="cat-icon" onclick="filterTo('polo')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=200&q=70')"></div>
+      <div class="cat-icon-label">Polo Tee</div>
     </div>
-    <div class="coll-card" onclick="filterTo('tshirt')">
-      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=75')"></div>
-      <div class="coll-overlay"><div class="coll-name">Drop Shoulder Tee</div><div class="coll-sub">Solid & Graphic</div></div>
+    <div class="cat-icon" onclick="filterTo('tshirt')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&q=70')"></div>
+      <div class="cat-icon-label">Drop Shoulder</div>
     </div>
-    <div class="coll-card" onclick="filterTo('hoodie')">
-      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&q=75')"></div>
-      <div class="coll-overlay"><div class="coll-name">Hoodie</div><div class="coll-sub">Stay Cozy</div></div>
+    <div class="cat-icon" onclick="filterTo('hoodie')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=200&q=70')"></div>
+      <div class="cat-icon-label">Hoodie</div>
     </div>
-    <div class="coll-card" onclick="filterTo('sweatshirt')">
-      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=500&q=75')"></div>
-      <div class="coll-overlay"><div class="coll-name">Sweatshirt</div><div class="coll-sub">Everyday Layer</div></div>
+    <div class="cat-icon" onclick="filterTo('sweatshirt')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=200&q=70')"></div>
+      <div class="cat-icon-label">Sweatshirt</div>
     </div>
-    <div class="coll-card" onclick="filterTo('jacket')">
-      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&q=75')"></div>
-      <div class="coll-overlay"><div class="coll-name">Jacket</div><div class="coll-sub">Outerwear Edge</div></div>
+    <div class="cat-icon" onclick="filterTo('jacket')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1551028719-00167b16eac5?w=200&q=70')"></div>
+      <div class="cat-icon-label">Jacket</div>
     </div>
-    <div class="coll-card" onclick="filterTo('bottoms')">
-      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&q=75')"></div>
-      <div class="coll-overlay"><div class="coll-name">Bottoms</div><div class="coll-sub">Pants & Joggers</div></div>
+    <div class="cat-icon" onclick="filterTo('bottoms')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=200&q=70')"></div>
+      <div class="cat-icon-label">Bottoms</div>
     </div>
-    <div class="coll-card" onclick="filterTo('accessories')">
-      <div class="coll-bg" style="background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url('https://images.unsplash.com/photo-1521369909029-2afed882baee?w=500&q=75')"></div>
-      <div class="coll-overlay"><div class="coll-name">Accessories</div><div class="coll-sub">Caps, Bags & More</div></div>
+    <div class="cat-icon" onclick="filterTo('accessories')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1521369909029-2afed882baee?w=200&q=70')"></div>
+      <div class="cat-icon-label">Accessories</div>
     </div>
   </div>
 </div>
 
 <!-- PRODUCTS -->
-<div class="section" id="shop" style="padding-top:0">
+<div class="section" id="shop" style="padding-top:24px">
   <div class="sec-hd">
     <h2 class="sec-title">All Products</h2>
   </div>
