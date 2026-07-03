@@ -1,148 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>ShirTory Admin — Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <style>
-    :root{--bg:#0a0a0a;--surface:#141414;--ink:#f0ece4;--muted:#777;--accent:#e63946;--border:#222;--radius:10px}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column}
-    a{color:inherit;text-decoration:none}
-    button{cursor:pointer;border:none;font:inherit}
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ShirTory Admin — Dashboard</title>
+<link rel="icon" type="image/png" href="images/logo.png"/>
+<script>
+// ============================================================
+// SESSION GUARD — runs immediately, before the page paints.
+// No valid session -> straight back to login, no flash of content.
+// ============================================================
+(function(){
+  try{
+    const s = JSON.parse(sessionStorage.getItem('shirtory_session'));
+    if(!s || !s.username || !s.role){ window.location.href='admin.html'; }
+  }catch(e){ window.location.href='admin.html'; }
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB0NMwYgWK7Zr76urLEkcQfv1pTDXJ4SmM",
+    authDomain: "shirtory-4bcae.firebaseapp.com",
+    projectId: "shirtory-4bcae",
+    storageBucket: "shirtory-4bcae.firebasestorage.app",
+    messagingSenderId: "634050233913",
+    appId: "1:634050233913:web:3b46991a205f3160956fe8",
+    measurementId: "G-5YPCEJ34BE"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+<style>
+  :root{--bg:#0a0a0a;--surface:#141414;--surface2:#1b1b1b;--ink:#f0ece4;--muted:#8a8a8a;--accent:#C9A84C;--accent2:#7B1A1A;--border:#242424;--radius:10px;--green:#2d6a4f;--blue:#457b9d;--orange:#e07a3f}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh}
+  a{color:inherit}
+  button{cursor:pointer;border:none;font:inherit}
+  input,select,textarea{font:inherit;color:var(--ink);background:#0f0f0f;border:1px solid var(--border);border-radius:8px;padding:10px 12px;width:100%}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+  label{display:block;font-size:.72rem;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px;margin-top:14px}
+  textarea{resize:vertical;min-height:70px}
 
-    .login-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
-    .login-box{
-      background:var(--surface);border:1px solid var(--border);border-radius:18px;
-      padding:48px 40px;width:100%;max-width:420px;
-    }
-    .login-logo{text-align:center;margin-bottom:32px}
-    .login-logo h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700}
-    .login-logo h1 span{color:var(--accent)}
-    .login-logo p{color:var(--muted);font-size:.85rem;margin-top:6px}
+  /* topbar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px}
+  .topbar h1{font-family:'Playfair Display',serif;font-size:1.3rem}
+  .topbar h1 span{color:var(--accent2)}
+  .who{display:flex;align-items:center;gap:14px;font-size:.85rem;color:var(--muted)}
+  .role-pill{padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:600}
+  .role-pill.master{background:#7B1A1A30;color:#e8b4b4}
+  .role-pill.mod{background:#C9A84C25;color:#e8d4a0}
+  .btn{padding:9px 16px;border-radius:8px;font-size:.82rem;font-weight:600;transition:opacity .2s}
+  .btn:hover{opacity:.85}
+  .btn-primary{background:var(--accent2);color:#fff}
+  .btn-gold{background:var(--accent);color:#0a0a0a}
+  .btn-ghost{background:#222;color:var(--ink)}
+  .btn-danger{background:#8a2020;color:#fff}
+  .btn-sm{padding:6px 12px;font-size:.75rem}
 
-    .login-tabs{display:flex;background:#0f0f0f;border-radius:8px;padding:4px;margin-bottom:28px;gap:4px}
-    .tab-btn{flex:1;padding:9px;border-radius:6px;font-size:.82rem;font-weight:500;color:var(--muted);background:none;transition:all .2s;text-align:center}
-    .tab-btn.active{background:var(--accent);color:#fff}
+  /* tabs */
+  .tabbar{display:flex;gap:6px;padding:14px 24px 0;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto}
+  .tab{padding:10px 18px;border-radius:8px 8px 0 0;font-size:.85rem;font-weight:600;color:var(--muted);background:none;white-space:nowrap}
+  .tab.active{background:var(--bg);color:var(--accent)}
 
-    label{display:block;font-size:.78rem;font-weight:500;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;margin-top:18px}
-    input{
-      width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius);
-      background:#0f0f0f;color:var(--ink);font:inherit;font-size:.92rem;
-      transition:border-color .2s;
-    }
-    input:focus{outline:none;border-color:var(--accent)}
-    .pw-wrap{position:relative}
-    .pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;color:var(--muted);font-size:.85rem;padding:4px}
+  .wrap{max-width:1100px;margin:0 auto;padding:28px 20px 60px}
+  .panel{display:none}
+  .panel.active{display:block}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+  .panel-head h2{font-family:'Playfair Display',serif;font-size:1.4rem}
+  .hint{font-size:.78rem;color:var(--muted);margin-bottom:16px;background:#ffffff08;border:1px solid var(--border);border-radius:8px;padding:10px 14px}
 
-    .btn-login{
-      width:100%;margin-top:24px;padding:14px;
-      background:var(--accent);color:#fff;border-radius:var(--radius);
-      font-size:.92rem;font-weight:600;letter-spacing:.04em;
-      transition:opacity .2s;
-    }
-    .btn-login:hover{opacity:.88}
-    .error-msg{color:#ff6b6b;font-size:.82rem;text-align:center;margin-top:12px;display:none}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr}}
 
-    .back-link{text-align:center;margin-top:20px;font-size:.8rem;color:var(--muted)}
-    .back-link a{color:var(--accent)}
+  .prod-item{display:flex;gap:14px;align-items:center;padding:14px;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;background:var(--surface2)}
+  .prod-thumb{width:56px;height:56px;border-radius:8px;background:#222;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:700;color:var(--muted)}
+  .prod-thumb img{width:100%;height:100%;object-fit:cover}
+  .prod-info{flex:1;min-width:0}
+  .prod-info .n{font-weight:600;font-size:.92rem}
+  .prod-info .m{font-size:.76rem;color:var(--muted);margin-top:2px}
+  .prod-actions{display:flex;gap:8px;flex-shrink:0}
+  .stock-badge{font-size:.7rem;padding:3px 9px;border-radius:999px;font-weight:600}
+  .stock-ok{background:#2d6a4f30;color:#8fd6ab}
+  .stock-low{background:#e07a3f30;color:#f4b98a}
+  .stock-out{background:#8a202030;color:#e79a9a}
 
-    .footer-txt{text-align:center;padding:20px;font-size:.75rem;color:var(--border)}
-  </style>
+  .size-check{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .size-check label{display:flex;align-items:center;gap:5px;text-transform:none;font-size:.82rem;color:var(--ink);margin:0;background:#0f0f0f;border:1px solid var(--border);padding:6px 10px;border-radius:8px;cursor:pointer}
+  .size-check input{width:auto}
+
+  .order-card{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--surface2)}
+  .order-top{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;flex-wrap:wrap;gap:8px}
+  .order-id{font-weight:700;font-family:'Playfair Display',serif;color:var(--accent)}
+  .order-meta{font-size:.8rem;color:var(--muted);margin-top:2px}
+  .order-body{padding:0 16px 16px;font-size:.85rem;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+  .order-body .full{grid-column:1/-1}
+  .order-body b{color:var(--muted);font-weight:500;font-size:.72rem;text-transform:uppercase;display:block;margin-bottom:2px}
+  .status-select{width:auto;padding:7px 10px;font-size:.78rem}
+  .empty{text-align:center;padding:50px 20px;color:var(--muted);font-size:.9rem}
+
+  .userrow{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;background:var(--surface2)}
+  .save-bar{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--border);padding:14px 24px;display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+  .toast{position:fixed;bottom:20px;right:20px;background:var(--accent2);color:#fff;padding:12px 20px;border-radius:10px;font-size:.85rem;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.4);z-index:999;display:none}
+  .close-x{background:none;color:var(--muted);font-size:1.1rem;padding:2px 8px}
+</style>
 </head>
 <body>
-<div class="login-wrap">
-  <div class="login-box">
-    <div class="login-logo">
-      <h1>Shir<span>Tory</span></h1>
-      <p>Admin Panel — Secure Login</p>
-    </div>
 
-    <div class="login-tabs">
-      <button class="tab-btn active" onclick="setRole('admin',this)">🔐 Master Admin</button>
-      <button class="tab-btn" onclick="setRole('moderator',this)">🛡️ Moderator</button>
-    </div>
-
-    <div id="roleHint" style="background:#e6394615;border:1px solid #e6394640;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#e63946;margin-bottom:4px">
-      Master Admin — Full access to all settings
-    </div>
-
-    <label>Username</label>
-    <input type="text" id="username" placeholder="Enter username" autocomplete="username"/>
-
-    <label>Password</label>
-    <div class="pw-wrap">
-      <input type="password" id="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"/>
-      <button class="pw-toggle" onclick="togglePW()">👁</button>
-    </div>
-
-    <button class="btn-login" onclick="login()">Login →</button>
-    <p class="error-msg" id="errorMsg">❌ Wrong username or password</p>
-
-    <p class="back-link"><a href="index.html">← Back to Store</a></p>
+<div class="topbar">
+  <h1>Shir<span>Tory</span> — Admin</h1>
+  <div class="who">
+    <span id="whoName">—</span>
+    <span class="role-pill" id="rolePill">—</span>
+    <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
   </div>
 </div>
-<p class="footer-txt">ShirTory Admin Panel © 2026</p>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab active" data-tab="products" onclick="showTab('products')">📦 Products</button>
+  <button class="tab" data-tab="orders" onclick="showTab('orders')">🧾 Orders</button>
+  <button class="tab" data-tab="settings" onclick="showTab('settings')" id="tabSettingsBtn">⚙️ Settings</button>
+  <button class="tab" data-tab="users" onclick="showTab('users')" id="tabUsersBtn">👤 Admin Users</button>
+</div>
+
+<div class="wrap">
+
+  <!-- PRODUCTS -->
+  <div class="panel active" id="panel-products">
+    <div class="panel-head">
+      <h2>Products</h2>
+      <button class="btn btn-gold" onclick="openProductForm()">+ Add Product</button>
+    </div>
+    <div class="hint">এখানে যা কিছু Save করবে সাথে সাথেই সব ডিভাইসে (ওয়েবসাইটে) live দেখা যাবে।</div>
+    <div id="productList"></div>
+  </div>
+
+  <!-- ORDERS -->
+  <div class="panel" id="panel-orders">
+    <div class="panel-head"><h2>Orders</h2></div>
+    <div class="hint" id="ordersHint">Order status change করলে customer order.html লিংকে গিয়ে সাথে সাথে আপডেট দেখতে পাবে।</div>
+    <div id="orderList"></div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="panel" id="panel-settings">
+    <div class="panel-head"><h2>Site Settings</h2></div>
+    <div class="card">
+      <label>Currency Symbol</label>
+      <input id="s_currency" placeholder="৳"/>
+      <label>About — Paragraph 1</label>
+      <textarea id="s_aboutP1"></textarea>
+      <label>About — Paragraph 2</label>
+      <textarea id="s_aboutP2"></textarea>
+      <div class="grid2">
+        <div><label>Stat 1 (e.g. 500+)</label><input id="s_stat1"/></div>
+        <div><label>Stat 2</label><input id="s_stat2"/></div>
+      </div>
+      <label>Stat 3</label>
+      <input id="s_stat3"/>
+    </div>
+    <div class="save-bar"><button class="btn btn-gold" onclick="saveSettings()">Save Settings</button></div>
+  </div>
+
+  <!-- USERS -->
+  <div class="panel" id="panel-users">
+    <div class="panel-head"><h2>Admin Users</h2></div>
+    <div class="hint">✅ এখানে যা Add/Remove করবে সব ডিভাইসে সাথে সাথে sync হয়ে যাবে — যেকোনো ফোন/কম্পিউটার থেকে একই username/password দিয়ে login করা যাবে।</div>
+    <div id="userList"></div>
+    <div class="card">
+      <label>New Username</label><input id="u_username"/>
+      <label>New Password</label><input id="u_password"/>
+      <label>Display Name</label><input id="u_name"/>
+      <label>Role</label>
+      <select id="u_role"><option value="moderator">Moderator</option><option value="master_admin">Master Admin</option></select>
+      <div style="margin-top:16px"><button class="btn btn-gold" onclick="addUser()">+ Add User</button></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PRODUCT FORM MODAL (simple inline overlay) -->
+<div id="prodModalBg" style="display:none;position:fixed;inset:0;background:#000000cc;z-index:100;align-items:center;justify-content:center;padding:20px;overflow:auto">
+  <div class="card" style="max-width:520px;width:100%;max-height:90vh;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h3 id="prodFormTitle" style="font-family:'Playfair Display',serif">Add Product</h3>
+      <button class="close-x" onclick="closeProductForm()">✕</button>
+    </div>
+    <input type="hidden" id="p_id"/>
+    <label>Name *</label><input id="p_name"/>
+    <label>Product Code</label><input id="p_code" placeholder="ST-TS-010"/>
+    <div class="grid2">
+      <div><label>Price *</label><input id="p_price" type="number"/></div>
+      <div><label>Old Price (optional)</label><input id="p_oldPrice" type="number"/></div>
+    </div>
+    <div class="grid2">
+      <div><label>Category</label><select id="p_category"></select></div>
+      <div><label>Stock</label><input id="p_stock" type="number" value="10"/></div>
+    </div>
+    <div class="grid2">
+      <div><label>Badge</label>
+        <select id="p_badge">
+          <option value="">None</option>
+          <option value="New">New</option>
+          <option value="Hot">Hot</option>
+          <option value="Limited">Limited</option>
+          <option value="Sale">Sale</option>
+          <option value="Bestseller">Bestseller</option>
+        </select>
+      </div>
+      <div><label>Card Color</label><input id="p_color" type="color" value="#7B1A1A"/></div>
+    </div>
+    <label>Image URL (optional)</label><input id="p_image" placeholder="https://..."/>
+    <label>Available Sizes</label>
+    <div class="size-check" id="p_sizes"></div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-ghost" onclick="closeProductForm()">Cancel</button>
+      <button class="btn btn-gold" onclick="saveProduct()">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-let selectedRole = 'admin';
+// ============================================================
+// SESSION / ROLE
+// ============================================================
+const session = JSON.parse(sessionStorage.getItem('shirtory_session'));
+const isMaster = session.role === 'master_admin';
 
-const DEFAULT_USERS = [
-  {username:'admin',password:'shirtory2026',role:'master_admin',name:'Master Admin'},
-  {username:'mod1',password:'mod123',role:'moderator',name:'Moderator 1'},
-];
+document.getElementById('whoName').textContent = 'Hi, ' + (session.name || session.username);
+const rolePill = document.getElementById('rolePill');
+rolePill.textContent = isMaster ? 'Master Admin' : 'Moderator';
+rolePill.classList.add(isMaster ? 'master' : 'mod');
 
-function getUsers(){
-  return JSON.parse(localStorage.getItem('shirtory_users')||JSON.stringify(DEFAULT_USERS));
+if(!isMaster){
+  document.getElementById('tabSettingsBtn').style.display = 'none';
+  document.getElementById('tabUsersBtn').style.display = 'none';
+  document.getElementById('ordersHint').textContent = 'তুমি Moderator হিসেবে অর্ডার দেখতে পারবে। Status পরিবর্তন / delete শুধু Master Admin করতে পারবে।';
 }
 
-function setRole(role,btn){
-  selectedRole = role;
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const hint = document.getElementById('roleHint');
-  if(role==='admin'){
-    hint.textContent='Master Admin — Full access to all settings';
-    hint.style.color='#e63946'; hint.style.borderColor='#e6394640'; hint.style.background='#e6394615';
+function logout(){
+  sessionStorage.removeItem('shirtory_session');
+  window.location.href = 'admin.html';
+}
+
+function showTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+name));
+}
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>{ t.style.display='none'; }, 2600);
+}
+
+// ============================================================
+// PRODUCTS
+// ============================================================
+const ALL_CATEGORIES=['shirt','polo','tshirt','hoodie','sweatshirt','jacket','bottoms','accessories'];
+const CAT_LABELS={shirt:'Shirts',polo:'Polo Tee',tshirt:'Drop Shoulder Tee',hoodie:'Hoodie',sweatshirt:'Sweatshirt',jacket:'Jacket',bottoms:'Bottoms',accessories:'Accessories'};
+const ALL_SIZES=['S','M','L','XL','XXL'];
+
+document.getElementById('p_category').innerHTML = ALL_CATEGORIES.map(c=>'<option value="'+c+'">'+CAT_LABELS[c]+'</option>').join('');
+document.getElementById('p_sizes').innerHTML = ALL_SIZES.map(sz=>'<label><input type="checkbox" value="'+sz+'"/> '+sz+'</label>').join('');
+
+let products = [];
+
+function renderProductList(){
+  const wrap = document.getElementById('productList');
+  if(!products.length){ wrap.innerHTML = '<div class="empty">কোনো Product নেই — উপরে থেকে Add Product চাপো।</div>'; return; }
+  wrap.innerHTML = products.map(p=>{
+    const stock = typeof p.stock==='number' ? p.stock : 0;
+    const sc = stock<=0 ? 'stock-out' : (stock<=5 ? 'stock-low' : 'stock-ok');
+    const stockLbl = stock<=0 ? 'Sold Out' : stock+' in stock';
+    const thumb = p.image ? '<img src="'+p.image+'" onerror="this.parentElement.textContent=\''+(p.name?p.name[0]:'?')+'\'"/>' : (p.name?p.name[0]:'?');
+    return '<div class="prod-item">'
+      + '<div class="prod-thumb">'+thumb+'</div>'
+      + '<div class="prod-info"><div class="n">'+p.name+'</div>'
+      + '<div class="m">'+(p.code||'')+' · '+(CAT_LABELS[p.category]||p.category)+' · ৳'+p.price+(p.oldPrice>p.price?' <s style="color:#666">৳'+p.oldPrice+'</s>':'')+'</div>'
+      + '<span class="stock-badge '+sc+'" style="margin-top:6px;display:inline-block">'+stockLbl+'</span></div>'
+      + '<div class="prod-actions">'
+      + '<button class="btn btn-ghost btn-sm" onclick="editProduct('+p.id+')">Edit</button>'
+      + (isMaster ? '<button class="btn btn-danger btn-sm" onclick="deleteProduct('+p.id+')">Delete</button>' : '')
+      + '</div></div>';
+  }).join('');
+}
+
+function nextProductId(){
+  return products.length ? Math.max(...products.map(p=>Number(p.id)||0)) + 1 : 1;
+}
+
+function openProductForm(){
+  document.getElementById('prodFormTitle').textContent = 'Add Product';
+  document.getElementById('p_id').value = '';
+  document.getElementById('p_name').value = '';
+  document.getElementById('p_code').value = '';
+  document.getElementById('p_price').value = '';
+  document.getElementById('p_oldPrice').value = '';
+  document.getElementById('p_category').value = ALL_CATEGORIES[0];
+  document.getElementById('p_stock').value = 10;
+  document.getElementById('p_badge').value = '';
+  document.getElementById('p_color').value = '#7B1A1A';
+  document.getElementById('p_image').value = '';
+  document.querySelectorAll('#p_sizes input').forEach(cb=>cb.checked=false);
+  document.getElementById('prodModalBg').style.display = 'flex';
+}
+function closeProductForm(){ document.getElementById('prodModalBg').style.display = 'none'; }
+
+function editProduct(id){
+  const p = products.find(x=>String(x.id)===String(id));
+  if(!p) return;
+  document.getElementById('prodFormTitle').textContent = 'Edit Product';
+  document.getElementById('p_id').value = p.id;
+  document.getElementById('p_name').value = p.name||'';
+  document.getElementById('p_code').value = p.code||'';
+  document.getElementById('p_price').value = p.price||0;
+  document.getElementById('p_oldPrice').value = p.oldPrice||'';
+  document.getElementById('p_category').value = p.category||ALL_CATEGORIES[0];
+  document.getElementById('p_stock').value = typeof p.stock==='number'?p.stock:0;
+  document.getElementById('p_badge').value = p.badge||'';
+  document.getElementById('p_color').value = p.color||'#7B1A1A';
+  document.getElementById('p_image').value = p.image||'';
+  const sizes = p.sizes||[];
+  document.querySelectorAll('#p_sizes input').forEach(cb=>cb.checked = sizes.includes(cb.value));
+  document.getElementById('prodModalBg').style.display = 'flex';
+}
+
+async function saveProduct(){
+  const name = document.getElementById('p_name').value.trim();
+  const price = Number(document.getElementById('p_price').value);
+  if(!name || !price){ toast('❌ Name ও Price দিতে হবে'); return; }
+
+  const idVal = document.getElementById('p_id').value;
+  const sizes = Array.from(document.querySelectorAll('#p_sizes input:checked')).map(cb=>cb.value);
+  const data = {
+    id: idVal ? Number(idVal) : nextProductId(),
+    name, price,
+    oldPrice: Number(document.getElementById('p_oldPrice').value)||0,
+    code: document.getElementById('p_code').value.trim(),
+    category: document.getElementById('p_category').value,
+    stock: Number(document.getElementById('p_stock').value)||0,
+    badge: document.getElementById('p_badge').value,
+    color: document.getElementById('p_color').value,
+    image: document.getElementById('p_image').value.trim(),
+    sizes
+  };
+
+  if(idVal){
+    products = products.map(p => String(p.id)===String(idVal) ? data : p);
   } else {
-    hint.textContent='Moderator — Can manage products & view orders';
-    hint.style.color='#f4a261'; hint.style.borderColor='#f4a26140'; hint.style.background='#f4a26115';
+    products.push(data);
+  }
+
+  await persistProducts();
+  closeProductForm();
+  toast('✅ Product Saved');
+}
+
+async function deleteProduct(id){
+  if(!confirm('এই Product Delete করতে চাও?')) return;
+  products = products.filter(p=>String(p.id)!==String(id));
+  await persistProducts();
+  toast('🗑️ Product Deleted');
+}
+
+async function persistProducts(){
+  renderProductList();
+  try{
+    await db.collection('shirtory').doc('products').set({ list: products });
+  }catch(err){
+    console.error(err);
+    toast('❌ Save করা যায়নি: ইন্টারনেট চেক করো');
   }
 }
 
-function togglePW(){
-  const inp = document.getElementById('password');
-  inp.type = inp.type==='password' ? 'text' : 'password';
+db.collection('shirtory').doc('products').onSnapshot(doc=>{
+  products = (doc.exists && Array.isArray(doc.data().list)) ? doc.data().list : [];
+  renderProductList();
+}, err=>{ console.error(err); toast('❌ Product লোড করতে সমস্যা হচ্ছে'); });
+
+// ============================================================
+// ORDERS
+// ============================================================
+const STATUS_LABELS = {pending:'Pending',confirmed:'Confirmed ✅',shipped:'Shipped 🚚',delivered:'Delivered 🏠'};
+
+function renderOrders(orders){
+  const wrap = document.getElementById('orderList');
+  if(!orders.length){ wrap.innerHTML = '<div class="empty">এখনো কোনো Order আসেনি।</div>'; return; }
+  wrap.innerHTML = orders.map(o=>{
+    const statusOpts = Object.keys(STATUS_LABELS).map(k=>'<option value="'+k+'"'+(o.status===k?' selected':'')+'>'+STATUS_LABELS[k]+'</option>').join('');
+    return '<div class="order-card">'
+      + '<div class="order-top">'
+      + '<div><div class="order-id">'+o.id+'</div><div class="order-meta">'+(o.date||'')+' · '+o.name+'</div></div>'
+      + '<div style="display:flex;gap:8px;align-items:center">'
+      + '<select class="status-select" '+(isMaster?'':'disabled')+' onchange="updateStatus(\''+o.id+'\',this.value)">'+statusOpts+'</select>'
+      + (isMaster ? '<button class="btn btn-danger btn-sm" onclick="deleteOrder(\''+o.id+'\')">Delete</button>' : '')
+      + '</div></div>'
+      + '<div class="order-body">'
+      + '<div><b>Phone</b>'+(o.phone||'—')+'</div>'
+      + '<div><b>Amount</b>'+(o.amount?(o.currency||'৳')+o.amount:'কথা বলে জানানো হবে')+'</div>'
+      + '<div class="full"><b>Product</b>'+(o.product||'—')+' x '+(o.qty||1)+'</div>'
+      + '<div class="full"><b>Address</b>'+(o.address||'—')+'</div>'
+      + (o.note ? '<div class="full"><b>Note</b>'+o.note+'</div>' : '')
+      + (o.image ? '<div class="full"><b>Photo</b><a href="'+o.image+'" target="_blank" style="color:var(--accent)">ছবি দেখুন →</a></div>' : '')
+      + '</div></div>';
+  }).join('');
 }
 
-function login(){
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value;
-  const errEl = document.getElementById('errorMsg');
-  errEl.style.display='none';
-
-  const users = getUsers();
-  const user = users.find(u=>u.username===username && u.password===password);
-
-  if(!user){ errEl.style.display='block'; return; }
-
-  const isAdminRole = selectedRole==='admin';
-  const isMasterAdmin = user.role==='master_admin';
-  const isMod = user.role==='moderator';
-
-  if(isAdminRole && !isMasterAdmin){ errEl.textContent='❌ This account is not a Master Admin'; errEl.style.display='block'; return; }
-  if(!isAdminRole && !isMod){ errEl.textContent='❌ This account is not a Moderator'; errEl.style.display='block'; return; }
-
-  // Save session
-  sessionStorage.setItem('shirtory_session', JSON.stringify({
-    username:user.username, role:user.role, name:user.name, loginTime:Date.now()
-  }));
-  window.location.href='dashboard.html';
+async function updateStatus(id, status){
+  if(!isMaster) return;
+  try{
+    await db.collection('orders').doc(id).update({status});
+    toast('✅ Status Updated');
+  }catch(err){ console.error(err); toast('❌ Status update করা যায়নি'); }
 }
 
-// Auto-focus
-window.onload = ()=>{ document.getElementById('username').focus(); }
+async function deleteOrder(id){
+  if(!isMaster) return;
+  if(!confirm('এই Order Delete করতে চাও?')) return;
+  try{
+    await db.collection('orders').doc(id).delete();
+    toast('🗑️ Order Deleted');
+  }catch(err){ console.error(err); toast('❌ Delete করা যায়নি'); }
+}
+
+db.collection('orders').orderBy('createdAt','desc').onSnapshot(snap=>{
+  const orders = snap.docs.map(d=>d.data());
+  renderOrders(orders);
+}, err=>{
+  console.error(err);
+  // Fallback without orderBy in case an index/createdAt issue occurs
+  db.collection('orders').get().then(snap=>{
+    const orders = snap.docs.map(d=>d.data());
+    renderOrders(orders);
+  }).catch(e2=>{ console.error(e2); toast('❌ Order লোড করতে সমস্যা হচ্ছে'); });
+});
+
+// ============================================================
+// SETTINGS (master only)
+// ============================================================
+async function saveSettings(){
+  const data = {
+    currency: document.getElementById('s_currency').value.trim() || '৳',
+    aboutP1: document.getElementById('s_aboutP1').value.trim(),
+    aboutP2: document.getElementById('s_aboutP2').value.trim(),
+    stat1: document.getElementById('s_stat1').value.trim(),
+    stat2: document.getElementById('s_stat2').value.trim(),
+    stat3: document.getElementById('s_stat3').value.trim(),
+  };
+  try{
+    await db.collection('shirtory').doc('settings').set(data, {merge:true});
+    toast('✅ Settings Saved');
+  }catch(err){ console.error(err); toast('❌ Save করা যায়নি'); }
+}
+
+db.collection('shirtory').doc('settings').onSnapshot(doc=>{
+  if(!doc.exists) return;
+  const s = doc.data();
+  document.getElementById('s_currency').value = s.currency||'৳';
+  document.getElementById('s_aboutP1').value = s.aboutP1||'';
+  document.getElementById('s_aboutP2').value = s.aboutP2||'';
+  document.getElementById('s_stat1').value = s.stat1||'';
+  document.getElementById('s_stat2').value = s.stat2||'';
+  document.getElementById('s_stat3').value = s.stat3||'';
+}, err=>console.error(err));
+
+// ============================================================
+// ADMIN USERS (master only) — synced via Firestore (shirtory/users)
+// so accounts you add work from ANY device, not just this browser.
+// ============================================================
+const DEFAULT_USERS = [
+  {username:'shirtory', password:'786786', role:'master_admin', name:'Master Admin'},
+  {username:'mod1', password:'mod123', role:'moderator', name:'Moderator 1'},
+];
+
+let cloudUsers = null; // current synced list (null until first snapshot)
+
+function renderUsers(){
+  const list = (Array.isArray(cloudUsers) && cloudUsers.length) ? cloudUsers : DEFAULT_USERS;
+  document.getElementById('userList').innerHTML = list.map(u=>
+    '<div class="userrow"><div><b>'+u.name+'</b> — @'+u.username+' <span class="role-pill '+(u.role==='master_admin'?'master':'mod')+'" style="margin-left:8px">'+(u.role==='master_admin'?'Master Admin':'Moderator')+'</span></div>'
+    + '<button class="btn btn-danger btn-sm" onclick="removeUser(\''+u.username+'\')">Remove</button></div>'
+  ).join('');
+}
+
+async function persistUsers(list){
+  try{
+    await db.collection('shirtory').doc('users').set({ list });
+  }catch(err){
+    console.error(err);
+    toast('❌ Save করা যায়নি: ইন্টারনেট চেক করো');
+  }
+}
+
+async function addUser(){
+  const username = document.getElementById('u_username').value.trim();
+  const password = document.getElementById('u_password').value;
+  const name = document.getElementById('u_name').value.trim() || username;
+  const role = document.getElementById('u_role').value;
+  if(!username || !password){ toast('❌ Username ও Password দিতে হবে'); return; }
+
+  const list = (Array.isArray(cloudUsers) && cloudUsers.length) ? [...cloudUsers] : [...DEFAULT_USERS];
+  if(list.some(u=>u.username.toLowerCase()===username.toLowerCase())){
+    toast('❌ এই Username আগে থেকেই আছে');
+    return;
+  }
+  list.push({username, password, role, name});
+  await persistUsers(list);
+  document.getElementById('u_username').value='';
+  document.getElementById('u_password').value='';
+  document.getElementById('u_name').value='';
+  toast('✅ User Added — এখন যেকোনো ডিভাইস থেকে login করা যাবে');
+}
+
+async function removeUser(username){
+  const list = (Array.isArray(cloudUsers) && cloudUsers.length) ? [...cloudUsers] : [...DEFAULT_USERS];
+  const target = list.find(u=>u.username===username);
+  if(target && target.role==='master_admin' && list.filter(u=>u.role==='master_admin').length<=1){
+    toast('❌ শেষ Master Admin remove করা যাবে না');
+    return;
+  }
+  if(!confirm('@'+username+' কে remove করতে চাও?')) return;
+  await persistUsers(list.filter(u=>u.username!==username));
+  toast('🗑️ User Removed');
+}
+
+db.collection('shirtory').doc('users').onSnapshot(doc=>{
+  cloudUsers = (doc.exists && Array.isArray(doc.data().list)) ? doc.data().list : null;
+  if(isMaster) renderUsers();
+}, err=>{ console.error(err); if(isMaster) toast('❌ User list লোড করতে সমস্যা হচ্ছে'); });
 </script>
 </body>
 </html>
