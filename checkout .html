@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Place Order — ShirTory</title>
+<link rel="icon" type="image/png" href="images/logo.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB0NMwYgWK7Zr76urLEkcQfv1pTDXJ4SmM",
+    authDomain: "shirtory-4bcae.firebaseapp.com",
+    projectId: "shirtory-4bcae",
+    storageBucket: "shirtory-4bcae.firebasestorage.app",
+    messagingSenderId: "634050233913",
+    appId: "1:634050233913:web:3b46991a205f3160956fe8",
+    measurementId: "G-5YPCEJ34BE"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+<style>
+  :root{
+    --primary:#7B1A1A; --primary-dark:#5a1212; --gold:#C9A84C;
+    --bg:#f8f8f8; --white:#ffffff; --ink:#1a1a1a; --muted:#6b7280; --border:#e5e7eb;
+    --shadow:0 4px 20px rgba(0,0,0,0.08);
+  }
+  *,*::before,*::after{box-sizing:border-box; margin:0; padding:0}
+  body{font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); padding:20px 16px 60px; min-height:100vh}
+  a{color:inherit}
+  .wrap{max-width:560px; margin:0 auto}
+  .top-bar{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px}
+  .back-link{display:flex; align-items:center; gap:6px; font-size:0.82rem; font-weight:600; color:var(--muted); text-decoration:none}
+  .logo-row{display:flex; align-items:center; gap:8px}
+  .logo-row img{width:26px; height:26px; object-fit:contain}
+  .logo-row span{font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--primary)}
+  h1.page-title{font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:4px}
+  .page-sub{font-size:0.85rem; color:var(--muted); margin-bottom:20px}
+
+  .card{background:var(--white); border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--border); padding:22px; margin-bottom:16px}
+  .card h3{font-size:0.95rem; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px}
+  .step-num{width:22px; height:22px; border-radius:50%; background:var(--primary); color:#fff; font-size:0.72rem; display:flex; align-items:center; justify-content:center; flex-shrink:0}
+
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .form-group{margin-bottom:14px}
+  .form-group:last-child{margin-bottom:0}
+  .f-label{display:block; font-size:0.75rem; font-weight:600; color:var(--muted); margin-bottom:6px}
+  .f-input{width:100%; padding:11px 13px; border:1.5px solid var(--border); border-radius:8px; font:inherit; font-size:0.88rem; background:var(--bg); color:var(--ink); outline:none; transition:border-color .15s}
+  .f-input:focus{border-color:var(--primary); background:var(--white)}
+  textarea.f-input{resize:vertical; min-height:74px}
+
+  .zone-row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .zone-opt{position:relative}
+  .zone-opt input{position:absolute; opacity:0; inset:0; cursor:pointer; margin:0}
+  .zone-card{border:1.5px solid var(--border); border-radius:10px; padding:14px; text-align:center; transition:all .15s; cursor:pointer}
+  .zone-opt input:checked + .zone-card{border-color:var(--primary); background:#fbf1f1}
+  .zone-name{font-weight:700; font-size:0.85rem; margin-bottom:3px}
+  .zone-price{font-size:0.78rem; color:var(--primary); font-weight:700}
+
+  .qty-stepper{display:flex; align-items:center; gap:0; border:1.5px solid var(--border); border-radius:8px; overflow:hidden; background:var(--bg); width:fit-content}
+  .qty-btn{width:38px; height:40px; background:var(--white); border:none; font-size:1.1rem; font-weight:700; color:var(--primary); cursor:pointer}
+  .qty-stepper input{width:52px; text-align:center; border:none; background:transparent; font:inherit; font-weight:700; font-size:0.95rem; -moz-appearance:textfield}
+  .qty-stepper input::-webkit-outer-spin-button, .qty-stepper input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
+
+  .summary-row{display:flex; justify-content:space-between; align-items:center; padding:8px 0; font-size:0.85rem; color:var(--muted)}
+  .summary-row.total{border-top:1.5px dashed var(--border); margin-top:6px; padding-top:14px; font-size:1.05rem; font-weight:700; color:var(--ink)}
+  .summary-row.total .amt{font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--primary)}
+
+  .img-preview-wrap{display:none; align-items:center; gap:10px; margin-top:8px}
+  .img-preview-wrap img{width:60px; height:60px; object-fit:cover; border-radius:6px; border:1px solid var(--border)}
+  .img-remove{font-size:0.75rem; color:var(--primary); background:none; border:none; cursor:pointer; text-decoration:underline; padding:0}
+  .img-hint{color:var(--muted); font-size:0.7rem; display:block; margin-top:5px}
+
+  .btn-submit{width:100%; display:flex; align-items:center; justify-content:center; gap:9px; background:#25D366; color:#fff; padding:15px; border-radius:10px; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; transition:opacity .15s}
+  .btn-submit:hover{opacity:.92}
+  .btn-submit:disabled{opacity:.6; cursor:not-allowed}
+  .btn-submit svg{width:19px; height:19px; fill:#fff}
+  .form-hint{text-align:center; font-size:0.72rem; color:var(--muted); margin-top:10px}
+
+  .success-box{display:none; background:#d1e7dd; border:1px solid #0a3622; border-radius:10px; padding:18px; text-align:center; margin-top:14px}
+  .success-box .ttl{font-weight:700; color:#0a3622; font-size:0.95rem}
+  .success-box .sub{font-size:0.82rem; color:#0a3622; margin-top:5px}
+  .save-warn{display:none; background:#fff3cd; border:1px solid #856404; color:#5c4a05; border-radius:8px; padding:10px 12px; font-size:0.75rem; margin-top:10px}
+
+  .err-text{color:#b91c1c; font-size:0.75rem; margin-top:5px; display:none}
+
+  @media(max-width:420px){ .form-row{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <a href="index.html" class="back-link">&larr; Home</a>
+    <div class="logo-row"><img src="images/logo.png" alt="ShirTory"/><span>Shir<span style="color:var(--gold)">Tory</span></span></div>
+  </div>
+  <h1 class="page-title">Place Your Order</h1>
+  <p class="page-sub">নিচের ফর্মটি পূরণ করুন — সব শেষে আপনার সব তথ্যসহ WhatsApp মেসেজ তৈরি হয়ে যাবে, শুধু Send করবেন।</p>
+
+  <!-- STEP 1: PRODUCT -->
+  <div class="card">
+    <h3><span class="step-num">1</span> Product</h3>
+    <div class="form-group">
+      <label class="f-label">Product বেছে নিন *</label>
+      <select class="f-input" id="cf_productSelect" onchange="onProductSelect()"></select>
+    </div>
+    <div class="form-group" id="cf_customWrap" style="display:none">
+      <label class="f-label">Product এর নাম / বিবরণ লিখুন *</label>
+      <input class="f-input" id="cf_customProduct" placeholder="যেমন: Custom Printed Tee — নিজের ডিজাইন"/>
+    </div>
+    <div class="form-row">
+      <div class="form-group" id="cf_sizeWrap" style="display:none">
+        <label class="f-label">Size</label>
+        <select class="f-input" id="cf_size"></select>
+      </div>
+      <div class="form-group">
+        <label class="f-label">Quantity *</label>
+        <div class="qty-stepper">
+          <button type="button" class="qty-btn" onclick="stepQty(-1)">&minus;</button>
+          <input type="number" id="cf_qty" value="1" min="1" oninput="updateSummary()"/>
+          <button type="button" class="qty-btn" onclick="stepQty(1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="f-label">ছবি যুক্ত করুন (ঐচ্ছিক — কাস্টম ডিজাইন / রেফারেন্স ছবি)</label>
+      <input class="f-input" type="file" accept="image/*" id="cf_image" onchange="onImageSelect(event)"/>
+      <div id="cf_imagePreviewWrap" class="img-preview-wrap">
+        <img id="cf_imagePreview"/>
+        <button type="button" class="img-remove" onclick="removeImage()">ছবি সরিয়ে ফেলুন</button>
+      </div>
+      <small id="cf_imgHint" class="img-hint"></small>
+    </div>
+  </div>
+
+  <!-- STEP 2: DELIVERY -->
+  <div class="card">
+    <h3><span class="step-num">2</span> Delivery</h3>
+    <div class="form-group">
+      <label class="f-label">Delivery Zone *</label>
+      <div class="zone-row">
+        <label class="zone-opt">
+          <input type="radio" name="zone" value="inside" checked onchange="updateSummary()"/>
+          <div class="zone-card">
+            <div class="zone-name">Inside Dhaka</div>
+            <div class="zone-price">৳70</div>
+          </div>
+        </label>
+        <label class="zone-opt">
+          <input type="radio" name="zone" value="outside" onchange="updateSummary()"/>
+          <div class="zone-card">
+            <div class="zone-name">Outside Dhaka</div>
+            <div class="zone-price">৳150</div>
+          </div>
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="f-label">সম্পূর্ণ ঠিকানা / Full Delivery Address *</label>
+      <textarea class="f-input" id="cf_address" placeholder="বাসা/রোড/এলাকা, থানা, জেলা — যেমন: House 12, Road 3, Mirpur-1, Dhaka"></textarea>
+      <div class="err-text" id="cf_addressErr">ঠিকানা দিন (কমপক্ষে ১০ অক্ষর)</div>
+    </div>
+    <div class="form-group">
+      <label class="f-label">Extra Note (optional)</label>
+      <textarea class="f-input" id="cf_note" placeholder="কোনো বিশেষ কথা থাকলে লিখুন…" style="min-height:56px"></textarea>
+    </div>
+  </div>
+
+  <!-- STEP 3: CONTACT -->
+  <div class="card">
+    <h3><span class="step-num">3</span> Your Details</h3>
+    <div class="form-row">
+      <div class="form-group"><label class="f-label">Your Name *</label><input class="f-input" id="cf_name" placeholder="Shafi"/></div>
+      <div class="form-group"><label class="f-label">Phone *</label><input class="f-input" id="cf_phone" placeholder="01XXX-XXXXXX" inputmode="tel"/></div>
+    </div>
+  </div>
+
+  <!-- STEP 4: SUMMARY + SUBMIT -->
+  <div class="card">
+    <h3><span class="step-num">4</span> Order Summary</h3>
+    <div class="summary-row"><span id="sum_prodLine">Product</span><span id="sum_prodAmt">—</span></div>
+    <div class="summary-row"><span id="sum_zoneLine">Delivery (Inside Dhaka)</span><span id="sum_zoneAmt">৳70</span></div>
+    <div class="summary-row total"><span>Total Amount</span><span class="amt" id="sum_total">৳70</span></div>
+
+    <button class="btn-submit" id="cf_submitBtn" onclick="placeOrder()">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span id="cf_submitLabel">WhatsApp এ Order করুন</span>
+    </button>
+    <p class="form-hint">Submit করলে WhatsApp খুলবে, সব তথ্যসহ মেসেজ রেডি থাকবে — শুধু Send করুন ✅</p>
+    <div class="save-warn" id="cf_saveWarn">⚠️ Order details WhatsApp-এ পাঠানো হয়েছে, তবে আমাদের সার্ভারে সেভ করা যায়নি (ইন্টারনেট/পারমিশন ইস্যু)। চিন্তা নেই — WhatsApp-এ Send করলেই আমরা অর্ডারটি পেয়ে যাব।</div>
+    <div class="success-box" id="cf_successBox">
+      <div class="ttl">✅ Order তৈরি হয়েছে!</div>
+      <div class="sub">আপনার Order ID: <b id="cf_successId">—</b></div>
+      <div class="sub">WhatsApp চ্যাটে গিয়ে মেসেজটি Send করুন যেন আমরা কনফার্ম করতে পারি।</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const WA='8801540406490';
+const ZONE_FEE={inside:70,outside:150};
+const ZONE_LABEL={inside:'Inside Dhaka',outside:'Outside Dhaka'};
+const ALL_SIZES=['S','M','L','XL','XXL'];
+const DEFAULT_PRODUCTS=[
+  {id:1,name:"Classic Logo Tee",code:"ST-TS-001",price:550,oldPrice:0,category:"tshirt",color:"#7B1A1A",badge:"Bestseller",image:"",stock:24,sizes:["S","M","L","XL"]},
+  {id:2,name:"Deshi Pride Graphic Tee",code:"ST-TS-002",price:650,oldPrice:800,category:"tshirt",color:"#457b9d",badge:"Sale",image:"",stock:14,sizes:["M","L","XL"]},
+  {id:3,name:"Premium Cotton Polo",code:"ST-PO-003",price:750,oldPrice:0,category:"polo",color:"#2d6a4f",badge:"Hot",image:"",stock:3,sizes:["S","M","L"]},
+  {id:4,name:"Oxford Formal Shirt",code:"ST-SH-004",price:950,oldPrice:1100,category:"shirt",color:"#1e3a5f",badge:"Sale",image:"",stock:18,sizes:["M","L","XL","XXL"]},
+  {id:5,name:"Pullover Hoodie",code:"ST-HD-005",price:1450,oldPrice:0,category:"hoodie",color:"#3d405b",badge:"New",image:"",stock:0,sizes:[]},
+  {id:6,name:"Essential Crewneck Sweatshirt",code:"ST-SW-006",price:1150,oldPrice:0,category:"sweatshirt",color:"#264653",badge:"",image:"",stock:9,sizes:["S","M","L","XL"]},
+  {id:7,name:"Denim Jacket",code:"ST-JK-007",price:2200,oldPrice:2500,category:"jacket",color:"#264653",badge:"Limited",image:"",stock:6,sizes:["M","L","XL"]},
+  {id:8,name:"Cargo Pants",code:"ST-BT-008",price:1200,oldPrice:0,category:"bottoms",color:"#6b4226",badge:"",image:"",stock:11,sizes:["S","M","L","XL"]},
+  {id:9,name:"Embroidered Cap",code:"ST-AC-009",price:500,oldPrice:0,category:"accessories",color:"#333",badge:"New",image:"",stock:30,sizes:[]},
+];
+let cloudProducts=null, cloudSettings=null;
+function getProducts(){
+  const stored=cloudProducts || JSON.parse(localStorage.getItem('shirtory_products')||'null');
+  if(!stored) return DEFAULT_PRODUCTS;
+  return stored.map(p=>({oldPrice:0,stock:10,sizes:["S","M","L","XL"],category:p.category||'tshirt',...p}));
+}
+function getSettings(){return cloudSettings || JSON.parse(localStorage.getItem('shirtory_settings')||'{}');}
+function getParam(name){return new URLSearchParams(location.search).get(name);}
+
+let cf_selectedImage=null;
+
+function populateProductSelect(){
+  const sel=document.getElementById('cf_productSelect');
+  const prevVal=sel.value || getParam('pid') || '';
+  const list=getProducts().filter(p=>(typeof p.stock!=='number')||p.stock>0);
+  sel.innerHTML='<option value="">-- একটি প্রোডাক্ট সিলেক্ট করুন --</option>'+
+    list.map(p=>'<option value="'+p.id+'">'+p.name+' — '+(getSettings().currency||'৳')+p.price+'</option>').join('')+
+    '<option value="custom">🎨 Custom / অন্য কিছু (নিজে লিখব)</option>';
+  if(prevVal && sel.querySelector('option[value="'+prevVal+'"]')) sel.value=prevVal;
+  onProductSelect();
+}
+
+function onProductSelect(){
+  const val=document.getElementById('cf_productSelect').value;
+  const customWrap=document.getElementById('cf_customWrap');
+  const sizeWrap=document.getElementById('cf_sizeWrap');
+  const sizeSel=document.getElementById('cf_size');
+  customWrap.style.display = (val==='custom') ? 'block' : 'none';
+  if(val && val!=='custom'){
+    const p=getProducts().find(x=>String(x.id)===String(val));
+    const sizes=(p&&p.sizes)||[];
+    if(sizes.length){
+      sizeWrap.style.display='block';
+      sizeSel.innerHTML=sizes.map(s=>'<option value="'+s+'">'+s+'</option>').join('');
+    } else { sizeWrap.style.display='none'; }
+  } else { sizeWrap.style.display='none'; }
+  updateSummary();
+}
+
+function stepQty(delta){
+  const inp=document.getElementById('cf_qty');
+  inp.value=Math.max(1,(parseInt(inp.value)||1)+delta);
+  updateSummary();
+}
+
+function currentZone(){ return document.querySelector('input[name="zone"]:checked').value; }
+
+function updateSummary(){
+  const val=document.getElementById('cf_productSelect').value;
+  const qty=Math.max(1, parseInt(document.getElementById('cf_qty').value)||1);
+  const cur=getSettings().currency||'৳';
+  const zone=currentZone();
+  const fee=ZONE_FEE[zone];
+  document.getElementById('sum_zoneLine').textContent='Delivery ('+ZONE_LABEL[zone]+')';
+  document.getElementById('sum_zoneAmt').textContent=cur+fee;
+
+  let subtotal=0, known=false;
+  if(val && val!=='custom'){
+    const p=getProducts().find(x=>String(x.id)===String(val));
+    if(p){ subtotal=p.price*qty; known=true;
+      document.getElementById('sum_prodLine').textContent=p.name+' x '+qty;
+      document.getElementById('sum_prodAmt').textContent=cur+subtotal;
+    }
+  }
+  if(!known){
+    document.getElementById('sum_prodLine').textContent=val==='custom' ? 'Custom product' : 'Product';
+    document.getElementById('sum_prodAmt').textContent='কথা বলে জানানো হবে';
+  }
+  document.getElementById('sum_total').textContent = known ? cur+(subtotal+fee) : cur+fee+' + product';
+}
+
+function onImageSelect(ev){
+  const file=ev.target.files[0];
+  const hint=document.getElementById('cf_imgHint');
+  if(!file){ return; }
+  if(!file.type.startsWith('image/')){ hint.textContent='শুধু ছবি ফাইল আপলোড করুন।'; ev.target.value=''; return; }
+  hint.textContent='ছবি প্রসেস হচ্ছে…';
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const img=new Image();
+    img.onload=function(){
+      const maxDim=1000;
+      let w=img.width, h=img.height;
+      if(w>h && w>maxDim){ h=Math.round(h*maxDim/w); w=maxDim; }
+      else if(h>maxDim){ w=Math.round(w*maxDim/h); h=maxDim; }
+      const canvas=document.createElement('canvas');
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      let quality=0.7;
+      let dataUrl=canvas.toDataURL('image/jpeg',quality);
+      while(dataUrl.length>700000 && quality>0.25){ quality-=0.1; dataUrl=canvas.toDataURL('image/jpeg',quality); }
+      if(dataUrl.length>700000){
+        hint.textContent='⚠️ ছবিটা এখনও অনেক বড়, দয়া করে অন্য একটা ছোট ছবি ব্যবহার করুন।';
+        cf_selectedImage=null; ev.target.value=''; return;
+      }
+      cf_selectedImage=dataUrl;
+      document.getElementById('cf_imagePreview').src=dataUrl;
+      document.getElementById('cf_imagePreviewWrap').style.display='flex';
+      hint.textContent='✅ ছবি যুক্ত হয়েছে';
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function removeImage(){
+  cf_selectedImage=null;
+  document.getElementById('cf_image').value='';
+  document.getElementById('cf_imagePreviewWrap').style.display='none';
+  document.getElementById('cf_imgHint').textContent='';
+}
+
+function generateOrderId(){
+  return 'SHT-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);
+}
+
+async function placeOrder(){
+  const name=document.getElementById('cf_name').value.trim();
+  const phone=document.getElementById('cf_phone').value.trim();
+  const address=document.getElementById('cf_address').value.trim();
+  const note=document.getElementById('cf_note').value.trim();
+  const productVal=document.getElementById('cf_productSelect').value;
+  const qty=Math.max(1, parseInt(document.getElementById('cf_qty').value)||1);
+  const zone=currentZone();
+  const deliveryFee=ZONE_FEE[zone];
+  const cur=getSettings().currency||'৳';
+  const addrErr=document.getElementById('cf_addressErr');
+
+  let hasErr=false;
+  if(address.length<10){ addrErr.style.display='block'; hasErr=true; } else { addrErr.style.display='none'; }
+  if(!name||!phone||!productVal||hasErr){
+    alert('সব required (*) field ঠিকভাবে পূরণ করুন!');
+    return;
+  }
+
+  let productName, productCode='', unitPrice=0, size='';
+  if(productVal==='custom'){
+    productName=document.getElementById('cf_customProduct').value.trim();
+    if(!productName){ alert('Custom product এর নাম/বিবরণ লিখুন!'); return; }
+  } else {
+    const p=getProducts().find(x=>String(x.id)===String(productVal));
+    if(!p){ alert('প্রোডাক্ট খুঁজে পাওয়া যায়নি, আবার সিলেক্ট করুন।'); return; }
+    productName=p.name; productCode=p.code||''; unitPrice=p.price;
+    size=document.getElementById('cf_size').value||'';
+  }
+  const subtotal=unitPrice*qty;
+  const grossTotal=subtotal+deliveryFee;
+  const orderId=generateOrderId();
+  const dateLabel=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+
+  const order={
+    id:orderId, name, phone, address, note,
+    product:productName+(size?(' — Size '+size):''),
+    productCode, size, qty, unitPrice, subtotal,
+    zone, zoneLabel:ZONE_LABEL[zone], deliveryFee,
+    amount:grossTotal, currency:cur,
+    status:'pending', date:dateLabel,
+    image: cf_selectedImage || '',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  const btn=document.getElementById('cf_submitBtn');
+  const label=document.getElementById('cf_submitLabel');
+  btn.disabled=true; label.textContent='তৈরি হচ্ছে…';
+
+  // Try saving to our database, but NEVER block the WhatsApp order on this.
+  // If saving fails (e.g. permissions), the customer's order still goes through
+  // via WhatsApp — the DB is only used for the order-tracking page.
+  let saved=true;
+  try{
+    await db.collection('orders').doc(orderId).set(order);
+  }catch(err){
+    console.error('Order save failed (continuing to WhatsApp anyway):', err);
+    saved=false;
+  }
+
+  const orderPageUrl=location.origin+location.pathname.substring(0,location.pathname.lastIndexOf('/')+1)+'order.html?id='+orderId;
+  const msgLines=[
+    '🛍️ *নতুন অর্ডার — ShirTory*','',
+    '📋 Order ID: *'+orderId+'*',
+    '👤 নাম: '+name,
+    '📞 ফোন: '+phone,
+    '👕 Product: '+order.product+' x '+qty,
+    (unitPrice?'💰 Product Amount: '+cur+subtotal:'💰 Product Amount: কথা বলে জানানো হবে'),
+    '🚚 Delivery ('+ZONE_LABEL[zone]+'): '+cur+deliveryFee,
+    (unitPrice?'💵 *Total Payable: '+cur+grossTotal+'*':'💵 *Total: প্রোডাক্ট মূল্য + '+cur+deliveryFee+' ডেলিভারি*'),
+    '📍 Address ('+ZONE_LABEL[zone]+'): '+address,
+    (note?'📝 Note: '+note:''),
+    (saved?('🔗 Full Order Details: '+orderPageUrl):''),
+    '','✅ Please confirm!'
+  ].filter(Boolean);
+  const msg=encodeURIComponent(msgLines.join('\n'));
+  window.open('https://wa.me/'+WA+'?text='+msg,'_blank');
+
+  document.getElementById('cf_successId').textContent=orderId;
+  document.getElementById('cf_successBox').style.display='block';
+  document.getElementById('cf_saveWarn').style.display = saved ? 'none' : 'block';
+  btn.disabled=false; label.textContent='WhatsApp এ Order করুন';
+  document.getElementById('cf_successBox').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// Instant paint from cache, then sync live from cloud
+populateProductSelect();
+db.collection('shirtory').doc('products').onSnapshot(doc=>{
+  cloudProducts=(doc.exists && doc.data().list) ? doc.data().list : null;
+  populateProductSelect();
+}, err=>console.error('Product sync error:', err));
+db.collection('shirtory').doc('settings').onSnapshot(doc=>{
+  cloudSettings = doc.exists ? doc.data() : null;
+  updateSummary();
+}, err=>console.error('Settings sync error:', err));
+</script>
+</body>
+</html>
