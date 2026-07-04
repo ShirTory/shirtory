@@ -323,4 +323,593 @@
     .footer-inner{max-width:1280px;margin:0 auto}
     .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;margin-bottom:32px}
     .footer-brand img{width:40px;height:40px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.7;margin-bottom:10px}
-    .footer-brand-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:rgba(255,255,255,0
+    .footer-brand-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px}
+    .footer-brand p{font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.7}
+    .footer-col h4{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.5);margin-bottom:14px}
+    .footer-col a{display:block;font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:8px;transition:color .2s}
+    .footer-col a:hover{color:rgba(255,255,255,0.8)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .footer-copy{font-size:0.72rem;color:rgba(255,255,255,0.3)}
+    .footer-soc{display:flex;gap:10px}
+    .footer-soc a{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;transition:background .2s}
+    .footer-soc a:hover{background:rgba(255,255,255,0.12)}
+    .footer-soc svg{width:14px;height:14px;fill:rgba(255,255,255,0.5)}
+
+    .soon-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;align-items:center;justify-content:center;padding:20px}
+    .soon-modal-overlay.open{display:flex}
+    .soon-modal{background:var(--white);border-radius:14px;padding:36px 28px;max-width:380px;text-align:center;box-shadow:var(--shadow-md)}
+    .soon-icon{font-size:2.5rem;margin-bottom:14px}
+    .soon-modal h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+    .soon-modal p{font-size:0.85rem;color:var(--muted);margin-bottom:22px;line-height:1.6}
+    .soon-modal .btn-hero-primary{justify-content:center;width:100%}
+
+    /* QUICK VIEW GALLERY */
+    .qv-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:300;align-items:center;justify-content:center;padding:20px}
+    .qv-overlay.open{display:flex}
+    .qv-modal{background:var(--white);border-radius:14px;max-width:640px;width:100%;max-height:90vh;overflow:auto;box-shadow:var(--shadow-md);position:relative}
+    .qv-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.5);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;z-index:2}
+    .qv-main{width:100%;aspect-ratio:1/1;background:var(--bg);position:relative;overflow:hidden}
+    .qv-main img{width:100%;height:100%;object-fit:cover}
+    .qv-thumbs{display:flex;gap:8px;padding:12px;flex-wrap:wrap}
+    .qv-thumb{width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid transparent;cursor:pointer;background:var(--bg)}
+    .qv-thumb img{width:100%;height:100%;object-fit:cover}
+    .qv-thumb.active{border-color:var(--primary)}
+    .qv-body{padding:8px 20px 24px}
+    .qv-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+    .qv-code{font-size:0.75rem;color:var(--muted);margin-bottom:12px}
+    .product-img-wrap{cursor:pointer}
+
+    /* FLOAT WA */
+    .float-wa{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.35);z-index:150;transition:transform .2s}
+    .float-wa:hover{transform:scale(1.08)}
+    .float-wa svg{width:26px;height:26px;fill:#fff}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      .nav-links{display:none}
+      .nav-toggle{display:block}
+      .nav-search{max-width:220px}
+      .hero-cta-row{left:32px;bottom:40px}
+      .about-inner{grid-template-columns:1fr;gap:32px}
+      .about-img-col{display:none}
+      .order-inner{grid-template-columns:1fr;gap:32px}
+      .footer-top{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:600px){
+      .hero-cta-row{position:static;justify-content:center;padding:16px 20px;background:#f4ede4}
+      .hero-title{font-size:2rem}
+      .cat-icon{width:66px}
+      .cat-icon-thumb{width:58px;height:58px}
+      .cat-icon-label{font-size:0.66rem}
+      .product-grid{grid-template-columns:1fr 1fr}
+      .form-row{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr}
+      .track-row{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-logo">
+    <img src="images/logo.png" alt="ShirTory"/>
+    <span class="nav-logo-text">ShirTory</span>
+  </div>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    <input type="text" placeholder="Search products…" oninput="searchProducts(this.value)"/>
+  </div>
+  <nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="checkout.html">Order</a>
+    <a href="#track">Track Order</a>
+  </nav>
+  <div class="nav-right">
+    <a class="nav-wa" href="https://wa.me/8801540406490?text=Hi%20ShirTory!" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <button class="nav-toggle" onclick="document.getElementById('mobileMenu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="this.closest('.mobile-menu').classList.remove('open')">Home</a>
+  <a href="#shop" onclick="this.closest('.mobile-menu').classList.remove('open')">Shop</a>
+  <a href="#about" onclick="this.closest('.mobile-menu').classList.remove('open')">About</a>
+  <a href="checkout.html">Order</a>
+  <a href="#track" onclick="this.closest('.mobile-menu').classList.remove('open')">Track Order</a>
+</div>
+
+<!-- HERO -->
+<section class="hero hero-banner" id="home">
+  <img class="hero-img" src="images/cover.jpg" alt="ShirTory Brand Story"/>
+  <div class="hero-cta-row">
+    <a href="#shop" class="btn-hero-primary">Shop Now</a>
+    <a href="checkout.html" class="btn-hero-secondary">Order Now</a>
+  </div>
+</section>
+
+<!-- PROMO -->
+<div class="promo-bar">
+  <div class="promo-track">
+    <span class="promo-item">ShirTory <span class="promo-sep">✦</span> Free Delivery on Orders Above ৳1500 <span class="promo-sep">✦</span> New Arrivals Every Week <span class="promo-sep">✦</span> WhatsApp Order Available <span class="promo-sep">✦</span> Made in Bangladesh <span class="promo-sep">✦</span></span>
+    <span class="promo-item">ShirTory <span class="promo-sep">✦</span> Free Delivery on Orders Above ৳1500 <span class="promo-sep">✦</span> New Arrivals Every Week <span class="promo-sep">✦</span> WhatsApp Order Available <span class="promo-sep">✦</span> Made in Bangladesh <span class="promo-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- CATEGORY ICONS (compact) -->
+<div class="section" style="padding-bottom:0">
+  <div class="sec-hd">
+    <h2 class="sec-title">Shop by Category</h2>
+  </div>
+  <div class="cat-icon-row">
+    <div class="cat-icon" onclick="filterTo('shirt')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=200&q=70')"></div>
+      <div class="cat-icon-label">Shirts</div>
+    </div>
+    <div class="cat-icon" onclick="filterTo('polo')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=200&q=70')"></div>
+      <div class="cat-icon-label">Polo Tee</div>
+    </div>
+    <div class="cat-icon" onclick="filterTo('tshirt')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&q=70')"></div>
+      <div class="cat-icon-label">Drop Shoulder</div>
+    </div>
+    <div class="cat-icon" onclick="filterTo('hoodie')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=200&q=70')"></div>
+      <div class="cat-icon-label">Hoodie</div>
+    </div>
+    <div class="cat-icon" onclick="filterTo('sweatshirt')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=200&q=70')"></div>
+      <div class="cat-icon-label">Sweatshirt</div>
+    </div>
+    <div class="cat-icon" onclick="filterTo('jacket')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1551028719-00167b16eac5?w=200&q=70')"></div>
+      <div class="cat-icon-label">Jacket</div>
+    </div>
+    <div class="cat-icon" onclick="filterTo('bottoms')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=200&q=70')"></div>
+      <div class="cat-icon-label">Bottoms</div>
+    </div>
+    <div class="cat-icon" onclick="filterTo('accessories')">
+      <div class="cat-icon-thumb" style="background-image:url('https://images.unsplash.com/photo-1521369909029-2afed882baee?w=200&q=70')"></div>
+      <div class="cat-icon-label">Accessories</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="section" id="shop" style="padding-top:24px">
+  <div class="sec-hd">
+    <h2 class="sec-title">All Products</h2>
+  </div>
+  <div class="cat-row">
+    <div class="cat-pill active" onclick="filterProducts('all',this)">All</div>
+    <div class="cat-pill" onclick="filterProducts('shirt',this)">Shirts</div>
+    <div class="cat-pill" onclick="filterProducts('polo',this)">Polo</div>
+    <div class="cat-pill" onclick="filterProducts('tshirt',this)">Drop Shoulder Tee</div>
+    <div class="cat-pill" onclick="filterProducts('hoodie',this)">Hoodie</div>
+    <div class="cat-pill" onclick="filterProducts('sweatshirt',this)">Sweatshirt</div>
+    <div class="cat-pill" onclick="filterProducts('jacket',this)">Jacket</div>
+    <div class="cat-pill" onclick="filterProducts('bottoms',this)">Bottoms</div>
+    <div class="cat-pill" onclick="filterProducts('accessories',this)">Accessories</div>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-strip" id="about">
+  <div class="about-inner">
+    <div class="about-img-col">
+      <div class="about-logo-circle">
+        <img src="images/logo.png" alt="ShirTory"/>
+      </div>
+    </div>
+    <div class="about-text">
+      <h2 id="aboutTitle">About ShirTory</h2>
+      <p id="aboutP1">We started ShirTory because we believe your clothing should say something. Every piece carries a story — crafted with quality, priced honestly, designed to be worn with pride.</p>
+      <p id="aboutP2">Based in Mirpur, Dhaka. Delivering across Bangladesh & worldwide.</p>
+      <div class="stats-row">
+        <div class="stat-box"><span class="stat-n" id="hstat1">100+</span><span class="stat-l">Products Sold</span></div>
+        <div class="stat-box"><span class="stat-n" id="hstat2">500+</span><span class="stat-l">Customers</span></div>
+        <div class="stat-box"><span class="stat-n" id="hstat3">100%</span><span class="stat-l">Deshi Made</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section class="order-section" id="order">
+  <div class="order-inner">
+    <div class="order-info">
+      <h2>Place Your Order</h2>
+      <p>Fill in the form and we'll open WhatsApp with your order details ready to send!</p>
+      <div class="info-item">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+        <div><div class="info-label">WhatsApp</div><div class="info-val">+880 1540-406490</div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+        <div><div class="info-label">Email</div><div class="info-val">shirtory1215@gmail.com</div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div><div class="info-label">Address</div><div class="info-val">Mirpur, Dhaka, Bangladesh</div></div>
+      </div>
+      <div class="social-row">
+        <a class="soc-btn soc-fb" href="https://www.facebook.com/profile.php?id=61588838799127" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+        <a class="soc-btn soc-ig" href="https://www.instagram.com/shirtory_clothing/" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Instagram
+        </a>
+        <a class="soc-btn soc-wa" href="https://wa.me/8801540406490" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="order-form" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:44px 28px">
+        <div style="font-size:2.4rem">🛍️</div>
+        <div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;margin-bottom:8px">Order করতে প্রস্তুত?</h3>
+          <p style="font-size:0.85rem;color:var(--muted);max-width:320px;margin:0 auto">Product, Delivery Zone (Inside/Outside Dhaka) সিলেক্ট করুন, ঠিকানা দিন — গ্র্যান্ড টোটাল দেখে এক ক্লিকে WhatsApp-এ Order Send করুন।</p>
+        </div>
+        <a href="checkout.html" class="btn-wa-submit" style="text-decoration:none;display:inline-flex">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span>Start Your Order</span>
+        </a>
+        <p class="form-hint">Order পেজে গিয়ে সব তথ্য দিলেই WhatsApp মেসেজ রেডি হয়ে যাবে ✅</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKING -->
+<section class="track-section" id="track">
+  <div class="track-inner">
+    <h2>Track Your Order</h2>
+    <p>আপনার Order ID দিয়ে অর্ডারের অবস্থা জানুন</p>
+    <div class="track-row">
+      <input class="track-input" id="trackInput" placeholder="Order ID — যেমন: SHT-2026-0001"/>
+      <button class="btn-track" onclick="trackOrder()">Track →</button>
+    </div>
+    <div class="track-result" id="trackResult">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div><div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">Order ID</div><div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--primary)" id="tr_id">—</div></div>
+        <span id="tr_badge" style="padding:5px 14px;border-radius:4px;font-size:0.72rem;font-weight:700">—</span>
+      </div>
+      <div class="track-grid">
+        <div><div class="track-field-label">Customer</div><div class="track-field-val" id="tr_name">—</div></div>
+        <div><div class="track-field-label">Product</div><div class="track-field-val" id="tr_product">—</div></div>
+        <div><div class="track-field-label">Date</div><div class="track-field-val" id="tr_date">—</div></div>
+        <div><div class="track-field-label">Amount</div><div class="track-field-val" id="tr_amount">—</div></div>
+      </div>
+      <div id="tr_imageWrap" style="display:none;margin:4px 0 8px">
+        <div class="track-field-label" style="margin-bottom:6px">আপলোড করা ছবি</div>
+        <img id="tr_image" style="max-width:140px;border-radius:8px;border:1px solid var(--border)"/>
+      </div>
+      <div style="background:var(--border);border-radius:999px;height:5px;overflow:hidden;margin-top:16px">
+        <div id="tr_bar" style="height:100%;background:var(--primary);border-radius:999px;transition:width .6s;width:0%"></div>
+      </div>
+      <div class="track-steps" style="margin-top:12px">
+        <div class="track-step"><div class="step-dot" id="s1">📦</div><div class="step-lbl">Received</div></div>
+        <div class="track-step"><div class="step-dot" id="s2">✅</div><div class="step-lbl">Confirmed</div></div>
+        <div class="track-step"><div class="step-dot" id="s3">🚚</div><div class="step-lbl">Shipped</div></div>
+        <div class="track-step"><div class="step-dot" id="s4">🏠</div><div class="step-lbl">Delivered</div></div>
+      </div>
+    </div>
+    <div class="track-not-found" id="trackNotFound">❌ Order ID পাওয়া যায়নি। সঠিক ID দিন অথবা <a href="https://wa.me/8801540406490" target="_blank" style="color:var(--primary);font-weight:600">WhatsApp এ জিজ্ঞেস করুন →</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- COMING SOON MODAL -->
+<div class="soon-modal-overlay" id="soonModal">
+  <div class="soon-modal">
+    <div class="soon-icon">🧵</div>
+    <h3 id="soonTitle">Coming Soon</h3>
+    <p id="soonText">We currently don't have this product yet. Please stay connected for the update!</p>
+    <button class="btn-hero-primary" onclick="closeSoonModal()" style="background:var(--primary)">Browse Other Products</button>
+  </div>
+</div>
+
+<!-- PRODUCT QUICK VIEW GALLERY -->
+<div class="qv-overlay" id="qvModal">
+  <div class="qv-modal">
+    <button class="qv-close" onclick="closeQuickView()">✕</button>
+    <div class="qv-main"><img id="qvMainImg" src="" alt=""/></div>
+    <div class="qv-thumbs" id="qvThumbs"></div>
+    <div class="qv-body">
+      <div class="qv-name" id="qvName"></div>
+      <div class="qv-code" id="qvCode"></div>
+      <div id="qvOrderWrap"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="ShirTory"/>
+        <div class="footer-brand-name">ShirTory</div>
+        <p>Premium clothing brand from Dhaka, Bangladesh. Your Style, Your Story.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#shop" onclick="filterProducts('tops')">Tops & Tees</a>
+        <a href="#shop" onclick="filterProducts('bottoms')">Bottoms</a>
+        <a href="#shop" onclick="filterProducts('outerwear')">Outerwear</a>
+        <a href="#shop" onclick="filterProducts('accessories')">Accessories</a>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="checkout.html">Place Order</a>
+        <a href="#track">Track Order</a>
+        <a href="https://wa.me/8801540406490" target="_blank">WhatsApp Support</a>
+        <a href="#about">About Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 ShirTory. All rights reserved.</p>
+      <div class="footer-soc">
+        <a href="https://www.facebook.com/profile.php?id=61588838799127" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="https://www.instagram.com/shirtory_clothing/" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+        <a href="https://wa.me/8801540406490" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/8801540406490?text=Hi%20ShirTory!" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+const WA='8801540406490';
+const ALL_CATEGORIES=['shirt','polo','tshirt','hoodie','sweatshirt','jacket','bottoms','accessories'];
+const CAT_LABELS={shirt:'Shirts',polo:'Polo Tee',tshirt:'Drop Shoulder Tee',hoodie:'Hoodie',sweatshirt:'Sweatshirt',jacket:'Jacket',bottoms:'Bottoms',accessories:'Accessories'};
+const ALL_SIZES=['S','M','L','XL','XXL'];
+
+const DEFAULT_PRODUCTS=[
+  {id:1,name:"Classic Logo Tee",code:"ST-TS-001",price:550,oldPrice:0,category:"tshirt",color:"#7B1A1A",badge:"Bestseller",image:"",stock:24,sizes:["S","M","L","XL"]},
+  {id:2,name:"Deshi Pride Graphic Tee",code:"ST-TS-002",price:650,oldPrice:800,category:"tshirt",color:"#457b9d",badge:"Sale",image:"",stock:14,sizes:["M","L","XL"]},
+  {id:3,name:"Premium Cotton Polo",code:"ST-PO-003",price:750,oldPrice:0,category:"polo",color:"#2d6a4f",badge:"Hot",image:"",stock:3,sizes:["S","M","L"]},
+  {id:4,name:"Oxford Formal Shirt",code:"ST-SH-004",price:950,oldPrice:1100,category:"shirt",color:"#1e3a5f",badge:"Sale",image:"",stock:18,sizes:["M","L","XL","XXL"]},
+  {id:5,name:"Pullover Hoodie",code:"ST-HD-005",price:1450,oldPrice:0,category:"hoodie",color:"#3d405b",badge:"New",image:"",stock:0,sizes:[]},
+  {id:6,name:"Essential Crewneck Sweatshirt",code:"ST-SW-006",price:1150,oldPrice:0,category:"sweatshirt",color:"#264653",badge:"",image:"",stock:9,sizes:["S","M","L","XL"]},
+  {id:7,name:"Denim Jacket",code:"ST-JK-007",price:2200,oldPrice:2500,category:"jacket",color:"#264653",badge:"Limited",image:"",stock:6,sizes:["M","L","XL"]},
+  {id:8,name:"Cargo Pants",code:"ST-BT-008",price:1200,oldPrice:0,category:"bottoms",color:"#6b4226",badge:"",image:"",stock:11,sizes:["S","M","L","XL"]},
+  {id:9,name:"Embroidered Cap",code:"ST-AC-009",price:500,oldPrice:0,category:"accessories",color:"#333",badge:"New",image:"",stock:30,sizes:[]},
+];
+const BADGE_CLS={New:'badge-new',Hot:'badge-hot','Hot 🔥':'badge-hot',Limited:'badge-limited',Sale:'badge-sale',Bestseller:'badge-bestseller','Sold Out':'badge-soldout'};
+// Live data cache, filled in by Firestore (cloud) so every visitor — any device,
+// any browser, the Facebook page link, etc. — sees the exact same products & content.
+let cloudProducts=null;
+let cloudSettings=null;
+
+function getProducts(){
+  const stored=cloudProducts || JSON.parse(localStorage.getItem('shirtory_products')||'null');
+  if(!stored) return DEFAULT_PRODUCTS;
+  // Normalize older product records that may lack new fields
+  return stored.map(p=>({
+    oldPrice:0,stock:10,sizes:["S","M","L","XL"],category:p.category||'tshirt',
+    ...p
+  }));
+}
+function getSettings(){return cloudSettings || JSON.parse(localStorage.getItem('shirtory_settings')||'{}');}
+
+function discountPct(price,oldPrice){
+  if(!oldPrice||oldPrice<=price)return 0;
+  return Math.round((1-(price/oldPrice))*100);
+}
+
+function renderProducts(filter='all',query=''){
+  const s=getSettings();const cur=s.currency||'৳';
+  const grid=document.getElementById('productGrid');
+  let list=getProducts();
+
+  // If filtering by a specific category with zero products, show "coming soon"
+  if(filter!=='all'){
+    const inCat=list.filter(p=>p.category===filter);
+    if(inCat.length===0){ openSoonModal(filter); }
+    list=inCat;
+  }
+  if(query)list=list.filter(p=>p.name.toLowerCase().includes(query.toLowerCase())||p.category.includes(query.toLowerCase()));
+
+  // Display order = admin's chosen order (the order they're saved in), EXCEPT
+  // out-of-stock products always sink to the bottom automatically, regardless
+  // of where the admin placed them in the list.
+  const inStock=list.filter(p=>!(typeof p.stock==='number' && p.stock<=0));
+  const outOfStock=list.filter(p=>typeof p.stock==='number' && p.stock<=0);
+  list=inStock.concat(outOfStock);
+
+  if(!list.length){
+    grid.innerHTML='<div class="no-products">No products found in this category yet. Please check back soon!</div>';
+    return;
+  }
+
+  grid.innerHTML=list.map(p=>{
+    const sizes=p.sizes||[];
+    const stock=typeof p.stock==='number'?p.stock:10;
+    const isSoldOut = stock<=0;
+    const disc=discountPct(p.price,p.oldPrice);
+    const badge = isSoldOut ? 'Sold Out' : p.badge;
+    const bc=badge?(BADGE_CLS[badge]||'badge-new'):'';
+    const bHTML=badge?'<div class="badge-wrap"><span class="badge '+bc+'">'+badge+'</span>'+(disc>0&&!isSoldOut?'<span class="badge badge-sale">-'+disc+'%</span>':'')+'</div>'
+      : (disc>0&&!isSoldOut?'<div class="badge-wrap"><span class="badge badge-sale">-'+disc+'%</span></div>':'');
+    const iHTML=p.image?'<img src="'+p.image+'" alt="'+p.name+'" onerror="this.style.display=\'none\'">'
+      :'<div class="product-placeholder"><span class="product-initial">'+p.name[0]+'</span><span class="product-initial-name">'+p.name+'</span></div>';
+
+    const priceHTML = '<div class="price-row"><span class="product-price">'+cur+p.price+'</span>'+
+      (p.oldPrice>p.price?'<span class="price-old">'+cur+p.oldPrice+'</span>':'')+'</div>';
+
+    const stockHTML = isSoldOut
+      ? '<div class="stock-row stock-low">Currently unavailable</div>'
+      : (stock<=5 ? '<div class="stock-row stock-low">Only '+stock+' left in stock!</div>' : '<div class="stock-row">'+stock+' in stock</div>');
+
+    const sizeHTML = sizes.length || true
+      ? '<div class="size-row">'+ALL_SIZES.map(sz=>{
+          const avail=sizes.includes(sz);
+          return '<span class="size-chip'+(avail?'':' unavailable')+'">'+sz+'</span>';
+        }).join('')+'</div>'
+      : '';
+
+    const waBtn = isSoldOut
+      ? '<button class="wa-btn" disabled style="background:#9ca3af;cursor:not-allowed">Sold Out</button>'
+      : '<button class="wa-btn" onclick="quickOrder('+p.id+')"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Order Now</button>';
+
+    return '<div class="product-card'+(isSoldOut?' soldout':'')+'"><div class="product-img-wrap" style="background:'+p.color+'12" onclick="openQuickView('+p.id+')">'+bHTML+iHTML+'</div><div class="product-body"><div class="product-name">'+p.name+'</div><div class="product-code">Code: '+(p.code||('ST-'+p.id))+'</div><div class="product-cat">'+(CAT_LABELS[p.category]||p.category)+'</div>'+sizeHTML+priceHTML+stockHTML+'<div class="cart-row">'+waBtn+'</div></div></div>';
+  }).join('');
+}
+
+function openQuickView(id){
+  const p = getProducts().find(x=>String(x.id)===String(id));
+  if(!p) return;
+  const imgs = (p.images && p.images.length ? p.images : (p.image ? [p.image] : [])).filter(Boolean);
+  const mainImg = document.getElementById('qvMainImg');
+  const thumbsWrap = document.getElementById('qvThumbs');
+  if(imgs.length){
+    mainImg.src = imgs[0];
+    mainImg.alt = p.name;
+    mainImg.style.display = 'block';
+    thumbsWrap.style.display = imgs.length>1 ? 'flex' : 'none';
+    thumbsWrap.innerHTML = imgs.map((src,i)=>'<div class="qv-thumb'+(i===0?' active':'')+'" onclick="qvSelect(this,\''+src.replace(/'/g,"\\'")+'\')"><img src="'+src+'" alt=""/></div>').join('');
+  } else {
+    mainImg.style.display = 'none';
+    thumbsWrap.style.display = 'none';
+    thumbsWrap.innerHTML = '';
+  }
+  document.getElementById('qvName').textContent = p.name;
+  document.getElementById('qvCode').textContent = 'Code: '+(p.code||('ST-'+p.id));
+  const stock=typeof p.stock==='number'?p.stock:10;
+  const isSoldOut = stock<=0;
+  document.getElementById('qvOrderWrap').innerHTML = isSoldOut
+    ? '<button class="wa-btn" disabled style="background:#9ca3af;cursor:not-allowed">Sold Out</button>'
+    : '<button class="wa-btn" onclick="quickOrder('+p.id+')">Order Now via WhatsApp</button>';
+  document.getElementById('qvModal').classList.add('open');
+}
+function qvSelect(el,src){
+  document.getElementById('qvMainImg').src = src;
+  document.querySelectorAll('.qv-thumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+function closeQuickView(){
+  document.getElementById('qvModal').classList.remove('open');
+}
+
+function openSoonModal(cat){
+  document.getElementById('soonTitle').textContent = (CAT_LABELS[cat]||cat) + ' — Coming Soon';
+  document.getElementById('soonText').textContent = "We currently don't have any "+(CAT_LABELS[cat]||cat).toLowerCase()+" products. Please stay connected for the update!";
+  document.getElementById('soonModal').classList.add('open');
+}
+function closeSoonModal(){
+  document.getElementById('soonModal').classList.remove('open');
+  filterProducts('all', document.querySelector('.cat-pill'));
+}
+
+let currentFilter='all', currentQuery='';
+function filterProducts(f,el){
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
+  if(el)el.classList.add('active');
+  currentFilter=f; currentQuery='';
+  renderProducts(f);
+}
+function filterTo(cat){
+  document.getElementById('shop').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{const el=document.querySelector('.cat-pill[onclick*="\''+cat+'\'"]');filterProducts(cat,el);},400);
+}
+function searchProducts(q){currentQuery=q; renderProducts(currentFilter,q);}
+
+function quickOrder(productId){
+  location.href='checkout.html?pid='+encodeURIComponent(productId);
+}
+
+// ============================================================
+// ORDER FORM — product select, live amount, optional photo, Firestore save
+// ============================================================
+let cf_selectedImage=null; // compressed base64 data URL, or null
+
+function populateProductSelect(){
+  const sel=document.getElementById('cf_productSelect');
+  if(!sel) return;
+  const prevVal=sel.value;
+  const list=getProducts().filter(p=>(typeof p.stock!=='number')||p.stock>0);
+  sel.innerHTML='<option value="">-- একটি প্রোডাক্ট সিলেক্ট করুন --</option>'+
+    list.map(p=>'<option value="'+p.id+'">'+p.name+' — '+(getSettings().currency||'৳')+p.price+'</option>').join('')+
+    '<option value="custom">🎨 Custom / অন্য কিছু (নিজে লিখব)</option>';
+  if(prevVal && sel.querySelector('option[value="'+prevVal+'"]')) sel.value=prevVal;
+}
+
+// NOTE: the actual order-placing form (product, delivery zone, address, amount
+// calculation, WhatsApp message + Firestore save) now lives on checkout.html.
+// It's a dedicated page so "Order Now" takes customers straight there instead
+// of scrolling within this page.
+
+async function trackOrder(){
+  const id=document.getElementById('trackInput').value.trim().toUpperCase();
+  document.getElementById('trackResult').style.display='none';
+  document.getElementById('trackNotFound').style.display='none';
+  if(!id) return;
+  let found=null;
+  try{
+    const doc=await db.collection('orders').doc(id).get();
+    if(doc.exists) found=doc.data();
+  }catch(err){ console.error(err); }
+  if(!found){document.getElementById('trackNotFound').style.display='block';return;}
+  document.getElementById('tr_id').textContent=found.id;
+  document.getElementById('tr_name').textContent=found.name||'—';
+  document.getElementById('tr_product').textContent=(found.product||'—')+(found.qty?' x'+found.qty:'');
+  document.getElementById('tr_date').textContent=found.date||'—';
+  document.getElementById('tr_amount').textContent=found.amount?(found.currency||'৳')+found.amount:'—';
+  const imgWrap=document.getElementById('tr_imageWrap');
+  if(found.image){ document.getElementById('tr_image').src=found.image; imgWrap.style.display='block'; }
+  else { imgWrap.style.display='none'; }
+  const sm={pending:{pct:15,label:'Pending',bg:'#fff3cd',col:'#856404'},confirmed:{pct:40,label:'Confirmed ✅',bg:'#d1e7dd',col:'#0a3622'},shipped:{pct:75,label:'Shipped 🚚',bg:'#cfe2ff',col:'#084298'},delivered:{pct:100,label:'Delivered 🏠',bg:'#d1e7dd',col:'#0a3622'}};
+  const st=sm[found.status||'pending'];
+  const badge=document.getElementById('tr_badge');
+  badge.textContent=st.label;badge.style.background=st.bg;badge.style.color=st.col;
+  document.getElementById('tr_bar').style.width=st.pct+'%';
+  [['s1',15],['s2',40],['s3',75],['s4',100]].forEach(([id,v])=>{
+    document.getElementById(id).classList.toggle('done',st.pct>=v);
+  });
+  document.getElementById('trackResult').style.display='block';
+}
+
+function applySettings(){
+  const s=getSettings();
+  if(s.aboutP1)document.getElementById('aboutP1').textContent=s.aboutP1;
+  if(s.aboutP2)document.getElementById('aboutP2').textContent=s.aboutP2;
+  if(s.stat1){const e=document.getElementById('hstat1');if(e)e.textContent=s.stat1;}
+  if(s.stat2){const e=document.getElementById('hstat2');if(e)e.textContent=s.stat2;}
+  if(s.stat3){const e=document.getElementById('hstat3');if(e)e.textContent=s.stat3;}
+}
+
+// Initial paint using whatever is cached locally (instant, no flash of "no products")
+applySettings();
+renderProducts();
+populateProductSelect();
+
+// Then connect to the live cloud database — this is what makes the store show the
+// SAME products/content on every device, browser, and the Facebook page link.
+db.collection('shirtory').doc('products').onSnapshot(doc=>{
+  cloudProducts = (doc.exists && doc.data().list) ? doc.data().list : null;
+  renderProducts(currentFilter, currentQuery);
+  populateProductSelect();
+}, err=>console.error('Product sync error:', err));
+
+db.collection('shirtory').doc('settings').onSnapshot(doc=>{
+  cloudSettings = doc.exists ? doc.data() : null;
+  applySettings();
+}, err=>console.error('Settings sync error:', err));
+</script>
+</body>
+</html>
